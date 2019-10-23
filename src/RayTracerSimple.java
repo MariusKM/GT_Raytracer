@@ -9,6 +9,7 @@ import java.awt.image.MemoryImageSource;
 import java.util.Vector;   // use java vector as a list
 import java.lang.Thread;
 
+import static java.lang.Math.sqrt;
 
 
 public class RayTracerSimple extends java.applet.Applet {
@@ -18,22 +19,42 @@ public class RayTracerSimple extends java.applet.Applet {
     static SceneSimple sceneSimple;
 
 
-    public RayTracerSimple() {
-        sceneSimple = new SceneSimple();
-        sceneSimple.sceneObjects = new Vector();
-    }
+
     public static void main(String args []) {
         int resX = 1024, resY = 768;
         int[] pixels = new int[resX * resY]; // put RGB values here
+         SphereObject sphere =  new SphereObject(-0.25,0.65,1,0.15);
+        /*sceneSimple = new SceneSimple();
+        sceneSimple.cameraPos = new Vector3(0,0,0);
+        sceneSimple.sceneObjects.add(sphere);*/
 
         // to set a red color value for a pixel at coordinates x,y use
+        double yStep = 1.0/resX, xStep = 1.0/resY;
+        double tmpy = 1.0, tmpz = 0.0; // tmpz is the projection plane
+        int pixY=0, pixX=0;
 
-        for (int y = 0; y < resY; y++){
+        for (pixY=0; pixY < 2*resY; pixY++){
+            double tmpx = -1.0;
+            tmpy -= yStep;
+            for (pixX = 0; pixX < 2*resX; pixX++){
 
-            for (int x = 0; x < resX; x++){
-                pixels[y * resX + x] = 0xff0000;
+                tmpx += xStep;
+               // Vector3  = new Vector3(tmpx, tmpy, tmpz);
+                Ray ray = new Ray(new Vector3(tmpx, tmpy,0),new Vector3(0, 0,1));
+
+                boolean intersect = intetrsect(ray,sphere);
+
+                if (intersect){
+                    pixels[pixY * resX + pixX] = 0xff0000;
+                }
+
+
             }
         }
+
+
+
+
 
 
         Image image = Toolkit.getDefaultToolkit()
@@ -47,99 +68,78 @@ public class RayTracerSimple extends java.applet.Applet {
         frame.setVisible(true);
 
     }
-}
 
-class renderPanel extends JPanel {
 
-    Vector targetList;
-    Image img;
-    static String calcString = "Tracing...";
-
-   /* public DrawPanel(Vector tl) {
-        this.targetList = tl;
-        setBackground(Color.red);
-    }
-
-    public void paint(Graphics g) {
-        System.out.println("in paint");
-        int w = size().width;
-        int h = size().height;
-
-        if (img == null) {
-            super.paint(g);
-            g.setColor(Color.green);
-            FontMetrics fm = g.getFontMetrics();
-            int x = (w - fm.stringWidth(calcString))/2;
-            int y = h-1;
-            g.drawString(calcString, x, y);
-
-        } else {
-            g.drawImage(img, 0, 0, w, h, this);
+    static boolean solveQuadratic( double a,  double b,  double c, double x0, double x1)
+    {
+        double discr = b * b - 4 * a * c; // Diskriminanter Term in der PQ formel, Term unter der Wurzel)
+        if (discr < 0){
+            // wenn dieser kleiner Null ist, dann gibt es keine Schnittpunkte
+            return false;
         }
-    }*/
+        else if (discr == 0){
+            // wenn dieser gleich Null ist, dann gibt es keine Schnittpunkte
+            x0 = x1 = - 0.5 * b / a;
+        }
+        else {
+            // ergebnis für 2 Schnittpunkte
+            double q = (b > 0) ? -0.5 *  (b + sqrt(discr)) : -0.5 * (b - sqrt(discr));
+            x0 = q / a;
+            x1 = c / q;
 
-   public Image newImage(){
-       int[] buffer = new int[800*600];
+        }
+        if (x0 > x1){
+            // siehe zu, dass x0 kleiner als x1
+            double tempx0 = x0;
+            double tempx1 = x1;
+            x0 = tempx1;
+            x1 = tempx0;
 
-       for (int i = 0 ; i< buffer.length; i++){
-           buffer[i] = -1;
-       }
-       Image newImage = Toolkit.getDefaultToolkit().createImage(
-               new MemoryImageSource(800, 600,buffer
-                        , 0, 800));
+        };
 
-       return newImage;
-
-   }
-
-    public Image getImage() {
-        return img;
+        return true;
     }
 
-    public void setImage(Image img) {
-        this.img = img;
-        repaint();
+   static boolean intetrsect(Ray ray, SphereObject sphere)
+    {
+        float  t0 = 0, t1 = 0; // Schnittpunktwerte für T
+
+        /*
+        a =1\\
+        b=2D(Origin-C)
+        c=|O-C|^2-R^2     */
+        Vector3 L = ray.Origin.sub(sphere.center); // Vector ray origin to sphere origin;
+        System.out.println(L.toString());
+        Vector3 dir = ray.Direction;
+        dir.normalize();
+        double a = dir.dotProduct(dir);// ray.Direction.dotProduct(ray.Direction); // directional Vector sq
+        double b = 2 * ray.Direction.dotProduct(L);
+        double c = L.dotProduct(L) - sphere.radiusSq; //
+        if (!solveQuadratic(a, b, c, t0, t1)){
+            return false;
+        }
+
+        if (t0 > t1){
+            // siehe zu, dass t0 kleiner als t1
+            float  tempt0 = t0;
+            float  tempt1 = t1;
+            t0 = tempt1;
+            t1 = tempt0;
+        }
+
+        if (t0 < 0) {
+            t0 = t1; // if t0 is negative its behind, so  let's use t1 instead
+            if (t0 < 0) {
+                return false; // both t0 and t1 are negative, no intersection
+            }
+        }
+
+        ray.t = t0;
+
+        return true;
     }
 }
 
-class SceneSimple{
-
- Vector sceneObjects;
- Vector3 lightPos;
- Vector3 cameraPos;
 
 
-}
 
-class renderFrame extends JFrame {
-
-    public renderFrame() {
-        super("Ray Tracer");
-    }
-
-
-}
-
-
-class Vector3{
-    double x,y,z;
-
-
-    public Vector3(){
-
-        x = 0;
-        y = 0;
-        z = 0;
-
-    }
-
-    public Vector3(double x,double y,double z){
-
-        this.x = x;
-        this.y = y;
-        this.z = z;
-
-    }
-
-
-}
