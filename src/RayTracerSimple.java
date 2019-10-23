@@ -8,6 +8,8 @@ import java.awt.image.DirectColorModel;
 import java.awt.image.MemoryImageSource;
 import java.util.Vector;   // use java vector as a list
 import java.lang.Thread;
+import static java.lang.Math.tan;
+import static java.lang.Math.toRadians;
 
 import static java.lang.Math.sqrt;
 
@@ -21,16 +23,47 @@ public class RayTracerSimple extends java.applet.Applet {
 
 
     public static void main(String args []) {
-         Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),0);
+         Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),45);
         int resX = 1024, resY = 1024;
         int[] pixels = new int[resX * resY]; // put RGB values here
-        SphereObject sphere =  new SphereObject(-0.5,0.5,1,0.15);
+
+        SphereObject[] spheres = new SphereObject[4];
+        spheres[0] =  new SphereObject(0,0,0,0.15);
+        spheres[1] =  new SphereObject(0,0.5,0,0.15);
+        spheres[2] =  new SphereObject(0.5,0.5,0,0.15);
+        spheres[3] =  new SphereObject(0.5,-0.5,1,0.15);
         /*sceneSimple = new SceneSimple();
         sceneSimple.cameraPos = new Vector3(0,0,0);
         sceneSimple.sceneObjects.add(sphere);*/
 
+        double scale = tan(toRadians(45* 0.5));
+        float imageAspectRatio = resX / resY;
+
+
+        for (int y  = 0; y < resY; ++y) {
+            for (int x = 0; x < resX; ++x) {
+                float pixelPosX = (2 * (x + 0.5f) / (float)resX- 1) * imageAspectRatio*cam.scale;
+                float pixelPosY = (1 - 2 * (y + 0.5f) / (float)resY)* cam.scale;
+                Vector3 rayDir = new Vector3(pixelPosX,pixelPosY,0).sub(cam.position);
+                rayDir.normalize();
+
+
+                 Ray ray = new Ray(cam.position, rayDir);
+
+                for (SphereObject s: spheres
+                     ) {
+                    boolean intersect = intetrsect(ray,s);
+
+                    if (intersect){
+                        pixels[y *resX+ x] = 0xff0000;
+                    }
+                }
+
+
+            }
+        }
         // to set a red color value for a pixel at coordinates x,y use
-        double yStep = 1.0/resX, xStep = 1.0/resY;
+     /*   double yStep = 1.0/resX, xStep = 1.0/resY;
         double tmpy = 1.0, tmpz = 0.0; // tmpz is the projection plane
         int pixY=0, pixX=0;
 
@@ -54,9 +87,9 @@ public class RayTracerSimple extends java.applet.Applet {
                     pixels[pixY *resX+ pixX] = 0xff0000;
                 }
             }
-        }
+        }*/
 
-  
+
 
         Image image = Toolkit.getDefaultToolkit()
                 .createImage(new MemoryImageSource(resX, resY, new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, resX));

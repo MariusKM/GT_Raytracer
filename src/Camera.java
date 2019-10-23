@@ -1,10 +1,11 @@
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
+import static java.lang.Math.*;
+import static java.lang.Math.toRadians;
 
 public class Camera {
     Vector3 position;
     Vector3 focusPoint;
-    float yawAngle;
+    float FOV;
+    float scale;
     Vector3 viewDir;
     Vector3 rotatedUpVector;
     Vector3 vVec;
@@ -13,17 +14,18 @@ public class Camera {
     float width,height;
 
 
-    public Camera (Vector3 pos, Vector3 focus, float angle){
+    public Camera (Vector3 pos, Vector3 focus, float FOV){
 
         this.position = pos;
         this.focusPoint = focus;
-        this.yawAngle = angle;
+        this.FOV = FOV;
+        this.scale  =  (float)tan(toRadians(45* 0.5));
         this.width = width;
         this.height = height;
 
         this.viewDir = position.sub(focusPoint);
         this.viewDir.normalize();
-        this.rotatedUpVector = new Vector3(sin(yawAngle), cos(yawAngle),0);
+        this.rotatedUpVector = new Vector3(sin(FOV), cos(FOV),0);
         this.vVec = viewDir;
         this.vVec.crossProduct(rotatedUpVector);
         this.vVec.normalize();
