@@ -21,9 +21,10 @@ public class RayTracerSimple extends java.applet.Applet {
 
 
     public static void main(String args []) {
-        int resX = 1024, resY = 768;
+         Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),0);
+        int resX = 1024, resY = 1024;
         int[] pixels = new int[resX * resY]; // put RGB values here
-         SphereObject sphere =  new SphereObject(-0.25,0.65,1,0.15);
+        SphereObject sphere =  new SphereObject(-0.5,0.5,1,0.15);
         /*sceneSimple = new SceneSimple();
         sceneSimple.cameraPos = new Vector3(0,0,0);
         sceneSimple.sceneObjects.add(sphere);*/
@@ -33,29 +34,29 @@ public class RayTracerSimple extends java.applet.Applet {
         double tmpy = 1.0, tmpz = 0.0; // tmpz is the projection plane
         int pixY=0, pixX=0;
 
-        for (pixY=0; pixY < 2*resY; pixY++){
+        for (pixY=0; pixY < resY; pixY++){
             double tmpx = -1.0;
             tmpy -= yStep;
-            for (pixX = 0; pixX < 2*resX; pixX++){
+            for (pixX = 0; pixX < resX; pixX++){
 
                 tmpx += xStep;
-               // Vector3  = new Vector3(tmpx, tmpy, tmpz);
-                Ray ray = new Ray(new Vector3(tmpx, tmpy,0),new Vector3(0, 0,1));
+                Vector3 projectedPlane  = new Vector3(tmpx, tmpy, tmpz);
+                Vector3 rayDir = new Vector3(projectedPlane);
+                rayDir.sub(cam.position);
+                rayDir.normalize();
+
+                // Ray ray = new Ray(cam.position, rayDir);
+                Ray ray = new Ray(new Vector3(tmpx, tmpy, tmpz), new Vector3(0,0,1));
 
                 boolean intersect = intetrsect(ray,sphere);
 
                 if (intersect){
-                    pixels[pixY * resX + pixX] = 0xff0000;
+                    pixels[pixY *resX+ pixX] = 0xff0000;
                 }
-
-
             }
         }
 
-
-
-
-
+  
 
         Image image = Toolkit.getDefaultToolkit()
                 .createImage(new MemoryImageSource(resX, resY, new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, resX));
@@ -66,7 +67,6 @@ public class RayTracerSimple extends java.applet.Applet {
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
     }
 
 
@@ -109,7 +109,7 @@ public class RayTracerSimple extends java.applet.Applet {
         b=2D(Origin-C)
         c=|O-C|^2-R^2     */
         Vector3 L = ray.Origin.sub(sphere.center); // Vector ray origin to sphere origin;
-        System.out.println(L.toString());
+        //System.out.println(L.toString());
         Vector3 dir = ray.Direction;
         dir.normalize();
         double a = dir.dotProduct(dir);// ray.Direction.dotProduct(ray.Direction); // directional Vector sq

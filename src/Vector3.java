@@ -18,6 +18,15 @@ public class Vector3{
 
     }
 
+
+    public Vector3(Vector3 v){
+
+        this.x = v.x;
+        this.y = v.y;
+        this.z = v.z;
+
+    }
+
     public void normalize() {
         double length;
 
