@@ -377,12 +377,15 @@ class SphereTarget extends Target {
         /* find the normal vector from sphere's center to the intersection */
         normal = new Vec(intersection);
         normal.sub(center);
+        //normal.mult(-1);
         normal.normalize();
 
         /* locate the light source from intersection */
         lightSource = new Vec(scene.light);
         lightSource.sub(intersection);
+
         lightSource.normalize();
+
 
         /* check if the light can be "seen" by the intersection point */
         intersectObjects(intersection, lightSource, tShadow, object, true);

@@ -74,6 +74,12 @@ public class Vector3{
 
 
     }
+    public double distance (Vector3 v){
+        double d = Math.sqrt(Math.pow(v.x- this.x,2) + Math.pow(v.y- this.y,2) + Math.pow(v.z- this.z,2));
+        return d;
+
+    }
+
 
 
     public String toString() {
