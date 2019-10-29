@@ -26,9 +26,10 @@ public class RayTracerSimple extends java.applet.Applet {
         Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,0),90);
         int resX = 1024, resY = 1024;
         int[] pixels = new int[resX * resY]; // put RGB values here
-
+        Material defaultMat = new Material(new Vector3(1.0, 0.1, 0),0);
         SphereObject[] spheres = new SphereObject[5];
         spheres[0] =  new SphereObject(0,0,0.5,0.15);
+
         spheres[1] =  new SphereObject(0,0.5,0.25,0.15);
         spheres[2] =  new SphereObject(0.5,0.5,2.5,0.15);
         spheres[3] =  new SphereObject(0.5,-0.5,2,0.15);
@@ -37,6 +38,10 @@ public class RayTracerSimple extends java.applet.Applet {
         /*sceneSimple = new SceneSimple();
         sceneSimple.cameraPos = new Vector3(0,0,0);
         sceneSimple.sceneObjects.add(sphere);*/
+        for (SphereObject s: spheres
+        ) {
+            s.material = defaultMat;
+        }
 
         Light sceneLight = new Light(new Vector3(2,2,2.5), 10, Color.white);
 
@@ -62,35 +67,25 @@ public class RayTracerSimple extends java.applet.Applet {
                     boolean intersect = intetrsect(myRay,s);
 
 
-
-
-
                     if (intersect){
 
-                        int intensity = s.shade(rayDir,cam.position,sceneLight,myRay.t);
+                        int pixelColor = s.shade(rayDir,cam.position,sceneLight,myRay.t);
 
-                        int clampedIntesity =   clamp(intensity,-255,255);
+                      //  int clampedIntesity =   clamp(intensity,-255,255);
 
-                        System.out.println(255*((double)clampedIntesity/255));
+                        //System.out.println(255*((double)clampedIntesity/255));
 
-                        Color lightColor = new Color(0, (int)(47*((double)clampedIntesity/255)), (int)(255*((double)clampedIntesity/255)));
-                       // Color materialColor = new Color((int)(255*((double)clampedIntesity/255)), 0, 0);
-                        int materialColor = new Color((int)(255*((double)clampedIntesity/255)), 0, 0).getRGB();
-                      /*  int newR = clamp(lightColor.getRed()+materialColor.getRed(),0,255);
-                        int newG = clamp(lightColor.getGreen()+materialColor.getGreen(),0,255);
-                        int newB = clamp(lightColor.getBlue()+materialColor.getBlue(),0,255);
-                        Color finalColor =new Color(newR,newG,newB);*/
+
 
 
                          // Color lightColor = Color.white;
                         //  Color materialColor = Color.red;
                        //   Color blendedCol = brighter(materialColor,clampedIntesity);
-                        pixels[y *resX+ x] =(s.shade) ? materialColor  :0x0000ff;
+                        pixels[y *resX+ x] =(s.shade) ? pixelColor  :0x0000ff;
                         //pixels[y *resX+ x] =(s.shade) ? blendedCol.getRGB()  :blendedCol.getRGB();
                     }
 
                 }
-git 
 
             }
         }
