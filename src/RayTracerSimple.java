@@ -8,11 +8,10 @@ import java.awt.image.DirectColorModel;
 import java.awt.image.MemoryImageSource;
 import java.util.Vector;   // use java vector as a list
 import java.lang.Thread;
-import static java.lang.Math.tan;
-import static java.lang.Math.toRadians;
 import java.awt.Color;
-import static java.lang.Math.sqrt;
 import java.awt.Color;
+
+import static java.lang.Math.*;
 
 public class RayTracerSimple extends java.applet.Applet {
 
@@ -23,13 +22,14 @@ public class RayTracerSimple extends java.applet.Applet {
 
 
     public static void main(String args []) {
-        Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,0),90);
         int resX = 1024, resY = 1024;
+       // Camera cam = new Camera(new Vector3(-1.75,1,-2),new Vector3(0,0,1),45,resX,resY);
+        Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),45,resX,resY);
+
         int[] pixels = new int[resX * resY]; // put RGB values here
-        Material defaultMat = new Material(new Vector3(1.0, 0.1, 0),0);
+
         SphereObject[] spheres = new SphereObject[5];
         spheres[0] =  new SphereObject(0,0,0.5,0.15);
-
         spheres[1] =  new SphereObject(0,0.5,0.25,0.15);
         spheres[2] =  new SphereObject(0.5,0.5,2.5,0.15);
         spheres[3] =  new SphereObject(0.5,-0.5,2,0.15);
@@ -40,26 +40,28 @@ public class RayTracerSimple extends java.applet.Applet {
         sceneSimple.sceneObjects.add(sphere);*/
         for (SphereObject s: spheres
         ) {
+
+            Material defaultMat = new Material(new Vector3(1.0 , 0.5f*random(), 0*random()),0);
             s.material = defaultMat;
         }
 
         Light sceneLight = new Light(new Vector3(2,2,2.5), 10, Color.white);
 
-        float  scale = (float)tan(toRadians(45* 0.5));
-        float imageAspectRatio = resX / resY;
+
         float t = 0 ;
 
         for (int y  = 0; y < resY; ++y) {
             for (int x = 0; x < resX; ++x) {
-                float pixelPosX = (2 * (x + 0.5f) / (float)resX- 1) * imageAspectRatio*cam.scale;
+             /*   float pixelPosX = (2 * (x + 0.5f) / (float)resX- 1) * imageAspectRatio*cam.scale;
                 float pixelPosY = (1 - 2 * (y + 0.5f) / (float)resY)* cam.scale;
                 Vector3 rayDir = new Vector3(pixelPosX,pixelPosY,0).sub(cam.position);
-                rayDir.normalize();
+                System.out.println(rayDir.toString());
+                rayDir.normalize();*/
 
-                /*Vector3 pixelPos = cam.pixelCenterCoordinate(y,x);
+                Vector3 pixelPos = cam.pixelCenterCoordinate(x,y);
                 System.out.println(pixelPos.toString());
                 Vector3 rayDir = pixelPos.sub(cam.position);
-                rayDir.normalize();*/
+                rayDir.normalize();
                 Ray myRay = new Ray(cam.position, rayDir);
 
                 for (SphereObject s: spheres
@@ -71,18 +73,9 @@ public class RayTracerSimple extends java.applet.Applet {
 
                         int pixelColor = s.shade(rayDir,cam.position,sceneLight,myRay.t);
 
-                      //  int clampedIntesity =   clamp(intensity,-255,255);
 
-                        //System.out.println(255*((double)clampedIntesity/255));
-
-
-
-
-                         // Color lightColor = Color.white;
-                        //  Color materialColor = Color.red;
-                       //   Color blendedCol = brighter(materialColor,clampedIntesity);
                         pixels[y *resX+ x] =(s.shade) ? pixelColor  :0x0000ff;
-                        //pixels[y *resX+ x] =(s.shade) ? blendedCol.getRGB()  :blendedCol.getRGB();
+
                     }
 
                 }
