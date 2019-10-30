@@ -23,7 +23,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
     public static void main(String args []) {
 
-          Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),90 git ,resX,resY);
+          Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),90 ,resX,resY);
           //Camera cam = new Camera(new Vector3(1,0,-1),new Vector3(0,0,1),90,resX,resY);
         //Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),45,resX,resY);
 
