@@ -2,21 +2,23 @@ import static java.lang.Math.*;
 import static java.lang.Math.toRadians;
 
 public class Camera {
-    Vector3 position;
-    Vector3 focusPoint;
-    double FOV;
-    double scale;
-    Vector3 viewDir;
-    Vector3 rotatedUpVector;
-    Vector3 vVec;
-    Vector3 uVec;
-    double aspectRatio ;
+    private Vector3 position;
+    private Vector3 focusPoint;
+    private double FOV;
+    private double scale;
+    private Vector3 viewDir;
+    private Vector3 rotatedUpVector;
+    private Vector3 vVec;
+    private Vector3 uVec;
+    private double aspectRatio ;
 
-    double width,height;
 
-    double distFromPlane, planeHeight, planeWidth;
-    Vector3 planeCenter,planeBottomLeft,pixelCenterCoordinate;
-    double pixelWidth,pixelHeight;
+
+    private double width,height;
+
+    private double distFromPlane, planeHeight, planeWidth;
+    private Vector3 planeCenter,planeBottomLeft,pixelCenterCoordinate;
+    private double pixelWidth,pixelHeight;
 
 
     public Camera (Vector3 pos, Vector3 focus, double FOV, double width,double height){
@@ -28,28 +30,29 @@ public class Camera {
         this.width = width;
         this.height = height;
         this.aspectRatio = width/height;
-        this.viewDir = focusPoint.sub(position);
-        this.viewDir.normalize();
-        this.rotatedUpVector = new Vector3(sin(FOV), cos(FOV),0);
-        this.vVec = new Vector3(viewDir);
-        this.vVec.crossProduct(rotatedUpVector);
-        this.vVec.normalize();
-        this.uVec = new Vector3(vVec);
-        this.uVec.crossProduct(viewDir);
+        init();
 
-         distFromPlane = position.distance(focusPoint);
-         planeHeight =  2* distFromPlane* tan(FOV/2);
-         planeWidth = planeHeight * aspectRatio;
-         pixelCenterCoordinate = new Vector3();
-         planeCenter = new Vector3(viewDir);
+    }
 
-         planeCenter.mult(distFromPlane);
-         //planeBottomLeft = planeCenter.sub(new Vector3((planeWidth/2)/(planeWidth/2) , (planeHeight/2)/(planeHeight/2),0));
+    void init(){
+        viewDir = focusPoint.sub(position);
+        viewDir.normalize();
+        rotatedUpVector = new Vector3(sin(FOV), cos(FOV),0);
+        vVec = new Vector3(viewDir);
+        vVec.crossProduct(rotatedUpVector);
+        vVec.normalize();
+        uVec = new Vector3(vVec);
+        uVec.crossProduct(viewDir);
 
-         planeBottomLeft = planeCenter.sub(new Vector3((planeWidth/2) ,(planeHeight/2),0));
-         pixelHeight =  planeHeight/ height;
-         pixelWidth = planeWidth/ width;
-
+        distFromPlane = position.distance(focusPoint);
+        planeHeight =  2* distFromPlane* tan(FOV/2);
+        planeWidth = planeHeight * aspectRatio;
+        pixelCenterCoordinate = new Vector3();
+        planeCenter = new Vector3(viewDir);
+        planeCenter.mult(distFromPlane);
+        planeBottomLeft = planeCenter.sub(new Vector3((planeWidth/2) ,(planeHeight/2),0));
+        pixelHeight =  planeHeight/ height;
+        pixelWidth = planeWidth/ width;
     }
 
 
@@ -69,6 +72,46 @@ public class Camera {
      //  L + ((pixelWidth) * (x) * u) + ((pixelHeight) * (y) * v) ;
 
         return  pixelCenterCoordinate;
+    }
+
+    public Vector3 getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector3 position) {
+        this.position = position;
+    }
+
+    public Vector3 getFocusPoint() {
+        return focusPoint;
+    }
+
+    public void setFocusPoint(Vector3 focusPoint) {
+        this.focusPoint = focusPoint;
+    }
+
+    public double getFOV() {
+        return FOV;
+    }
+
+    public void setFOV(double FOV) {
+        this.FOV = FOV;
+    }
+
+    public double getAspectRatio() {
+        return aspectRatio;
+    }
+
+    public void setAspectRatio(double aspectRatio) {
+        this.aspectRatio = aspectRatio;
+    }
+
+    public double getScale() {
+        return scale;
+    }
+
+    public void setScale(double scale) {
+        this.scale = scale;
     }
 
 }

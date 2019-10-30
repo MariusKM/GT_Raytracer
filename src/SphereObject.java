@@ -1,10 +1,10 @@
 import java.awt.*;
 
 class SphereObject  {
-    Vector3 center;
-    double radius, radiusSq; // precompute radiusSq since we use it a lot
-    public boolean shade = true;
-    Material material;
+    private Vector3 center;
+    private double radius, radiusSq; // precompute radiusSq since we use it a lot
+    private boolean shade = true;
+    private Material material;
 
     public SphereObject(double x, double y, double z, double r) {
         center = new Vector3(x, y, z);
@@ -45,14 +45,14 @@ class SphereObject  {
         normal.normalize();
 
         // get light direction
-        lightDir = new Vector3 (light.position);
+        lightDir = new Vector3 (light.getPosition());
         lightDir.sub(lightDir,intersection);
         lightDir.normalize();
-        double lightDist = center.distance(light.position);
+        double lightDist = center.distance(light.getPosition());
         //System.out.println(lightDist);
 
         intensity = normal.dotProduct(lightDir)/Math.pow(lightDist+1,2);
-        intensity*= light.intensity;
+        intensity*= light.getIntensity();
         if(intensity < 0.0)
             intensity = 0.0;
 
@@ -65,11 +65,11 @@ class SphereObject  {
 
         int clampedIntensity = RayTracerSimple.clamp((int)intensity,0, 255);
 
-        Color lightColor = light.color;
+        Color lightColor = light.getColor();
 
         Color shadedLight = new Color((int)(lightColor.getRed()*((double)clampedIntensity/255)), (int)(lightColor.getGreen()*((double)clampedIntensity/255)), (int)(lightColor.getBlue()*((double)clampedIntensity/255)));
-
-        Color objectColor =  new Color((int)(shadedLight.getRed()*material.albedoColor.x),(int)(shadedLight.getGreen()*material.albedoColor.y),(int)(shadedLight.getBlue()*material.albedoColor.z) );
+        Vector3 albedo =  material.getAlbedoColor();
+        Color objectColor =  new Color((int)(shadedLight.getRed()*albedo.x),(int)(shadedLight.getGreen()*albedo.y),(int)(shadedLight.getBlue()*albedo.z) );
 
 
 
@@ -79,10 +79,43 @@ class SphereObject  {
         return(pixelCol);
     }
 
+    public Vector3 getCenter() {
+        return center;
+    }
 
+    public void setCenter(Vector3 center) {
+        this.center = center;
+    }
 
+    public double getRadius() {
+        return radius;
+    }
 
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
 
+    public double getRadiusSq() {
+        return radiusSq;
+    }
 
+    public void setRadiusSq(double radiusSq) {
+        this.radiusSq = radiusSq;
+    }
 
+    public boolean isShade() {
+        return shade;
+    }
+
+    public void setShade(boolean shade) {
+        this.shade = shade;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
 }

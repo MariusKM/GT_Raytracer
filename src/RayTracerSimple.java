@@ -1,11 +1,11 @@
 
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.ColorModel;
-import java.awt.image.ComponentColorModel;
-import java.awt.image.DirectColorModel;
-import java.awt.image.MemoryImageSource;
+import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Vector;   // use java vector as a list
 import java.lang.Thread;
 import java.awt.Color;
@@ -19,67 +19,71 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static SceneSimple sceneSimple;
 
-
+    static int resX = 1024, resY = 1024;
 
     public static void main(String args []) {
-        int resX = 1024, resY = 1024;
-          Camera cam = new Camera(new Vector3(-2,0,-1),new Vector3(0,0,1),45,resX,resY);
+
+          Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),90 git ,resX,resY);
           //Camera cam = new Camera(new Vector3(1,0,-1),new Vector3(0,0,1),90,resX,resY);
         //Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),45,resX,resY);
 
         int[] pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
+        Light sceneLight = new Light(new Vector3(0,2,2.5), 10, Color.white);
+
 
         SphereObject[] spheres = new SphereObject[5];
-        spheres[0] =  new SphereObject(0,0,0.5,0.15);
+        spheres[0] =  new SphereObject(0,0,0.5,0.25);
         spheres[1] =  new SphereObject(0,0.5,0.25,0.15);
-        spheres[2] =  new SphereObject(0.5,0.5,2.5,0.15);
-        spheres[3] =  new SphereObject(0.5,-0.5,2,0.15);
-        spheres[4] =  new SphereObject(2,2,5,0.05);
-        spheres[4].shade = false;
+        spheres[2] =  new SphereObject(0.5,0.5,2.5,0.35);
+        spheres[3] =  new SphereObject(0.5,-0.5,2,0.4);
+        spheres[4] =  new SphereObject(sceneLight.getPosition(),0.05);
+        spheres[4].setShade(false);
 
 
         for (SphereObject s: spheres) {
 
             Material defaultMat = new Material(new Vector3(1.0 , 0.5f*random(), 0*random()),0);
-            s.material = defaultMat;
-            sceneSimple.sceneObjects.add(s);
+            s.setMaterial(defaultMat);
+            sceneSimple.getSceneObjects().add(s);
 
         }
 
-        Light sceneLight = new Light(new Vector3(2,2,2.5), 10, Color.white);
 
 
         float t = 0 ;
 
         for (int y  = 0; y < resY; ++y) {
             for (int x = 0; x < resX; ++x) {
-             /*   float pixelPosX = (2 * (x + 0.5f) / (float)resX- 1) * imageAspectRatio*cam.scale;
-                float pixelPosY = (1 - 2 * (y + 0.5f) / (float)resY)* cam.scale;
-                Vector3 rayDir = new Vector3(pixelPosX,pixelPosY,0).sub(cam.position);
-                System.out.println(rayDir.toString());
-         */
+             double pixelPosX = (2 * (x + 0.5f) / (float)resX- 1) * cam.getAspectRatio()*cam.getScale();
+             double pixelPosY = (1 - 2 * (y + 0.5f) / (float)resY)* cam.getScale();
+             Vector3 rayDir = new Vector3(pixelPosX,pixelPosY,0).sub(cam.getPosition());
 
-                Vector3 pixelPos = cam.pixelCenterCoordinate(x,y);
-               // System.out.println(pixelPos.toString());
-                Vector3 rayDir = pixelPos.sub(cam.position);
 
+
+               /*    Vector3 pixelPos = cam.pixelCenterCoordinate(x,y);
+
+                Vector3 rayDir = pixelPos.sub(cam.getPosition());
+ */
 
                 rayDir.normalize();
 
-                Ray myRay = new Ray(cam.position, rayDir);
+                Ray myRay = new Ray(cam.getPosition(), rayDir);
 
-                for (SphereObject s: sceneSimple.sceneObjects) {
+                for (SphereObject s: sceneSimple.getSceneObjects()) {
                     boolean intersect = intetrsect(myRay,s);
 
-                    if (intersect && s == myRay.nearest){
+                    if (intersect && s == myRay.getNearest()){
 
-                        int pixelColor = s.shade(rayDir,cam.position,sceneLight,myRay.t);
+                        int pixelColor = s.shade(rayDir,cam.getPosition(),sceneLight,myRay.getT());
 
 
-                        pixels[y *resX+ x] =(s.shade) ? pixelColor  :0x0000ff;
+                        pixels[y *resY+ x] =(s.isShade()) ? pixelColor  :0x0000ff;
+                        break;
 
                     }
+
+                    pixels[y *resY+ x] =Color.darkGray.getRGB();
 
                 }
 
@@ -88,19 +92,32 @@ public class RayTracerSimple extends java.applet.Applet {
 
 
 
-
         Image image = Toolkit.getDefaultToolkit()
                 .createImage(new MemoryImageSource(resX, resY, new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, resX));
 
         JFrame frame = new JFrame();
         frame.add(new JLabel(new ImageIcon(image)));
+        frame.setBackground(Color.DARK_GRAY);
         frame.setResizable(false);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        savePic(image,"jpeg","render"+random()+".jpeg");
     }
 
+    static  void savePic(Image image, String type, String dst){
+        int width = resX;
+        int height = resY;
+        BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+        Graphics g = bi.getGraphics();
+        try {
+            g.drawImage(image, 0, 0, null);
+            ImageIO.write(bi, type, new File(dst));
+        } catch (IOException e) {
 
+            e.printStackTrace();
+        }
+    }
     static double[] solveQuadratic( double a,  double b,  double c )
     {
         double x0, x1;
@@ -141,17 +158,16 @@ public class RayTracerSimple extends java.applet.Applet {
    static boolean intetrsect( Ray Ray, SphereObject sphere)
     {
 
-
         /*
         a =1\\
         b=2D(Origin-C)
-        c=|O-C|^2-R^2     */
-        Vector3 L = Ray.Origin.sub(sphere.center); // Vector ray origin to sphere origin;
-        Vector3 dir = Ray.Direction;
+        c=|O-C|^2-R^2    */
+        Vector3 L = Ray.getOrigin().sub(sphere.getCenter());
+        Vector3 dir = Ray.getDirection();
         dir.normalize();
         double a = dir.dotProduct(dir);// directional Vector sq
-        double b = 2 * Ray.Direction.dotProduct(L);
-        double c = L.dotProduct(L) - sphere.radiusSq; //
+        double b = 2 * Ray.getDirection().dotProduct(L);
+        double c = L.dotProduct(L) - sphere.getRadiusSq();
         double[] quadraticResults = solveQuadratic(a, b, c);
 
         double  t0 =  quadraticResults[1];
@@ -177,11 +193,10 @@ public class RayTracerSimple extends java.applet.Applet {
                 return false; // both t0 and t1 are negative, keine schnittpunkte
             }
         }
-        if (t0< Ray.t){
-            Ray.t = t0;
-            Ray.nearest = sphere;
+        if (t0< Ray.getT()){
+            Ray.setT(t0);
+            Ray.setNearest(sphere);
         }
-
 
 
         return true;
@@ -191,30 +206,6 @@ public class RayTracerSimple extends java.applet.Applet {
         return Math.max(min, Math.min(max, val));
     }
 
-    public static Color brighter(Color col, double brightnessFac) {
-        int r = col.getRed();
-        int g = col.getGreen();
-        int b = col.getBlue();
-        int alpha = col.getAlpha();
-        brightnessFac /= 255;
-        /* From 2D group:
-         * 1. black.brighter() should return grey
-         * 2. applying brighter to blue will always return blue, brighter
-         * 3. non pure color (non zero rgb) will eventually return white
-         */
-        int i = (int)(1.0/(1.0-brightnessFac));
-        if ( r == 0 && g == 0 && b == 0) {
-            return new Color(i, i, i, alpha);
-        }
-        if ( r > 0 && r < i ) r = i;
-        if ( g > 0 && g < i ) g = i;
-        if ( b > 0 && b < i ) b = i;
-
-        return new Color(Math.min((int)(r/brightnessFac), 255),
-                Math.min((int)(g/brightnessFac), 255),
-                Math.min((int)(b/brightnessFac), 255),
-                alpha);
-    }
 
     static Color blend  (Color a, Color b){
 
