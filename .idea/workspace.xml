@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fccc9254-2209-4289-82b2-699c4f7b6947" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RayTracerSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerSimple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SceneSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SceneSimple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SphereObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SphereObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vector3.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,13 +25,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Camera.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="54" column="4" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
+            <state relative-caret-position="425">
+              <caret line="37" column="24" selection-start-line="37" selection-start-column="24" selection-end-line="37" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/RayTracer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="417" lean-forward="true" selection-start-line="417" selection-end-line="417" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#6414#6415#0" expanded="true" />
+                <element signature="e#6449#6450#0" expanded="true" />
+                <element signature="e#7392#7393#0" expanded="true" />
+                <element signature="e#7418#7419#0" expanded="true" />
+                <element signature="e#8606#8607#0" expanded="true" />
+                <element signature="e#8631#8632#0" expanded="true" />
+                <element signature="e#8665#8666#0" expanded="true" />
+                <element signature="e#8720#8721#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -44,10 +69,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
+            <state relative-caret-position="-16">
+              <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#5700#5701#0" expanded="true" />
                 <element signature="e#5756#5757#0" expanded="true" />
               </folding>
             </state>
@@ -55,13 +81,23 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk-13.0.1/lib/src.zip!/java.base/java/lang/Math.java">
+        <entry file="file://$PROJECT_DIR$/src/Ray.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="805" column="25" selection-start-line="805" selection-start-column="25" selection-end-line="805" selection-end-column="25" />
+            <state relative-caret-position="68">
+              <caret line="4" column="19" lean-forward="true" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SceneSimple.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
               <folding>
-                <element signature="e#33242#33243#0" expanded="true" />
-                <element signature="e#33327#33328#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#216#217#0" expanded="true" />
+                <element signature="e#263#264#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -70,8 +106,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SphereObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="38" column="38" lean-forward="true" selection-start-line="38" selection-start-column="38" selection-end-line="38" selection-end-column="38" />
+            <state relative-caret-position="102">
+              <caret line="6" column="22" lean-forward="true" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -79,17 +115,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Vector3.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="72" selection-start-line="72" selection-end-line="72" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk-13.0.1/lib/src.zip!/java.base/java/lang/Object.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="49" selection-start-line="49" selection-end-line="49" />
+            <state relative-caret-position="566">
+              <caret line="64" selection-start-line="64" selection-end-line="64" />
             </state>
           </provider>
         </entry>
@@ -130,6 +157,7 @@
       <find>back</find>
       <find>dis</find>
       <find>FACTOR</find>
+      <find>shadow</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -141,16 +169,16 @@
         <option value="$PROJECT_DIR$/src/RTWindow.java" />
         <option value="$PROJECT_DIR$/src/Target.java" />
         <option value="$PROJECT_DIR$/src/TargetObject.java" />
-        <option value="$PROJECT_DIR$/src/SceneSimple.java" />
-        <option value="$PROJECT_DIR$/src/Vector3.java" />
         <option value="$PROJECT_DIR$/src/Color.java" />
-        <option value="$PROJECT_DIR$/src/Ray.java" />
         <option value="$PROJECT_DIR$/src/RayTracer.java" />
         <option value="$PROJECT_DIR$/src/Light.java" />
         <option value="$PROJECT_DIR$/src/Material.java" />
-        <option value="$PROJECT_DIR$/src/SphereObject.java" />
-        <option value="$PROJECT_DIR$/src/RayTracerSimple.java" />
         <option value="$PROJECT_DIR$/src/Camera.java" />
+        <option value="$PROJECT_DIR$/src/SphereObject.java" />
+        <option value="$PROJECT_DIR$/src/Vector3.java" />
+        <option value="$PROJECT_DIR$/src/Ray.java" />
+        <option value="$PROJECT_DIR$/src/SceneSimple.java" />
+        <option value="$PROJECT_DIR$/src/RayTracerSimple.java" />
       </list>
     </option>
   </component>
@@ -164,7 +192,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -181,6 +208,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -254,10 +282,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.494133" visible="true" weight="0.13113007" />
-      <window_info id="Structure" order="1" sideWeight="0.505867" side_tool="true" visible="true" weight="0.13113007" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4928292" visible="true" weight="0.13219616" />
+      <window_info id="Structure" order="1" sideWeight="0.5071708" side_tool="true" visible="true" weight="0.13219616" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -265,7 +292,7 @@
       <window_info id="Favorites" order="6" sideWeight="0.505867" side_tool="true" weight="0.13113007" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.16901408" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.16901408" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.36619717" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -314,16 +341,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RTWindow.java" />
-    <entry file="file://$PROJECT_DIR$/src/SceneSimple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-          <folding>
-            <element signature="e#195#196#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-13.0.1/lib/src.zip!/java.base/java/lang/FdLibm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="609">
@@ -355,13 +372,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Ray.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="18" selection-start-column="18" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-13.0.1/lib/src.zip!/java.desktop/java/awt/image/DirectColorModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="841">
@@ -373,13 +383,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-13.0.1/lib/src.zip!/java.base/java/lang/Object.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="49" selection-start-line="49" selection-end-line="49" />
         </state>
       </provider>
     </entry>
@@ -399,42 +402,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RayTracer.java">
+    <entry file="jar://C:/Program Files/Java/jdk-13.0.1/lib/src.zip!/java.base/java/lang/Object.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="982">
-          <caret line="348" lean-forward="true" selection-start-line="348" selection-end-line="348" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6414#6415#0" expanded="true" />
-            <element signature="e#6449#6450#0" expanded="true" />
-            <element signature="e#7392#7393#0" expanded="true" />
-            <element signature="e#7418#7419#0" expanded="true" />
-            <element signature="e#8606#8607#0" expanded="true" />
-            <element signature="e#8631#8632#0" expanded="true" />
-            <element signature="e#8665#8666#0" expanded="true" />
-            <element signature="e#8720#8721#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Vector3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="72" selection-start-line="72" selection-end-line="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Light.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SphereObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="38" column="38" lean-forward="true" selection-start-line="38" selection-start-column="38" selection-end-line="38" selection-end-column="38" />
+        <state relative-caret-position="157">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
         </state>
       </provider>
     </entry>
@@ -449,12 +420,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
+    <entry file="file://$PROJECT_DIR$/src/Ray.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
+        <state relative-caret-position="68">
+          <caret line="4" column="19" lean-forward="true" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SceneSimple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#216#217#0" expanded="true" />
+            <element signature="e#263#264#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SphereObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="22" lean-forward="true" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Vector3.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="566">
+          <caret line="64" selection-start-line="64" selection-end-line="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Light.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-16">
+          <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5700#5701#0" expanded="true" />
             <element signature="e#5756#5757#0" expanded="true" />
           </folding>
         </state>
@@ -462,10 +474,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Camera.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="54" column="4" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
+        <state relative-caret-position="425">
+          <caret line="37" column="24" selection-start-line="37" selection-start-column="24" selection-end-line="37" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RayTracer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="417" lean-forward="true" selection-start-line="417" selection-end-line="417" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#6414#6415#0" expanded="true" />
+            <element signature="e#6449#6450#0" expanded="true" />
+            <element signature="e#7392#7393#0" expanded="true" />
+            <element signature="e#7418#7419#0" expanded="true" />
+            <element signature="e#8606#8607#0" expanded="true" />
+            <element signature="e#8631#8632#0" expanded="true" />
+            <element signature="e#8665#8666#0" expanded="true" />
+            <element signature="e#8720#8721#0" expanded="true" />
           </folding>
         </state>
       </provider>

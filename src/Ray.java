@@ -4,12 +4,14 @@ public class Ray {
     Vector3 Direction;
     Vector3 hitPos;
     public double t;
+    SphereObject nearest;
 
     public Ray (Vector3 or, Vector3 dir){
         this.Origin = or;
         this.Direction = dir;
         hitPos = new Vector3(0,0,0);
-
+        t = 10000;
+        nearest = null;
 
     }
 }

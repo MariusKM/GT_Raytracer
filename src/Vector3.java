@@ -46,7 +46,7 @@ public class Vector3{
         return((x*v.x + y*v.y + z*v.z));
     }
 
-    // this = this crosses v
+
     public void crossProduct(Vector3 v) {
         double tmpx = y*v.z - z*v.y,
                 tmpy = z*v.x - x*v.z,
@@ -62,13 +62,13 @@ public class Vector3{
         x=x+v.x; y=y+v.y; z=z+v.z;
     }
 
-    // subtracts v from this vector
+
     public void sub(Vector3 v, Vector3 z) {
         v.x = v.x - z.x;
         v.y = v.y - z.y;
         v.z = v.z - z.z;
     }
-    // subtracts v from this vector
+
     public Vector3 sub(Vector3 v) {
         return  new Vector3(x - v.x,y - v.y,z - v.z);
 

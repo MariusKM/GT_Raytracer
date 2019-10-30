@@ -4,18 +4,22 @@ import static java.lang.Math.toRadians;
 public class Camera {
     Vector3 position;
     Vector3 focusPoint;
-    float FOV;
-    float scale;
+    double FOV;
+    double scale;
     Vector3 viewDir;
     Vector3 rotatedUpVector;
     Vector3 vVec;
     Vector3 uVec;
     double aspectRatio ;
 
-    float width,height;
+    double width,height;
+
+    double distFromPlane, planeHeight, planeWidth;
+    Vector3 planeCenter,planeBottomLeft,pixelCenterCoordinate;
+    double pixelWidth,pixelHeight;
 
 
-    public Camera (Vector3 pos, Vector3 focus, float FOV, float width,float height){
+    public Camera (Vector3 pos, Vector3 focus, double FOV, double width,double height){
 
         this.position = pos;
         this.focusPoint = focus;
@@ -33,35 +37,32 @@ public class Camera {
         this.uVec = new Vector3(vVec);
         this.uVec.crossProduct(viewDir);
 
+         distFromPlane = position.distance(focusPoint);
+         planeHeight =  2* distFromPlane* tan(FOV/2);
+         planeWidth = planeHeight * aspectRatio;
+         pixelCenterCoordinate = new Vector3();
+         planeCenter = new Vector3(viewDir);
+
+         planeCenter.mult(distFromPlane);
+         //planeBottomLeft = planeCenter.sub(new Vector3((planeWidth/2)/(planeWidth/2) , (planeHeight/2)/(planeHeight/2),0));
+
+         planeBottomLeft = planeCenter.sub(new Vector3((planeWidth/2) ,(planeHeight/2),0));
+         pixelHeight =  planeHeight/ height;
+         pixelWidth = planeWidth/ width;
+
     }
 
-    public Vector3 rayDirection(Vector3 pixelCenterCoordinate){
-
-        Vector3 rayDirection = pixelCenterCoordinate.sub(position) ;
-        rayDirection.normalize();
-
-        return  rayDirection;
-    }
 
     public Vector3 pixelCenterCoordinate (int x, int y){
-        double dist = position.distance(focusPoint);
-        double H  =  2* dist* tan(FOV/2);
-        Double W = H * aspectRatio;
-        Vector3 pixelCenterCoordinate = new Vector3();
-        Vector3 C = new Vector3(viewDir);
 
-        C.mult(dist);
-        Vector3 L = C.sub(new Vector3((width/2)/(width/2) , (height/2)/(height/2),0));
 
-        double PixelHeight =  H/ height;
-        double PixelWidth = W/ width;
         Vector3 uVec1 = new Vector3(uVec);
-        uVec1.mult(PixelWidth* x);
+        uVec1.mult(pixelWidth* x);
         Vector3 vVec1 = new Vector3(vVec);
-        vVec1.mult(PixelHeight* y);
+        vVec1.mult(pixelHeight* y);
 
 
-        pixelCenterCoordinate = new Vector3(L);
+        pixelCenterCoordinate = new Vector3(planeBottomLeft);
         pixelCenterCoordinate.add(uVec1);
         pixelCenterCoordinate.add(vVec1);
 

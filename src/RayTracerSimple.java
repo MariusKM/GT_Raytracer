@@ -23,10 +23,12 @@ public class RayTracerSimple extends java.applet.Applet {
 
     public static void main(String args []) {
         int resX = 1024, resY = 1024;
-       // Camera cam = new Camera(new Vector3(-1.75,1,-2),new Vector3(0,0,1),45,resX,resY);
-        Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),45,resX,resY);
+          Camera cam = new Camera(new Vector3(-2,0,-1),new Vector3(0,0,1),45,resX,resY);
+          //Camera cam = new Camera(new Vector3(1,0,-1),new Vector3(0,0,1),90,resX,resY);
+        //Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),45,resX,resY);
 
         int[] pixels = new int[resX * resY]; // put RGB values here
+        sceneSimple = new SceneSimple();
 
         SphereObject[] spheres = new SphereObject[5];
         spheres[0] =  new SphereObject(0,0,0.5,0.15);
@@ -35,14 +37,14 @@ public class RayTracerSimple extends java.applet.Applet {
         spheres[3] =  new SphereObject(0.5,-0.5,2,0.15);
         spheres[4] =  new SphereObject(2,2,5,0.05);
         spheres[4].shade = false;
-        /*sceneSimple = new SceneSimple();
-        sceneSimple.cameraPos = new Vector3(0,0,0);
-        sceneSimple.sceneObjects.add(sphere);*/
-        for (SphereObject s: spheres
-        ) {
+
+
+        for (SphereObject s: spheres) {
 
             Material defaultMat = new Material(new Vector3(1.0 , 0.5f*random(), 0*random()),0);
             s.material = defaultMat;
+            sceneSimple.sceneObjects.add(s);
+
         }
 
         Light sceneLight = new Light(new Vector3(2,2,2.5), 10, Color.white);
@@ -56,20 +58,21 @@ public class RayTracerSimple extends java.applet.Applet {
                 float pixelPosY = (1 - 2 * (y + 0.5f) / (float)resY)* cam.scale;
                 Vector3 rayDir = new Vector3(pixelPosX,pixelPosY,0).sub(cam.position);
                 System.out.println(rayDir.toString());
-                rayDir.normalize();*/
+         */
 
                 Vector3 pixelPos = cam.pixelCenterCoordinate(x,y);
-                System.out.println(pixelPos.toString());
+               // System.out.println(pixelPos.toString());
                 Vector3 rayDir = pixelPos.sub(cam.position);
+
+
                 rayDir.normalize();
+
                 Ray myRay = new Ray(cam.position, rayDir);
 
-                for (SphereObject s: spheres
-                     ) {
+                for (SphereObject s: sceneSimple.sceneObjects) {
                     boolean intersect = intetrsect(myRay,s);
 
-
-                    if (intersect){
+                    if (intersect && s == myRay.nearest){
 
                         int pixelColor = s.shade(rayDir,cam.position,sceneLight,myRay.t);
 
@@ -97,14 +100,6 @@ public class RayTracerSimple extends java.applet.Applet {
         frame.setVisible(true);
     }
 
-    static boolean test(Ray Ray){
-
-
-        Ray.hitPos = new Vector3(100,100,100);
-        Ray.t = 1000;
-        return false;
-    }
-
 
     static double[] solveQuadratic( double a,  double b,  double c )
     {
@@ -117,11 +112,11 @@ public class RayTracerSimple extends java.applet.Applet {
             return results;
         }
         else if (discr == 0){
-            // wenn dieser gleich Null ist, dann gibt es keine Schnittpunkte
+            // wenn dieser gleich Null ist, dann gibt es einen Schnittpunkt (Tangente)
             x0 = x1 = - 0.5 * b / a;
         }
         else {
-            // ergebnis für 2 Schnittpunkte
+            // Érgebnis für 2 Schnittpunkte
             double q = (b > 0) ? -0.5 *  (b + sqrt(discr)) : -0.5 * (b - sqrt(discr));
             x0 = q / a;
             x1 = c / q;
@@ -135,7 +130,7 @@ public class RayTracerSimple extends java.applet.Applet {
             x1 = tempx0;
 
         };
-        results[0] = 1;
+        results[0] = 1; // identfikator
         results[1] = x0;
         results[2] = x1;
 
@@ -152,10 +147,9 @@ public class RayTracerSimple extends java.applet.Applet {
         b=2D(Origin-C)
         c=|O-C|^2-R^2     */
         Vector3 L = Ray.Origin.sub(sphere.center); // Vector ray origin to sphere origin;
-        //System.out.println(L.toString());
         Vector3 dir = Ray.Direction;
         dir.normalize();
-        double a = dir.dotProduct(dir);// ray.Direction.dotProduct(ray.Direction); // directional Vector sq
+        double a = dir.dotProduct(dir);// directional Vector sq
         double b = 2 * Ray.Direction.dotProduct(L);
         double c = L.dotProduct(L) - sphere.radiusSq; //
         double[] quadraticResults = solveQuadratic(a, b, c);
@@ -178,13 +172,16 @@ public class RayTracerSimple extends java.applet.Applet {
 
 
         if (t0 < 0) {
-            t0 = t1; // if t0 is negative its behind, so  let's use t1 instead
+            t0 = t1; // if negative, INtersection is behind us
             if (t0 < 0) {
-                return false; // both t0 and t1 are negative, no intersection
+                return false; // both t0 and t1 are negative, keine schnittpunkte
             }
         }
+        if (t0< Ray.t){
+            Ray.t = t0;
+            Ray.nearest = sphere;
+        }
 
-        Ray.t = t0;
 
 
         return true;
