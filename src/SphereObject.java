@@ -3,6 +3,7 @@ import java.awt.*;
 class SphereObject extends SceneObject {
     private Vector3 center;
     private double radius, radiusSq; // precompute radiusSq since we use it a lot
+    private float speed = 0.01f;
 // TODO : Clean up shading
 
 
@@ -168,6 +169,14 @@ class SphereObject extends SceneObject {
 
     public void setRadiusSq(double radiusSq) {
         this.radiusSq = radiusSq;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 }
 

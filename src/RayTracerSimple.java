@@ -21,47 +21,109 @@ public class RayTracerSimple extends java.applet.Applet {
     static int resX = 1024, resY = 1024;
     static boolean usePerspective = false;
     static int numSpheres = 30;
+    static SceneObject[] sceneObjects;
+    static int[] pixels;
+    static Camera cam;
+    static Light sceneLight;
+    private static boolean exit;
+    static int delta_timeMS;
+    static float delta_time;
+    static long last_time;
+
+    public static boolean isExit() {
+        return exit;
+    }
+
+    public static void setExit(boolean exit) {
+        RayTracerSimple.exit = exit;
+    }
+
+    static JFrame frame = new JFrame();
+    static  JLabel graphics = new JLabel();
 
     public static void main(String args[]) {
 
-        Camera cam = new Camera(new Vector3(0, 0, -1), new Vector3(0, 0, 1), 90, resX, resY);
-        //Camera cam = new Camera(new Vector3(1,0,-1),new Vector3(0,0,1),90,resX,resY);
-        //Camera cam = new Camera(new Vector3(0,0,-1),new Vector3(0,0,1),45,resX,resY);
+        initScene();
+        last_time = System.nanoTime();
+        do{
+            handleTime();
+            handleAnimation();
+            paintPix();
+            drawGUI();
+        }
+        while(!exit);
 
-        int[] pixels = new int[resX * resY]; // put RGB values here
-        sceneSimple = new SceneSimple();
-        Light sceneLight = new Light(new Vector3(0, 1.25, 0.25), 30, Color.white);
+        String path = "C:/Users/mariu/Workspaces/uni/GT Ray Tracing";
+        // savePic(image, "jpeg", path + random() + ".jpeg");
+    }
 
-
-        SceneObject[] spheres = createSpheres(numSpheres,0.15f,0.01f);
-       /* spheres[0] = new SphereObject(-0.5, 0, 0.5, 0.25);
-        spheres[1] = new SphereObject(0.75, 0.75, 0.25, 0.15);
-        spheres[2] = new SphereObject(0.5, 0.5, 1, 0.35);
-        spheres[3] = new SphereObject(0, -0.5, 1, 0.4);*/
-
-        SceneObject lightObject= new SphereObject(sceneLight.getPosition(), 0.05);
-        lightObject.setShade(false);
-        lightObject.setGizmo(true);
-        sceneSimple.getSceneObjects().add(lightObject);
-        lightObject.setScene(sceneSimple);
-
-        PlaneObject groundPlane = new PlaneObject(new Vector3(0, -2, 0), new Vector3(0, 1, 0));
-        Material groundMat = new Material(new Vector3(0.7, 0.35, 0.35), 0);
-        groundPlane.setMaterial(groundMat);
-        sceneSimple.getSceneObjects().add(groundPlane);
-        groundPlane.setScene(sceneSimple);
+    static void handleAnimation(){
+        float upperLimit = 1.5f;
+        float lowerLimit = 0;
 
 
-        for (SceneObject s : spheres) {
+        for (SceneObject s: sceneSimple.getSceneObjects()
+             ) {
 
-            Material defaultMat = new Material(new Vector3(1.0, 0.5f * random(), 0 * random()), 0);
-            s.setMaterial(defaultMat);
-    ;       sceneSimple.getSceneObjects().add(s);
-            s.setScene(sceneSimple);
+            if (s instanceof SphereObject && !s.isGizmo()){
+
+
+                 Vector3 newPos = new Vector3(((SphereObject) s).getCenter());
+
+                 if (newPos.y > upperLimit){
+
+                     ((SphereObject) s).setSpeed(-0.01f);
+                 }
+
+                 if (newPos.y < lowerLimit){
+
+                     ((SphereObject) s).setSpeed(0.01f);
+                 }
+
+                 newPos.add(new Vector3(0,((SphereObject) s).getSpeed()*delta_time,0));
+                ((SphereObject) s).setCenter(newPos);
+
+            }
+
         }
 
+
+
+    }
+
+
+    static void handleTime(){
+
+        long time = System.nanoTime();
+        delta_timeMS = (int) ((time - last_time) / 1000000);
+        delta_time = ((float)delta_timeMS)/1000;
+        last_time = time;
+        System.out.println("last frame took :: "+delta_time+"s");
+    }
+
+    static void drawGUI() {
+
+         if (exit){
+             return;
+         }
+        Image image = Toolkit.getDefaultToolkit()
+                .createImage(new MemoryImageSource(resX, resY, new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, resX));
+
+
+         //JLabel graphics = new JLabel(new ImageIcon(image));
+         graphics.setIcon(new ImageIcon(image));
+         frame.add(graphics);
+
+        frame.setResizable(false);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+    static void paintPix() {
+
         float t = 0;
-        int insideCounter = 0 , outsideCounter = 0 ;
+        int insideCounter = 0, outsideCounter = 0;
         for (int y = 0; y < resY; ++y) {
             for (int x = 0; x < resX; ++x) {
                 Vector3 rayDir;
@@ -96,49 +158,66 @@ public class RayTracerSimple extends java.applet.Applet {
                     //outsideCounter++;
 
                     intersectObj = temp;
-                    int pixelColor = (intersectObj.isShade()) ?  intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT()) : Color.WHITE.getRGB();
+                    int pixelColor = (intersectObj.isShade()) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT()) : Color.WHITE.getRGB();
 
                     pixels[y * resY + x] = pixelColor;
 
-                }else{
+                } else {
                     pixels[y * resY + x] = Color.darkGray.getRGB();
                 }
 
 
-
             }
         }
-     //   System.out.println("INTERSECT INSIDE:: "+insideCounter+ " || "+ outsideCounter );
-
-        Image image = Toolkit.getDefaultToolkit()
-                .createImage(new MemoryImageSource(resX, resY, new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, resX));
-
-        JFrame frame = new JFrame();
-        frame.add(new JLabel(new ImageIcon(image)));
-        frame.setBackground(Color.DARK_GRAY);
-        frame.setResizable(false);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        String path = "C:/Users/mariu/Workspaces/uni/GT Ray Tracing";
-        savePic(image, "jpeg", path + random() + ".jpeg");
     }
 
-    static SceneObject[] createSpheres(int numSpheres, float maxRad, float minRad){
+    static void initScene() {
+        cam = new Camera(new Vector3(0, 0, -1), new Vector3(0, 0, 1), 90, resX, resY);
+
+        KeyHandler keyHandler = new KeyHandler();
+        frame.addKeyListener(keyHandler);
+        pixels = new int[resX * resY]; // put RGB values here
+        sceneSimple = new SceneSimple();
+        sceneLight = new Light(new Vector3(0, 1.25, 0.25), 30, Color.white);
+
+        sceneObjects = createSpheres(numSpheres, 0.15f, 0.01f);
+
+        SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05);
+        lightObject.setShade(false);
+        lightObject.setGizmo(true);
+        sceneSimple.getSceneObjects().add(lightObject);
+        lightObject.setScene(sceneSimple);
+
+        PlaneObject groundPlane = new PlaneObject(new Vector3(0, -2, 0), new Vector3(0, 1, 0));
+        Material groundMat = new Material(new Vector3(0.7, 0.35, 0.35), 0);
+        groundPlane.setMaterial(groundMat);
+        sceneSimple.getSceneObjects().add(groundPlane);
+        groundPlane.setScene(sceneSimple);
+
+        for (SceneObject s : sceneObjects) {
+
+            Material defaultMat = new Material(new Vector3(1.0, 0.5f * random(), 0 * random()), 0);
+            s.setMaterial(defaultMat);
+            sceneSimple.getSceneObjects().add(s);
+            s.setScene(sceneSimple);
+        }
+    }
+
+    static SceneObject[] createSpheres(int numSpheres, float maxRad, float minRad) {
         SceneObject[] spheres = new SceneObject[numSpheres];
         Vector3 spherePos;
         double sphereRadius;
-        for (int i = 0; i< numSpheres; i++){
-            spherePos = randomVecInRange(-0.5,1,0,1,0,2);
-            sphereRadius = random() * maxRad +minRad;
-            spheres[i] = new SphereObject(spherePos,sphereRadius);
+        for (int i = 0; i < numSpheres; i++) {
+            spherePos = randomVecInRange(-0.5, 1, 0, 1, 0, 2);
+            sphereRadius = random() * maxRad + minRad;
+            spheres[i] = new SphereObject(spherePos, sphereRadius);
         }
         return spheres;
     }
 
-    static Vector3 randomVecInRange(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax){
+    static Vector3 randomVecInRange(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax) {
 
-        Vector3 randomVec = new Vector3(random()*xmax+xmin,random()*ymax+ymin,random()*zmax+zmin);
+        Vector3 randomVec = new Vector3(random() * xmax + xmin, random() * ymax + ymin, random() * zmax + zmin);
         return randomVec;
     }
 
@@ -209,6 +288,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
 
     }
+
 }
 
 
