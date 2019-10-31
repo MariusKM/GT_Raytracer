@@ -4,19 +4,19 @@ import java.util.Vector;
 
 public class SceneSimple{
 
-    private ArrayList<SphereObject> sceneObjects;
+    private ArrayList<SceneObject> sceneObjects;
     private Light sceneLight;
     private Camera sceneCam;
 
     public SceneSimple(){
-        sceneObjects = new ArrayList<SphereObject>();
+        sceneObjects = new ArrayList<SceneObject>();
     }
-    
-    public ArrayList<SphereObject> getSceneObjects() {
+
+    public ArrayList<SceneObject> getSceneObjects() {
         return sceneObjects;
     }
 
-    public void setSceneObjects(ArrayList<SphereObject> sceneObjects) {
+    public void setSceneObjects(ArrayList<SceneObject> sceneObjects) {
         this.sceneObjects = sceneObjects;
     }
 

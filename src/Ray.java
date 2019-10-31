@@ -3,7 +3,7 @@ public class Ray {
     private Vector3 Origin;
     private Vector3 Direction;
     private double t;
-    private SphereObject nearest;
+    private SceneObject nearest;
 
     public Vector3 getOrigin() {
         return Origin;
@@ -31,11 +31,11 @@ public class Ray {
         this.t = t;
     }
 
-    public SphereObject getNearest() {
+    public SceneObject getNearest() {
         return nearest;
     }
 
-    public void setNearest(SphereObject nearest) {
+    public void setNearest(SceneObject nearest) {
         this.nearest = nearest;
     }
 
