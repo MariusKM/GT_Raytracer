@@ -3,8 +3,6 @@ import java.awt.*;
 public class PlaneObject extends SceneObject {
     private Vector3 pointOnPlane;
     private Vector3 planeNormal;
-    private boolean shade = true;
-    private Material material;
 
 
     public PlaneObject(Vector3 pointOnPlane, Vector3 planeNormal) {
@@ -22,7 +20,7 @@ public class PlaneObject extends SceneObject {
         Vector3 vecToOrigin = this.pointOnPlane.sub(Ray.getOrigin());
         double t = vecToOrigin.dotProduct(normal) / zaehler;
         if (t >= 0) {
-            if (t< Ray.getT()){
+            if (t < Ray.getT()) {
                 Ray.setT(t);
                 Ray.setNearest(plane);
             }
@@ -56,8 +54,17 @@ public class PlaneObject extends SceneObject {
         double lightDist = pointOnPlane.distance(light.getPosition());
         //System.out.println(lightDist);
 
-        intensity = normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2);
-        intensity *= light.getIntensity();
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = shadowCheck(this.getScene(), shadowRay);
+        if (shadow) {
+            intensity = 0;
+            return Color.black.getRGB();
+        } else {
+            intensity = normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2);
+            intensity *= light.getIntensity();
+        }
+
+
         if (intensity < 0.0)
             intensity = 0.0;
 
@@ -65,15 +72,15 @@ public class PlaneObject extends SceneObject {
             intensity = 1.0;
 
 
-        intensity = intensity * 255;
 
 
-        int clampedIntensity = RayTracerSimple.clamp((int) intensity, 0, 255);
+
+
 
         Color lightColor = light.getColor();
 
-        Color shadedLight = new Color((int) (lightColor.getRed() * ((double) clampedIntensity / 255)), (int) (lightColor.getGreen() * ((double) clampedIntensity / 255)), (int) (lightColor.getBlue() * ((double) clampedIntensity / 255)));
-        Vector3 albedo = material.getAlbedoColor();
+        Color shadedLight = new Color((int) (lightColor.getRed() * ((double) intensity )), (int) (lightColor.getGreen() * ((double) intensity)), (int) (lightColor.getBlue() * ((double) intensity)));
+        Vector3 albedo = this.getMaterial().getAlbedoColor();
         Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
 
 
@@ -82,6 +89,21 @@ public class PlaneObject extends SceneObject {
 
         return (pixelCol);
     }
+
+    public boolean shadowCheck(SceneSimple scene, Ray myRay) {
+        for (SceneObject s : scene.getSceneObjects()) {
+            if (!s.equals(this) && !s.isGizmo()) {
+                boolean intersect = s.intersect(myRay, s);
+
+                if (intersect) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 
     public Vector3 getPointOnPlane() {
         return pointOnPlane;
@@ -99,19 +121,5 @@ public class PlaneObject extends SceneObject {
         this.planeNormal = planeNormal;
     }
 
-    public boolean isShade() {
-        return shade;
-    }
 
-    public void setShade(boolean shade) {
-        this.shade = shade;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
 }

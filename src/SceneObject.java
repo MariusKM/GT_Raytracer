@@ -2,9 +2,15 @@ abstract class SceneObject {
 
     private boolean shade = true;
     private Material material;
+    private SceneSimple scene;
+    private boolean isGizmo = false;
+
 
     public abstract boolean intersect(Ray ray, SceneObject object);
-    public abstract int shadeDiffuse(Vector3 rayDir , Vector3 sceneOrigin, Light light, double t);
+
+    public abstract int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, double t);
+
+    public abstract boolean shadowCheck( SceneSimple scene, Ray myRay);
 
     public boolean isShade() {
         return shade;
@@ -20,5 +26,21 @@ abstract class SceneObject {
 
     public void setMaterial(Material material) {
         this.material = material;
+    }
+
+    public SceneSimple getScene() {
+        return scene;
+    }
+
+    public void setScene(SceneSimple scene) {
+        this.scene = scene;
+    }
+
+    public boolean isGizmo() {
+        return isGizmo;
+    }
+
+    public void setGizmo(boolean gizmo) {
+        isGizmo = gizmo;
     }
 }
