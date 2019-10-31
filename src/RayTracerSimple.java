@@ -20,7 +20,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static int resX = 1024, resY = 1024;
     static boolean usePerspective = false;
-    static int numSpheres = 30;
+    static int numSpheres = 20;
     static SceneObject[] sceneObjects;
     static int[] pixels;
     static Camera cam;
@@ -29,6 +29,7 @@ public class RayTracerSimple extends java.applet.Applet {
     static int delta_timeMS;
     static float delta_time;
     static long last_time;
+    static Color BG_Color = new Color(0.075f,0.075f,0.075f);
 
     public static boolean isExit() {
         return exit;
@@ -59,8 +60,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static void handleAnimation(){
         float upperLimit = 1.5f;
-        float lowerLimit = 0;
-
+        float lowerLimit = -1f;
 
         for (SceneObject s: sceneSimple.getSceneObjects()
              ) {
@@ -70,24 +70,18 @@ public class RayTracerSimple extends java.applet.Applet {
 
                  Vector3 newPos = new Vector3(((SphereObject) s).getCenter());
 
-                 if (newPos.y > upperLimit){
+                 if (newPos.y > upperLimit || newPos.y < lowerLimit){
 
-                     ((SphereObject) s).setSpeed(-0.01f);
+                     ((SphereObject) s).setSpeed(((SphereObject) s).getSpeed() *-1);
                  }
 
-                 if (newPos.y < lowerLimit){
 
-                     ((SphereObject) s).setSpeed(0.01f);
-                 }
 
                  newPos.add(new Vector3(0,((SphereObject) s).getSpeed()*delta_time,0));
                 ((SphereObject) s).setCenter(newPos);
 
             }
-
         }
-
-
 
     }
 
@@ -98,7 +92,7 @@ public class RayTracerSimple extends java.applet.Applet {
         delta_timeMS = (int) ((time - last_time) / 1000000);
         delta_time = ((float)delta_timeMS)/1000;
         last_time = time;
-        System.out.println("last frame took :: "+delta_time+"s");
+        //System.out.println("last frame took :: "+delta_time+"s");
     }
 
     static void drawGUI() {
@@ -132,8 +126,8 @@ public class RayTracerSimple extends java.applet.Applet {
                     rayDir = pixelPos.sub(cam.getPosition());
 
                 } else {
-                    double pixelPosX = (2 * (x + 0.5f) / (float) resX - 1) * cam.getAspectRatio() * cam.getScale();
-                    double pixelPosY = (1 - 2 * (y + 0.5f) / (float) resY) * cam.getScale();
+                    float pixelPosX = (2 * (x + 0.5f) / (float) resX - 1) * cam.getAspectRatio() * cam.getScale();
+                    float pixelPosY = (1 - 2 * (y + 0.5f) / (float) resY) * cam.getScale();
                     rayDir = new Vector3(pixelPosX, pixelPosY, 0).sub(cam.getPosition());
                 }
 
@@ -163,7 +157,7 @@ public class RayTracerSimple extends java.applet.Applet {
                     pixels[y * resY + x] = pixelColor;
 
                 } else {
-                    pixels[y * resY + x] = Color.darkGray.getRGB();
+                    pixels[y * resY + x] = BG_Color.getRGB();
                 }
 
 
@@ -178,25 +172,25 @@ public class RayTracerSimple extends java.applet.Applet {
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0, 1.25, 0.25), 30, Color.white);
+        sceneLight = new Light(new Vector3(0f, 1.25f, 0.25f), 20, Color.white);
 
         sceneObjects = createSpheres(numSpheres, 0.15f, 0.01f);
 
-        SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05);
+        SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05f);
         lightObject.setShade(false);
         lightObject.setGizmo(true);
         sceneSimple.getSceneObjects().add(lightObject);
         lightObject.setScene(sceneSimple);
 
         PlaneObject groundPlane = new PlaneObject(new Vector3(0, -2, 0), new Vector3(0, 1, 0));
-        Material groundMat = new Material(new Vector3(0.7, 0.35, 0.35), 0);
+        Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0);
         groundPlane.setMaterial(groundMat);
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
 
         for (SceneObject s : sceneObjects) {
 
-            Material defaultMat = new Material(new Vector3(1.0, 0.5f * random(), 0 * random()), 0);
+            Material defaultMat = new Material(new Vector3((float )(random()*0.5f +0.5f), (float )(0.5f * random()), (float) (0.2 * random())), 0);
             s.setMaterial(defaultMat);
             sceneSimple.getSceneObjects().add(s);
             s.setScene(sceneSimple);
@@ -206,10 +200,10 @@ public class RayTracerSimple extends java.applet.Applet {
     static SceneObject[] createSpheres(int numSpheres, float maxRad, float minRad) {
         SceneObject[] spheres = new SceneObject[numSpheres];
         Vector3 spherePos;
-        double sphereRadius;
+        float sphereRadius;
         for (int i = 0; i < numSpheres; i++) {
-            spherePos = randomVecInRange(-0.5, 1, 0, 1, 0, 2);
-            sphereRadius = random() * maxRad + minRad;
+            spherePos = randomVecInRange(-0.5, 1, -0.25, 1, 0, 1);
+            sphereRadius = (float)(random() * maxRad + minRad);
             spheres[i] = new SphereObject(spherePos, sphereRadius);
         }
         return spheres;
@@ -217,7 +211,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static Vector3 randomVecInRange(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax) {
 
-        Vector3 randomVec = new Vector3(random() * xmax + xmin, random() * ymax + ymin, random() * zmax + zmin);
+        Vector3 randomVec = new Vector3((float)(random() * xmax + xmin), (float)(random() * ymax + ymin), (float)(random() * zmax + zmin));
         return randomVec;
     }
 
@@ -235,28 +229,28 @@ public class RayTracerSimple extends java.applet.Applet {
         }
     }
 
-    static double[] solveQuadratic(double a, double b, double c) {
-        double x0, x1;
-        double[] results = new double[3];
-        double discr = b * b - 4 * a * c; // Diskriminanter Term in der PQ formel, Term unter der Wurzel)
+    static float[] solveQuadratic(double a, double b, double c) {
+        float x0, x1;
+        float[] results = new float[3];
+        float discr =(float)( b * b - 4 * a * c); // Diskriminanter Term in der PQ formel, Term unter der Wurzel)
         if (discr < 0) {
             // wenn dieser kleiner Null ist, dann gibt es keine Schnittpunkte
             results[0] = -1;
             return results;
         } else if (discr == 0) {
             // wenn dieser gleich Null ist, dann gibt es einen Schnittpunkt (Tangente)
-            x0 = x1 = -0.5 * b / a;
+            x0 = x1 = (float)(-0.5 * b / a);
         } else {
             // Ergebnis für 2 Schnittpunkte
-            double q = (b > 0) ? -0.5 * (b + sqrt(discr)) : -0.5 * (b - sqrt(discr));
-            x0 = q / a;
-            x1 = c / q;
+            float q = (float)((b > 0) ? -0.5 * (b + sqrt(discr)) : -0.5 * (b - sqrt(discr)));
+            x0 = (float)(q / a);
+            x1 = (float)(c / q);
 
         }
         if (x0 > x1) {
             // siehe zu, dass x0 kleiner als x1
-            double tempx0 = x0;
-            double tempx1 = x1;
+            float tempx0 = x0;
+            float tempx1 = x1;
             x0 = tempx1;
             x1 = tempx0;
 

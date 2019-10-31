@@ -2,12 +2,12 @@ import java.awt.*;
 
 class SphereObject extends SceneObject {
     private Vector3 center;
-    private double radius, radiusSq; // precompute radiusSq since we use it a lot
-    private float speed = 0.01f;
+    private float radius, radiusSq; // precompute radiusSq since we use it a lot
+    private float speed = 0.05f;
 // TODO : Clean up shading
 
 
-    public SphereObject(double x, double y, double z, double r) {
+    public SphereObject(float x, float y, float z, float r) {
         center = new Vector3(x, y, z);
         radius = r;
         radiusSq = r * r;
@@ -15,7 +15,7 @@ class SphereObject extends SceneObject {
 
     }
 
-    public SphereObject(Vector3 v, double r) {
+    public SphereObject(Vector3 v, float r) {
         center = new Vector3(v.x, v.y, v.z);
         radius = r;
         radiusSq = r * r;
@@ -29,10 +29,10 @@ class SphereObject extends SceneObject {
 
     }
 
-    public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, double t) {
+    public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
 
         Vector3 intersection, normal, lightDir;
-        double intensity;
+        float intensity;
 
 
         // berechne intersection Point
@@ -49,7 +49,7 @@ class SphereObject extends SceneObject {
         lightDir = new Vector3(light.getPosition());
         lightDir.sub(lightDir, intersection);
         lightDir.normalize();
-        double lightDist = center.distance(light.getPosition());
+        float lightDist = center.distance(light.getPosition());
         //System.out.println(lightDist);
         Ray shadowRay = new Ray(intersection, lightDir);
         boolean shadow = shadowCheck(this.getScene(), shadowRay);
@@ -57,15 +57,15 @@ class SphereObject extends SceneObject {
             intensity = 0;
             return Color.black.getRGB();
         } else {
-            intensity = normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2);
+            intensity = (float)(normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
             intensity *= light.getIntensity();
         }
 
         if (intensity < 0.0)
-            intensity = 0.0;
+            intensity = 0.0f;
 
         if (intensity > 1.0)
-            intensity = 1.0;
+            intensity = 1.0f;
 
 
 
@@ -75,7 +75,7 @@ class SphereObject extends SceneObject {
 
         Color lightColor = light.getColor();
 
-        Color shadedLight = new Color((int) (lightColor.getRed() * ((double) intensity )), (int) (lightColor.getGreen() * ((double) intensity )), (int) (lightColor.getBlue() * ((double) intensity )));
+        Color shadedLight = new Color((int) (lightColor.getRed() * ((float) intensity )), (int) (lightColor.getGreen() * ((float) intensity )), (int) (lightColor.getBlue() * ((float) intensity )));
         Vector3 albedo = this.getMaterial().getAlbedoColor();
         Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
 
@@ -94,13 +94,13 @@ class SphereObject extends SceneObject {
         Vector3 L = Ray.getOrigin().sub(sphere.getCenter());
         Vector3 dir = Ray.getDirection();
         dir.normalize();
-        double a = dir.dotProduct(dir);// directional Vector sq
-        double b = 2 * Ray.getDirection().dotProduct(L);
-        double c = L.dotProduct(L) - sphere.getRadiusSq();
-        double[] quadraticResults = RayTracerSimple.solveQuadratic(a, b, c);
+        float a = dir.dotProduct(dir);// directional Vector sq
+        float b = 2 * Ray.getDirection().dotProduct(L);
+        float c = L.dotProduct(L) - sphere.getRadiusSq();
+        float[] quadraticResults = RayTracerSimple.solveQuadratic(a, b, c);
 
-        double t0 = quadraticResults[1];
-        double t1 = quadraticResults[2];
+        float t0 = quadraticResults[1];
+        float t1 = quadraticResults[2];
         if (quadraticResults[0] < 0) {
 
             return false;
@@ -109,8 +109,8 @@ class SphereObject extends SceneObject {
         if (t0 > t1) {
 
             // siehe zu, dass t0 kleiner als t1
-            double tempt0 = t0;
-            double tempt1 = t1;
+            float tempt0 = t0;
+            float tempt1 = t1;
             t0 = tempt1;
             t1 = tempt0;
         }
@@ -155,19 +155,19 @@ class SphereObject extends SceneObject {
         this.center = center;
     }
 
-    public double getRadius() {
+    public float getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(float radius) {
         this.radius = radius;
     }
 
-    public double getRadiusSq() {
+    public float getRadiusSq() {
         return radiusSq;
     }
 
-    public void setRadiusSq(double radiusSq) {
+    public void setRadiusSq(float radiusSq) {
         this.radiusSq = radiusSq;
     }
 

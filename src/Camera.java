@@ -4,24 +4,24 @@ import static java.lang.Math.toRadians;
 public class Camera {
     private Vector3 position;
     private Vector3 focusPoint;
-    private double FOV;
-    private double scale;
+    private float FOV;
+    private float scale;
     private Vector3 viewDir;
     private Vector3 rotatedUpVector;
     private Vector3 vVec;
     private Vector3 uVec;
-    private double aspectRatio ;
+    private float aspectRatio ;
 
 
 
-    private double width,height;
+    private float  width,height;
 
-    private double distFromPlane, planeHeight, planeWidth;
+    private float  distFromPlane, planeHeight, planeWidth;
     private Vector3 planeCenter,planeBottomLeft,pixelCenterCoordinate;
-    private double pixelWidth,pixelHeight;
+    private float pixelWidth,pixelHeight;
 
 
-    public Camera (Vector3 pos, Vector3 focus, double FOV, double width,double height){
+    public Camera (Vector3 pos, Vector3 focus, float FOV, float  width,float  height){
 
         this.position = pos;
         this.focusPoint = focus;
@@ -37,7 +37,7 @@ public class Camera {
     void init(){
         viewDir = focusPoint.sub(position);
         viewDir.normalize();
-        rotatedUpVector = new Vector3(sin(FOV), cos(FOV),0);
+        rotatedUpVector = new Vector3((float)sin(FOV), (float)cos(FOV),0);
         vVec = new Vector3(viewDir);
         vVec.crossProduct(rotatedUpVector);
         vVec.normalize();
@@ -45,7 +45,7 @@ public class Camera {
         uVec.crossProduct(viewDir);
 
         distFromPlane = position.distance(focusPoint);
-        planeHeight =  2* distFromPlane* tan(FOV/2);
+        planeHeight =  2* distFromPlane* (float )tan(FOV/2);
         planeWidth = planeHeight * aspectRatio;
         pixelCenterCoordinate = new Vector3();
         planeCenter = new Vector3(viewDir);
@@ -90,27 +90,27 @@ public class Camera {
         this.focusPoint = focusPoint;
     }
 
-    public double getFOV() {
+    public float getFOV() {
         return FOV;
     }
 
-    public void setFOV(double FOV) {
+    public void setFOV(float FOV) {
         this.FOV = FOV;
     }
 
-    public double getAspectRatio() {
+    public float getAspectRatio() {
         return aspectRatio;
     }
 
-    public void setAspectRatio(double aspectRatio) {
+    public void setAspectRatio(float aspectRatio) {
         this.aspectRatio = aspectRatio;
     }
 
-    public double getScale() {
+    public float getScale() {
         return scale;
     }
 
-    public void setScale(double scale) {
+    public void setScale(float scale) {
         this.scale = scale;
     }
 

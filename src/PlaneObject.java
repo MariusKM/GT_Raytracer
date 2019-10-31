@@ -15,10 +15,10 @@ public class PlaneObject extends SceneObject {
         //s = (k – np)/(nv)
         Vector3 normal = new Vector3(this.planeNormal);
         Vector3 rayDir = new Vector3(Ray.getDirection());
-        double zaehler = normal.dotProduct(rayDir);
+        float zaehler = normal.dotProduct(rayDir);
 
         Vector3 vecToOrigin = this.pointOnPlane.sub(Ray.getOrigin());
-        double t = vecToOrigin.dotProduct(normal) / zaehler;
+        float t = vecToOrigin.dotProduct(normal) / zaehler;
         if (t >= 0) {
             if (t < Ray.getT()) {
                 Ray.setT(t);
@@ -32,10 +32,10 @@ public class PlaneObject extends SceneObject {
         return false;
     }
 
-    public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, double t) {
+    public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
 
         Vector3 intersection, normal, lightDir;
-        double intensity;
+        float intensity;
 
 
         // berechne intersection Point
@@ -51,7 +51,7 @@ public class PlaneObject extends SceneObject {
         lightDir = new Vector3(light.getPosition());
         lightDir.sub(lightDir, intersection);
         lightDir.normalize();
-        double lightDist = pointOnPlane.distance(light.getPosition());
+        float lightDist = pointOnPlane.distance(light.getPosition());
         //System.out.println(lightDist);
 
         Ray shadowRay = new Ray(intersection, lightDir);
@@ -60,16 +60,16 @@ public class PlaneObject extends SceneObject {
             intensity = 0;
             return Color.black.getRGB();
         } else {
-            intensity = normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2);
+            intensity = (float)(normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
             intensity *= light.getIntensity();
         }
 
 
         if (intensity < 0.0)
-            intensity = 0.0;
+            intensity = 0.0f;
 
         if (intensity > 1.0)
-            intensity = 1.0;
+            intensity = 1.0f;
 
 
 
@@ -79,7 +79,7 @@ public class PlaneObject extends SceneObject {
 
         Color lightColor = light.getColor();
 
-        Color shadedLight = new Color((int) (lightColor.getRed() * ((double) intensity )), (int) (lightColor.getGreen() * ((double) intensity)), (int) (lightColor.getBlue() * ((double) intensity)));
+        Color shadedLight = new Color((int) (lightColor.getRed() * ((float) intensity )), (int) (lightColor.getGreen() * ((float) intensity)), (int) (lightColor.getBlue() * ((float) intensity)));
         Vector3 albedo = this.getMaterial().getAlbedoColor();
         Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
 

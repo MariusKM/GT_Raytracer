@@ -8,7 +8,7 @@ abstract class SceneObject {
 
     public abstract boolean intersect(Ray ray, SceneObject object);
 
-    public abstract int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, double t);
+    public abstract int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t);
 
     public abstract boolean shadowCheck( SceneSimple scene, Ray myRay);
 
