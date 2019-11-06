@@ -19,8 +19,8 @@ public class RayTracerSimple extends java.applet.Applet {
     static SceneSimple sceneSimple;
 
     static int resX = 1024, resY = 1024;
-    static boolean usePerspective = false;
-    static int numSpheres = 20;
+    static boolean usePerspective = true;
+    static int numSpheres = 50;
     static SceneObject[] sceneObjects;
     static int[] pixels;
     static Camera cam;
@@ -154,10 +154,10 @@ public class RayTracerSimple extends java.applet.Applet {
                     intersectObj = temp;
                     int pixelColor = (intersectObj.isShade()) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT()) : Color.WHITE.getRGB();
 
-                    pixels[y * resY + x] = pixelColor;
+                    pixels[(resY-y-1)* resY + x] = pixelColor;
 
                 } else {
-                    pixels[y * resY + x] = BG_Color.getRGB();
+                    pixels[(resY-y-1) * resY + x] = BG_Color.getRGB();
                 }
 
 
@@ -166,13 +166,13 @@ public class RayTracerSimple extends java.applet.Applet {
     }
 
     static void initScene() {
-        cam = new Camera(new Vector3(0, 0, -1), new Vector3(0, 0, 1), 90, resX, resY);
+        cam = new Camera(new Vector3(0, 0, 0), new Vector3(0, 0, -1), 90, resX, resY);
 
         KeyHandler keyHandler = new KeyHandler();
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0f, 1.25f, 0.25f), 20, Color.white);
+        sceneLight = new Light(new Vector3(0f, 1.25f, -1.25f), 20, Color.white);
 
         sceneObjects = createSpheres(numSpheres, 0.15f, 0.01f);
 
@@ -188,6 +188,10 @@ public class RayTracerSimple extends java.applet.Applet {
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
 
+        SphereObject testSphere = new SphereObject(new Vector3(0,0,-2), 0.15f);
+        testSphere.setMaterial(groundMat);
+        sceneSimple.getSceneObjects().add(testSphere);
+        testSphere.setScene(sceneSimple);
         for (SceneObject s : sceneObjects) {
 
             Material defaultMat = new Material(new Vector3((float )(random()*0.5f +0.5f), (float )(0.5f * random()), (float) (0.2 * random())), 0);
@@ -202,7 +206,7 @@ public class RayTracerSimple extends java.applet.Applet {
         Vector3 spherePos;
         float sphereRadius;
         for (int i = 0; i < numSpheres; i++) {
-            spherePos = randomVecInRange(-0.5, 1, -0.25, 1, 0, 1);
+            spherePos = randomVecInRange(-1, 1, -1.5f, 1, -1, 0);
             sphereRadius = (float)(random() * maxRad + minRad);
             spheres[i] = new SphereObject(spherePos, sphereRadius);
         }

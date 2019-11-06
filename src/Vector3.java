@@ -74,6 +74,7 @@ public class Vector3{
 
 
     }
+    // TODO : ADD dist squared
     public float distance (Vector3 v){
         float d = (float)(Math.sqrt(Math.pow(v.x- this.x,2) + Math.pow(v.y- this.y,2) + Math.pow(v.z- this.z,2)));
         return d;

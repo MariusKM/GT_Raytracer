@@ -16,7 +16,7 @@ public class Camera {
 
     private float  width,height;
 
-    private float  distFromPlane, planeHeight, planeWidth;
+    private float  planeHeight, planeWidth;
     private Vector3 planeCenter,planeBottomLeft,pixelCenterCoordinate;
     private float pixelWidth,pixelHeight;
 
@@ -37,19 +37,19 @@ public class Camera {
     void init(){
         viewDir = focusPoint.sub(position);
         viewDir.normalize();
-        rotatedUpVector = new Vector3((float)sin(FOV), (float)cos(FOV),0);
-        vVec = new Vector3(viewDir);
-        vVec.crossProduct(rotatedUpVector);
+        rotatedUpVector = new Vector3(0, 1,0);//new Vector3((float)sin(FOV), (float)cos(FOV),0);
+        uVec = new Vector3(viewDir);
+        uVec.crossProduct(rotatedUpVector);
+        uVec.normalize();
+        vVec = new Vector3(uVec);
+        vVec.crossProduct(viewDir);
         vVec.normalize();
-        uVec = new Vector3(vVec);
-        uVec.crossProduct(viewDir);
 
-        distFromPlane = position.distance(focusPoint);
-        planeHeight =  2* distFromPlane* (float )tan(FOV/2);
+        planeHeight =  2* (float )tan(FOV/2);
         planeWidth = planeHeight * aspectRatio;
-        pixelCenterCoordinate = new Vector3();
+
         planeCenter = new Vector3(viewDir);
-        planeCenter.mult(distFromPlane);
+        planeCenter.add(position);
         planeBottomLeft = planeCenter.sub(new Vector3((planeWidth/2) ,(planeHeight/2),0));
         pixelHeight =  planeHeight/ height;
         pixelWidth = planeWidth/ width;
