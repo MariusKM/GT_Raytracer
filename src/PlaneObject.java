@@ -10,21 +10,21 @@ public class PlaneObject extends SceneObject {
         this.planeNormal = planeNormal;
     }
 
-    public boolean intersect(Ray Ray, SceneObject plane) {
+    public boolean intersect(Ray3 Ray3, SceneObject plane) {
 
         //s = (k – np)/(nv)
         Vector3 normal = new Vector3(this.planeNormal);
-        Vector3 rayDir = new Vector3(Ray.getDirection());
+        Vector3 rayDir = new Vector3(Ray3.getDirection());
         float zaehler = normal.dotProduct(rayDir);
 
-        Vector3 vecToOrigin = this.pointOnPlane.sub(Ray.getOrigin());
+        Vector3 vecToOrigin = this.pointOnPlane.sub(Ray3.getOrigin());
         float t = vecToOrigin.dotProduct(normal) / zaehler;
         if (t >= 0) {
-            if (t < Ray.getT()) {
-                Ray.setT(t);
-                Ray.setNearest(plane);
+            if (t < Ray3.getT()) {
+                Ray3.setT(t);
+                Ray3.setNearest(plane);
             }
-            Ray.setT(t);
+            Ray3.setT(t);
             return true;
         }
 
@@ -54,8 +54,8 @@ public class PlaneObject extends SceneObject {
         float lightDist = pointOnPlane.distance(light.getPosition());
         //System.out.println(lightDist);
 
-        Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay);
+        Ray3 shadowRay3 = new Ray3(intersection, lightDir);
+        boolean shadow = shadowCheck(this.getScene(), shadowRay3);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -90,10 +90,10 @@ public class PlaneObject extends SceneObject {
         return (pixelCol);
     }
 
-    public boolean shadowCheck(SceneSimple scene, Ray myRay) {
+    public boolean shadowCheck(SceneSimple scene, Ray3 myRay3) {
         for (SceneObject s : scene.getSceneObjects()) {
             if (!s.equals(this) && !s.isGizmo()) {
-                boolean intersect = s.intersect(myRay, s);
+                boolean intersect = s.intersect(myRay3, s);
 
                 if (intersect) {
                     return true;

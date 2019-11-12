@@ -6,9 +6,6 @@ import java.awt.*;
 import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Vector;   // use java vector as a list
-import java.lang.Thread;
-import java.awt.Color;
 import java.awt.Color;
 
 import static java.lang.Math.*;
@@ -51,10 +48,11 @@ public class RayTracerSimple extends java.applet.Applet {
             handleAnimation();
             paintPix();
             drawGUI();
+           // exit = true;
         }
         while(!exit);
 
-        String path = "C:/Users/mariu/Workspaces/uni/GT Ray Tracing";
+        String path = "C:/Users/mariu/Workspaces/uni/GT Ray3 Tracing";
         // savePic(image, "jpeg", path + random() + ".jpeg");
     }
 
@@ -123,7 +121,9 @@ public class RayTracerSimple extends java.applet.Applet {
                 Vector3 rayDir;
                 if (usePerspective) {
                     Vector3 pixelPos = cam.pixelCenterCoordinate(x, y);
+
                     rayDir = pixelPos.sub(cam.getPosition());
+
 
                 } else {
                     float pixelPosX = (2 * (x + 0.5f) / (float) resX - 1) * cam.getAspectRatio() * cam.getScale();
@@ -134,31 +134,33 @@ public class RayTracerSimple extends java.applet.Applet {
 
                 rayDir.normalize();
 
-                Ray myRay = new Ray(cam.getPosition(), rayDir);
+                Ray3 myRay3 = new Ray3(cam.getPosition(), rayDir);
                 boolean intersect = false;
                 SceneObject temp;
                 SceneObject intersectObj;
 
                 for (SceneObject s : sceneSimple.getSceneObjects()) {
-                    intersect = s.intersect(myRay, s);
+                    intersect = s.intersect(myRay3, s);
                   /* if (intersect){
                         insideCounter++;
                     }*/
 
                 }
-
-                if (myRay.getNearest() != null) {
-                    temp = myRay.getNearest();
+                int indexer = usePerspective ? (resY-y-1)* resY + x:(y * resY + x) ;
+                if (myRay3.getNearest() != null) {
+                    temp = myRay3.getNearest();
                     //outsideCounter++;
 
                     intersectObj = temp;
-                    int pixelColor = (intersectObj.isShade()) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT()) : Color.WHITE.getRGB();
+                    int pixelColor = (intersectObj.isShade()) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay3.getT()) : Color.WHITE.getRGB();
 
-                    pixels[(resY-y-1)* resY + x] = pixelColor;
+                    pixels[indexer] = pixelColor;
 
                 } else {
-                    pixels[(resY-y-1) * resY + x] = BG_Color.getRGB();
+                    pixels[indexer] = BG_Color.getRGB();
                 }
+
+
 
 
             }
@@ -166,13 +168,13 @@ public class RayTracerSimple extends java.applet.Applet {
     }
 
     static void initScene() {
-        cam = new Camera(new Vector3(0, 0, 0), new Vector3(0, 0, -1), 90, resX, resY);
+        cam = new Camera(new Vector3(0, 0, 1), new Vector3(0, 0, -1), 90, resX, resY);
 
         KeyHandler keyHandler = new KeyHandler();
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0f, 1.25f, -1.25f), 20, Color.white);
+        sceneLight = new Light(new Vector3(0f, 1.0f, -0.25f), 20, Color.white);
 
         sceneObjects = createSpheres(numSpheres, 0.15f, 0.01f);
 
@@ -188,10 +190,6 @@ public class RayTracerSimple extends java.applet.Applet {
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
 
-        SphereObject testSphere = new SphereObject(new Vector3(0,0,-2), 0.15f);
-        testSphere.setMaterial(groundMat);
-        sceneSimple.getSceneObjects().add(testSphere);
-        testSphere.setScene(sceneSimple);
         for (SceneObject s : sceneObjects) {
 
             Material defaultMat = new Material(new Vector3((float )(random()*0.5f +0.5f), (float )(0.5f * random()), (float) (0.2 * random())), 0);
@@ -206,7 +204,7 @@ public class RayTracerSimple extends java.applet.Applet {
         Vector3 spherePos;
         float sphereRadius;
         for (int i = 0; i < numSpheres; i++) {
-            spherePos = randomVecInRange(-1, 1, -1.5f, 1, -1, 0);
+            spherePos = randomVecInRange(-1, 1, -0.75f, 1, -0.5, 0);
             sphereRadius = (float)(random() * maxRad + minRad);
             spheres[i] = new SphereObject(spherePos, sphereRadius);
         }

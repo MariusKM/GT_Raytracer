@@ -6,11 +6,11 @@ abstract class SceneObject {
     private boolean isGizmo = false;
 
 
-    public abstract boolean intersect(Ray ray, SceneObject object);
+    public abstract boolean intersect(Ray3 ray3, SceneObject object);
 
     public abstract int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t);
 
-    public abstract boolean shadowCheck( SceneSimple scene, Ray myRay);
+    public abstract boolean shadowCheck( SceneSimple scene, Ray3 myRay3);
 
     public boolean isShade() {
         return shade;

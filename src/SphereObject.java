@@ -28,6 +28,58 @@ class SphereObject extends SceneObject {
         radius = radiusSq = 1;
 
     }
+    public int shadeBRDF(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
+
+        Vector3 intersection, normal, lightDir;
+        float intensity;
+        // Farbe = (N·L)(kd* albedo + D * F * G)
+
+        //F = F0+ (1 – F0)(1 – N·V)^5
+       // F0 = 0.04f;
+        //G = N·V / (N·V(1 – r/2) + r/2) * N·L / (N·L(1 – r/2) + r/2)
+        //kd = (1 – F)(1 – metalness)
+        // H = (V+L)/2
+
+        // berechne intersection Point
+        intersection = new Vector3(rayDir);
+        intersection.mult(t);
+        intersection.add(sceneOrigin);
+
+        // find surface normal
+        normal = new Vector3(intersection);
+        normal.sub(center);
+        normal.normalize();
+
+        // get light direction
+        lightDir = new Vector3(light.getPosition());
+        lightDir.sub(lightDir, intersection);
+        lightDir.normalize();
+        float lightDist = center.distance(light.getPosition());
+
+
+        // D
+        // D = 𝑟^2/ 𝜋 ((𝑁∙𝐻)^2 (r^2-1)+1)^2
+        Vector3 H = new Vector3(lightDir);
+        H.mult(-1);
+        H.add(lightDir);
+        H.mult(0.5f);
+
+        float roughnessSq = (float)Math.pow(getMaterial().getRoughness(),2);
+
+        Vector3 normalD = new Vector3(normal);
+        float nennerD = (float)(Math.PI*Math.pow((Math.pow(normalD.dotProduct(H),2) * (roughnessSq-1)+1),2));
+
+        Float D = roughnessSq/nennerD;
+
+
+
+
+
+
+        int pixelCol = Color.white.getRGB();
+
+        return (pixelCol);
+    }
 
     public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
 
@@ -51,8 +103,8 @@ class SphereObject extends SceneObject {
         lightDir.normalize();
         float lightDist = center.distance(light.getPosition());
         //System.out.println(lightDist);
-        Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay);
+        Ray3 shadowRay3 = new Ray3(intersection, lightDir);
+        boolean shadow = shadowCheck(this.getScene(), shadowRay3);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -84,25 +136,24 @@ class SphereObject extends SceneObject {
         return (pixelCol);
     }
 
-    public boolean intersect(Ray Ray, SceneObject object) {
+    public boolean intersect(Ray3 Ray3, SceneObject object) {
         /*
         a =1\\
         b=2D(Origin-C)
         c=|O-C|^2-R^2    */
         SphereObject sphere = (SphereObject) object;
 
-        Vector3 L = Ray.getOrigin().sub(sphere.getCenter());
-        Vector3 dir = Ray.getDirection();
+        Vector3 L = Ray3.getOrigin().sub(sphere.getCenter());
+        Vector3 dir = Ray3.getDirection();
         dir.normalize();
-        float a = dir.dotProduct(dir);// directional Vector sq
-        float b = 2 * Ray.getDirection().dotProduct(L);
+        float a = dir.dotProduct(dir);// directional math.Vector sq
+        float b = 2 * Ray3.getDirection().dotProduct(L);
         float c = L.dotProduct(L) - sphere.getRadiusSq();
         float[] quadraticResults = RayTracerSimple.solveQuadratic(a, b, c);
 
         float t0 = quadraticResults[1];
         float t1 = quadraticResults[2];
         if (quadraticResults[0] < 0) {
-
             return false;
         }
 
@@ -122,9 +173,9 @@ class SphereObject extends SceneObject {
                 return false; // both t0 and t1 are negative, keine schnittpunkte
             }
         }
-        if (t0 < Ray.getT()) {
-            Ray.setT(t0);
-            Ray.setNearest(sphere);
+        if (t0 < Ray3.getT()) {
+            Ray3.setT(t0);
+            Ray3.setNearest(sphere);
         }
 
 
@@ -132,10 +183,10 @@ class SphereObject extends SceneObject {
     }
 
 
-    public boolean shadowCheck( SceneSimple scene, Ray myRay) {
+    public boolean shadowCheck( SceneSimple scene, Ray3 myRay3) {
         for (SceneObject s : scene.getSceneObjects()) {
             if (!s.equals(this) && !s.isGizmo()) {
-                boolean intersect = s.intersect(myRay, s);
+                boolean intersect = s.intersect(myRay3, s);
 
                 if (intersect) {
                     return true;
