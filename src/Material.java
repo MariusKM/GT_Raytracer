@@ -33,4 +33,12 @@ public class Material {
         this.roughness = roughness;
         this.metalness = metalness;
     }
+
+
+    public Material(Vector3 albedo, float roughness){
+
+        this.albedoColor = albedo;
+        this.roughness = roughness;
+        this.metalness = 0;
+    }
 }

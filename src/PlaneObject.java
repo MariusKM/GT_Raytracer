@@ -20,11 +20,11 @@ public class PlaneObject extends SceneObject {
         Vector3 vecToOrigin = this.pointOnPlane.sub(Ray3.getOrigin());
         float t = vecToOrigin.dotProduct(normal) / zaehler;
         if (t >= 0) {
-            if (t < Ray3.getT()) {
-                Ray3.setT(t);
+            if (t < Ray3.getT0()) {
+                Ray3.setT0(t);
                 Ray3.setNearest(plane);
             }
-            Ray3.setT(t);
+            Ray3.setT0(t);
             return true;
         }
 

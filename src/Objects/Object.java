@@ -1,36 +1,30 @@
 package Objects;
 
-import raytracer.Map;
-import material.IMaterial;
+
 import math.*;
 
 public abstract class Object implements IObject {
 
-	private IMaterial material;// material of the object
+
 	public TransformationMatrix4x4 trans;
-	private Map bumpmap;
+
 	
 	/**
 	 * constructor
 	 */
 	public Object() {
 		trans = new TransformationMatrix4x4();
-		bumpmap = null;
+
 	}
 
 	/* (non-Javadoc)
 	 * @see objects.IObject#assignMaterial(material.IMaterial)
 	 */
-	public void assignMaterial(IMaterial material_) {
-		material = material_;
-	}
+
 
 	/* (non-Javadoc)
 	 * @see objects.IObject#getMaterial()
-	 */
-	public IMaterial getMaterial() {
-		return material;
-	}
+
 
 	/* (non-Javadoc)
 	 * @see objects.IObject#move(math.Vector3D)
@@ -136,19 +130,7 @@ public abstract class Object implements IObject {
 		trans = m;
 	}
 
-	/* (non-Javadoc)
-	 * @see objects.IObject#getBumpMap()
-	 */
-	public Map getMap() {
-		return bumpmap;
-	}
 
-	/* (non-Javadoc)
-	 * @see objects.IObject#assignBumpMap(painter.IPainter)
-	 */
-	public void assignMap(Map bumpmap_) {
-		bumpmap = bumpmap_;
-	}
 	
 	
 

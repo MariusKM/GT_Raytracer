@@ -173,8 +173,8 @@ class SphereObject extends SceneObject {
                 return false; // both t0 and t1 are negative, keine schnittpunkte
             }
         }
-        if (t0 < Ray3.getT()) {
-            Ray3.setT(t0);
+        if (t0 < Ray3.getT0()) {
+            Ray3.setT0(t0);
             Ray3.setNearest(sphere);
         }
 

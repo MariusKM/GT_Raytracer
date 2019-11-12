@@ -1,7 +1,6 @@
 package Objects;
 
-import raytracer.Map;
-import material.IMaterial;
+
 import math.*;
 
 // interface for an object
@@ -40,21 +39,7 @@ public interface IObject {
 	 */
 	public void transform(TransformationMatrix4x4 m);
 
-	/**
-	 * assigns the material to the object
-	 * @param material
-	 */
-	public void assignMaterial(IMaterial material);
-	
-	/**
-	 * @return material of the object
-	 */
-	public IMaterial getMaterial();
-	
-	/**
-	 * calculates the coordinates at ri.nextPosition
-	 * @param ri intersection information
-	 */
+
 	public void calculateTextureCoordinates(IntersectionInfo ri);
 	
 	/**
@@ -123,13 +108,5 @@ public interface IObject {
 	public IObject getCopy();
 	
 	
-	/**
-	 * @return the used map or null if not used
-	 */
-	public Map getMap();
-	
-	/**
-	 * @param map_ the bump or normal map
-	 */
-	public void assignMap(Map map_);
+
 }

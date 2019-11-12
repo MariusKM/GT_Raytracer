@@ -12,12 +12,13 @@ public class IntersectionInfo {
 	public double t1;				// distance from ray3.start to the 1. intersections
 	public IObject t1object;	// object at 1. intersection
 
-	
 	// info at intersection 2
 	public double t2;				// distance from ray3.start to the 2. intersections
+
 	public IObject t2object;	// object at 2. intersection
 	
 	public Ray ray;					// the ray3 that intersects the object
+
 	public boolean hit;				// does the ray3 hits the object
 	
 	// info at the next intersection (t>0)
