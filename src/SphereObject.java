@@ -5,7 +5,7 @@ import java.awt.*;
 class SphereObject extends SceneObject {
     private Vector3 center;
     private float radius, radiusSq; // precompute radiusSq since we use it a lot
-    private float speed = 0.05f;
+
 // TODO : Clean up shading
 
 
@@ -136,7 +136,7 @@ class SphereObject extends SceneObject {
             return Color.black.getRGB();
         } else {
             intensity = (float)(normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
-            intensity *= light.getIntensity();
+            intensity *= light.getIntensity()*5;
         }
 
 
@@ -294,12 +294,6 @@ class SphereObject extends SceneObject {
         this.radiusSq = radiusSq;
     }
 
-    public float getSpeed() {
-        return speed;
-    }
 
-    public void setSpeed(float speed) {
-        this.speed = speed;
-    }
 }
 

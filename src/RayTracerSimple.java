@@ -1,5 +1,6 @@
 
 
+import math.Matrix4x4;
 import math.TransformationMatrix4x4;
 import math.Vector3D;
 
@@ -68,12 +69,18 @@ Do the animation stuff
         for (SceneObject s: sceneSimple.getSceneObjects()
              ) {
 
-            if (s instanceof SphereObject && !s.isGizmo()){
+            if (s instanceof Ellipsoid && !s.isGizmo()){
 
 
-                 Vector3 newPos = new Vector3(((SphereObject) s).getCenter());
+                TransformationMatrix4x4 trans = new TransformationMatrix4x4();
+                trans.createTranslationMatrix( new Vector3D(0,s.getSpeed()*delta_time,0));
 
-                 if (newPos.y > upperLimit || newPos.y < lowerLimit){
+                ((Ellipsoid) s).transform(trans);
+                trans = new TransformationMatrix4x4();
+                //trans.createYRotationMatrix(s.getSpeed()*delta_time);
+                trans.createRotationMatrix(s.getSpeed()*delta_time,s.getSpeed()*delta_time,s.getSpeed()*delta_time);
+                ((Ellipsoid) s).transform(trans);
+               /*  if (newPos.y > upperLimit || newPos.y < lowerLimit){
 
                      ((SphereObject) s).setSpeed(((SphereObject) s).getSpeed() *-1);
                  }
@@ -81,7 +88,7 @@ Do the animation stuff
 
 
                  newPos.add(new Vector3(0,((SphereObject) s).getSpeed()*delta_time,0));
-                ((SphereObject) s).setCenter(newPos);
+                ((SphereObject) s).setCenter(newPos);*/
 
             }
         }
@@ -174,17 +181,18 @@ Do the animation stuff
     }
 
     static void initScene() {
-        cam = new Camera(new Vector3(0, 0.5f, 0.2f), new Vector3(0, 0.5f, -1), 90, resX, resY);
+        cam = new Camera(new Vector3(0, 0.5f, 1), new Vector3(0, 0.5f, -1), 90, resX, resY);
 
         KeyHandler keyHandler = new KeyHandler();
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0f, 1f, -0.75f), 20, Color.white);
+        sceneLight = new Light(new Vector3(0f, 1f, -3), 10, Color.white);
 
-          sceneObjects = createSpheres(numSpheres, 0.15f, 0.01f);
-          PlaneObject groundPlane = new PlaneObject(new Vector3(0, -2, 0), new Vector3(0, 1, 0));
-          Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.9f,0.5f);
+          sceneObjects = createSceneObjects(numSpheres, 0.15f, 0.01f);//createSpheres(numSpheres, 0.15f, 0.01f);
+         Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.15f,0.9f);
+        PlaneObject groundPlane = new PlaneObject(new Vector3(0, -2, 0), new Vector3(0, 1, 0));
+
           groundPlane.setMaterial(groundMat);
           sceneSimple.getSceneObjects().add(groundPlane);
           groundPlane.setScene(sceneSimple);
@@ -207,11 +215,27 @@ Do the animation stuff
 
          for (SceneObject s : sceneObjects) {
 
-            Material defaultMat = new Material(new Vector3((float )(random()*0.5f +0.5f), (float )(0.5f * random()), (float) (0.2 * random())), 0.1f,0.75f);
+            Material defaultMat = new Material(new Vector3((float )(random()*0.5f +0.5f), (float )(0.5f * random()), (float) (0.2 * random())), 0.25f,0.3f);
             s.setMaterial(defaultMat);
             sceneSimple.getSceneObjects().add(s);
             s.setScene(sceneSimple);
         }
+    }
+    static SceneObject[] createSceneObjects(int numObjects, float maxRad, float minRad) {
+        SceneObject[] objects = new SceneObject[numObjects];
+        Vector3 objectPos;
+        float radiusX,radiusY,radiusZ;
+        for (int i = 0; i < numObjects; i++) {
+            objectPos = randomVecInRange(-0.5f, 1, -0.75f, 1, -0.25, 0);
+            radiusX = (float)(random() * maxRad + minRad);
+            radiusY = (float)(random() * maxRad + minRad);
+            radiusZ = (float)(random() * maxRad + minRad);
+            TransformationMatrix4x4 trans = new TransformationMatrix4x4();
+            trans.createTranslationMatrix( new Vector3D(objectPos.x,objectPos.y,objectPos.z));
+            SceneObject ellipse = new Ellipsoid(0.9,0.6,0.2,trans);
+            objects[i] = new Ellipsoid( radiusX,radiusY,radiusZ,trans);
+        }
+        return objects;
     }
 
     static SceneObject[] createSpheres(int numSpheres, float maxRad, float minRad) {

@@ -188,7 +188,7 @@ public class PlaneObject extends SceneObject {
 
         // SHADOWS && INTENSITY
         Ray3 shadowRay3 = new Ray3(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay3);
+        boolean shadow =false; //shadowCheck(this.getScene(), shadowRay3);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();

@@ -4,7 +4,7 @@ abstract class SceneObject {
     private Material material;
     private SceneSimple scene;
     private boolean isGizmo = false;
-
+    private float speed = 0.05f;
 
     public abstract boolean intersect(Ray3 ray3, SceneObject object);
 
@@ -43,5 +43,12 @@ abstract class SceneObject {
 
     public void setGizmo(boolean gizmo) {
         isGizmo = gizmo;
+    }
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 }
