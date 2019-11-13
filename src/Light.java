@@ -2,7 +2,7 @@ import java.awt.Color;
 
 public class Light {
     private Vector3 position;
-    private double intensity;
+    private float intensity;
     private Color color;
 
 
@@ -14,11 +14,11 @@ public class Light {
         this.position = position;
     }
 
-    public double getIntensity() {
+    public float getIntensity() {
         return intensity;
     }
 
-    public void setIntensity(double intensity) {
+    public void setIntensity(float intensity) {
         this.intensity = intensity;
     }
 
@@ -30,7 +30,7 @@ public class Light {
         this.color = color;
     }
 
-    public Light (Vector3 position, double intensity, Color color){
+    public Light (Vector3 position, float intensity, Color color){
 
         this.position  = position;
         this.intensity = intensity;

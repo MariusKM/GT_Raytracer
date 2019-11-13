@@ -211,6 +211,11 @@ public class Quadrik3 extends SceneObject {
     }
 
     @Override
+    public int shadeCookTorrance(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
+        return 0;
+    }
+
+    @Override
     public boolean shadowCheck(SceneSimple scene, Ray3 myRay3) {
         for (SceneObject s : scene.getSceneObjects()) {
             if (!s.equals(this) && !s.isGizmo()) {

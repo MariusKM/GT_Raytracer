@@ -20,7 +20,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static int resX = 1024, resY = 1024;
     static boolean usePerspective = true;
-    static int numSpheres = 50;
+    static int numSpheres = 25;
     static SceneObject[] sceneObjects;
     static int[] pixels;
     static Camera cam;
@@ -56,7 +56,7 @@ public class RayTracerSimple extends java.applet.Applet {
         while(!exit);
 
         String path = "C:/Users/mariu/Workspaces/uni/GT Ray3 Tracing";
-        // savePic(image, "jpeg", path + random() + ".jpeg");
+        //savePic(image, "jpeg", path + random() + ".jpeg");
     }
 /*
 Do the animation stuff
@@ -157,7 +157,8 @@ Do the animation stuff
                     //outsideCounter++;
 
                     intersectObj = temp;
-                    int pixelColor = (intersectObj.isShade()) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) : Color.WHITE.getRGB();
+                    //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) : Color.WHITE.getRGB();
+                    int pixelColor = (intersectObj.isShade()) ?   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) : Color.WHITE.getRGB();
 
                     pixels[indexer] = pixelColor;
 
@@ -173,44 +174,44 @@ Do the animation stuff
     }
 
     static void initScene() {
-        cam = new Camera(new Vector3(0, 0, 1), new Vector3(0, 0, -1), 90, resX, resY);
+        cam = new Camera(new Vector3(0, 0.5f, 0.2f), new Vector3(0, 0.5f, -1), 90, resX, resY);
 
         KeyHandler keyHandler = new KeyHandler();
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0f, 1.0f, -0.25f), 20, Color.white);
+        sceneLight = new Light(new Vector3(0f, 1f, -0.75f), 20, Color.white);
 
-      //  sceneObjects = createSpheres(numSpheres, 0.15f, 0.01f);
-       // PlaneObject groundPlane = new PlaneObject(new Vector3(0, -2, 0), new Vector3(0, 1, 0));
-        Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0);
-       // groundPlane.setMaterial(groundMat);
-       // sceneSimple.getSceneObjects().add(groundPlane);
-      //  groundPlane.setScene(sceneSimple);
+          sceneObjects = createSpheres(numSpheres, 0.15f, 0.01f);
+          PlaneObject groundPlane = new PlaneObject(new Vector3(0, -2, 0), new Vector3(0, 1, 0));
+          Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.9f,0.5f);
+          groundPlane.setMaterial(groundMat);
+          sceneSimple.getSceneObjects().add(groundPlane);
+          groundPlane.setScene(sceneSimple);
 
-       // SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05f);
-      //  lightObject.setShade(false);
-       // lightObject.setGizmo(true);
-       // sceneSimple.getSceneObjects().add(lightObject);
-      //  lightObject.setScene(sceneSimple);
-        //ightObject.setMaterial(groundMat);
-        TransformationMatrix4x4 trans = new TransformationMatrix4x4();
+          SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05f);
+          lightObject.setShade(false);
+          lightObject.setGizmo(true);
+          sceneSimple.getSceneObjects().add(lightObject);
+          lightObject.setScene(sceneSimple);
+          lightObject.setMaterial(groundMat);
+     /*   TransformationMatrix4x4 trans = new TransformationMatrix4x4();
         trans.createTranslationMatrix( new Vector3D(0,0,-2));
-        SceneObject ellipse = new Ellipsoid(0.1,0.6,0.2,trans);
+        SceneObject ellipse = new Ellipsoid(0.9,0.6,0.2,trans);
         sceneSimple.getSceneObjects().add(ellipse);
         ellipse.setGizmo(true);
         ellipse.setScene(sceneSimple);
-        ellipse.setMaterial(groundMat);
+        ellipse.setMaterial(groundMat);*/
 
 
 
-        /*for (SceneObject s : sceneObjects) {
+         for (SceneObject s : sceneObjects) {
 
-            Material defaultMat = new Material(new Vector3((float )(random()*0.5f +0.5f), (float )(0.5f * random()), (float) (0.2 * random())), 0);
+            Material defaultMat = new Material(new Vector3((float )(random()*0.5f +0.5f), (float )(0.5f * random()), (float) (0.2 * random())), 0.1f,0.75f);
             s.setMaterial(defaultMat);
             sceneSimple.getSceneObjects().add(s);
             s.setScene(sceneSimple);
-        }*/
+        }
     }
 
     static SceneObject[] createSpheres(int numSpheres, float maxRad, float minRad) {
@@ -218,7 +219,7 @@ Do the animation stuff
         Vector3 spherePos;
         float sphereRadius;
         for (int i = 0; i < numSpheres; i++) {
-            spherePos = randomVecInRange(-1, 1, -0.75f, 1, -0.5, 0);
+            spherePos = randomVecInRange(-0.5f, 1, -0.75f, 1, -0.5, 0);
             sphereRadius = (float)(random() * maxRad + minRad);
             spheres[i] = new SphereObject(spherePos, sphereRadius);
         }
@@ -285,6 +286,9 @@ Do the animation stuff
         return Math.max(min, Math.min(max, val));
     }
 
+    public static float clampF(float val, float min, float max) {
+        return Math.max(min, Math.min(max, val));
+    }
 
     static Color blend(Color a, Color b) {
 
