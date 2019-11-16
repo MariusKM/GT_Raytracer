@@ -39,11 +39,11 @@ public class ComplexObject extends SceneObject {
         boolean result =false;
         switch(operation) {
             case "Schnitt":
-                result = quadA.intersectBody(ray3, object) ^ quadB.intersectBody(ray3, object);
+                result = quadA.intersectBody(ray3, object) && quadB.intersectBody(ray3, object);
                 break;
 
             case "Differenz":
-                result = quadA.intersectBody(ray3, object) && quadB.intersectBody(ray3, object);
+                result = quadA.intersectBody(ray3, object) ^ quadB.intersectBody(ray3, object);
                 break;
 
             default://fall through
