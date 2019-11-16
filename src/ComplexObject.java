@@ -37,18 +37,19 @@ public class ComplexObject extends SceneObject {
         switch(operation) {
             case "Schnitt":
                 for (Quadrik3 quad : list) {
-                    result = result ^ quad.intersect(ray3, object);
+                    result = result ^ quad.intersectBody(ray3, object);
                 }
                 break;
             case "Differenz":
                 result =true;
                 for (Quadrik3 quad : list) {
-                    result = result && quad.intersect(ray3, object);
+                    result = result && quad.intersectBody(ray3, object);
                 }
                 break;
             default://fall through
             case "Vereinigung":
                 for (Quadrik3 quad : list) {
+                    //We don't need the body
                     result = result || quad.intersect(ray3, object);
                 }
                 break;
