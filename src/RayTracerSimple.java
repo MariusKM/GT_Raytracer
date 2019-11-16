@@ -208,7 +208,7 @@ Do the animation stuff
         ellipse2.setScene(sceneSimple);
         ellipse2.setMaterial(groundMat);
 
-        ComplexObject xobj = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Ver");
+        ComplexObject xobj = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Differenz");
         sceneSimple.getSceneObjects().add(xobj);
         xobj.setGizmo(true);
         xobj.setScene(sceneSimple);

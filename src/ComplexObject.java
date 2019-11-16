@@ -12,8 +12,8 @@ public class ComplexObject extends SceneObject {
     public Quadrik3 quadA, quadB;
 
     ComplexObject(Quadrik3 a,Quadrik3 b, String operation ){
-        //list.add(a);
-        //list.add(b);
+        list.add(a);//ugly
+        list.add(b);
         this.quadA = a;
         this.quadB = b;
         this.operation=operation;
@@ -39,15 +39,19 @@ public class ComplexObject extends SceneObject {
         boolean result =false;
         switch(operation) {
             case "Schnitt":
+                // zwingend A und B
                 result = quadA.intersectBody(ray3, object) && quadB.intersectBody(ray3, object);
                 break;
 
             case "Differenz":
-                result = quadA.intersectBody(ray3, object) ^ quadB.intersectBody(ray3, object);
+                // quasi: A ohne B
+                // A und nicht B A
+                result = quadA.intersectBody(ray3, object) & !quadB.intersectBody(ray3, object);
                 break;
 
             default://fall through
             case "Vereinigung":
+                // Sobald A oder B
                 result = quadA.intersect(ray3, object) || quadB.intersect(ray3, object);
                 break;
         }
