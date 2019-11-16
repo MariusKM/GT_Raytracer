@@ -1,16 +1,17 @@
 import math.VectorOps;
 
-public class HalfSpace extends SceneObject {
+ abstract class HalfSpace extends SceneObject {
 
     // a*x+b*y+c*z+d<=0
     private double a,b,c,d;
-    /**
+
+    /*/**
      * constructor
      * @param a_
      * @param b_
      * @param c_
      * @param d_
-     */
+     *
     public HalfSpace(double a_, double b_, double c_, double d_) {
         super();
         a = 0; b = 1; c = 0; d = 0;
@@ -56,7 +57,7 @@ public class HalfSpace extends SceneObject {
         }
         return false;
     }
-
+*/
     @Override
     public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
         return 0;

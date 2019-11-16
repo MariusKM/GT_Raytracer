@@ -9,10 +9,13 @@ public class ComplexObject extends SceneObject {
 
     private String operation="Vereinigung";
     public ArrayList<Quadrik3> list = new ArrayList<Quadrik3>();
+    public Quadrik3 quadA, quadB;
 
     ComplexObject(Quadrik3 a,Quadrik3 b, String operation ){
-        list.add(a);
-        list.add(b);
+        //list.add(a);
+        //list.add(b);
+        this.quadA = a;
+        this.quadB = b;
         this.operation=operation;
     }
 
@@ -36,22 +39,16 @@ public class ComplexObject extends SceneObject {
         boolean result =false;
         switch(operation) {
             case "Schnitt":
-                for (Quadrik3 quad : list) {
-                    result = result ^ quad.intersectBody(ray3, object);
-                }
+                result = quadA.intersectBody(ray3, object) ^ quadB.intersectBody(ray3, object);
                 break;
+
             case "Differenz":
-                result =true;
-                for (Quadrik3 quad : list) {
-                    result = result && quad.intersectBody(ray3, object);
-                }
+                result = quadA.intersectBody(ray3, object) && quadB.intersectBody(ray3, object);
                 break;
+
             default://fall through
             case "Vereinigung":
-                for (Quadrik3 quad : list) {
-                    //We don't need the body
-                    result = result || quad.intersect(ray3, object);
-                }
+                result = quadA.intersect(ray3, object) || quadB.intersect(ray3, object);
                 break;
         }
         //lastIntersection();

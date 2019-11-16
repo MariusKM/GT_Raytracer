@@ -195,24 +195,27 @@ Do the animation stuff
       //  lightObject.setScene(sceneSimple);
         //ightObject.setMaterial(groundMat);
         TransformationMatrix4x4 trans = new TransformationMatrix4x4();
-      //  trans.createTranslationMatrix( new Vector3D(0,1,-4));
-//        SceneObject ellipse = new Ellipsoid(0.1,0.6,0.2,trans);
-//        sceneSimple.getSceneObjects().add(ellipse);
-//        ellipse.setGizmo(true);
-//        ellipse.setScene(sceneSimple);
-//        ellipse.setMaterial(groundMat);
+        trans.createTranslationMatrix( new Vector3D(0,1,-4));
+        SceneObject ellipse = new Ellipsoid(0.1,0.6,0.2,trans);
+        //sceneSimple.getSceneObjects().add(ellipse);
+        ellipse.setGizmo(true);
+        ellipse.setScene(sceneSimple);
+        ellipse.setMaterial(groundMat);
 
-        //Cylinder ellipsoid
-        //trans.createXScaleMatrix( 1.);//(0,5,0));
-        trans.createZRotationMatrix( 150.);
+        SceneObject ellipse2 = new Ellipsoid(0.1,0.4,0.2,trans);
+        //sceneSimple.getSceneObjects().add(ellipse2);
+        ellipse2.setGizmo(true);
+        ellipse2.setScene(sceneSimple);
+        ellipse2.setMaterial(groundMat);
 
-        trans.createTranslationMatrix( new Vector3D(0,0,-1));
-        //trans.createYScaleMatrix( 2.);//new math.Vector3D(0,5,0));
-        SceneObject ellipC = new EllipticalCylinder(0.1,0.6,0.2,trans);
-        sceneSimple.getSceneObjects().add(ellipC);
-        ellipC.setGizmo(true);
-        ellipC.setScene(sceneSimple);
-        ellipC.setMaterial(groundMat);
+        ComplexObject xobj = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Ver");
+        sceneSimple.getSceneObjects().add(xobj);
+        xobj.setGizmo(true);
+        xobj.setScene(sceneSimple);
+        xobj.setMaterial(groundMat);
+
+
+
 
         /*for (SceneObject s : sceneObjects) {
 
