@@ -195,14 +195,24 @@ Do the animation stuff
       //  lightObject.setScene(sceneSimple);
         //ightObject.setMaterial(groundMat);
         TransformationMatrix4x4 trans = new TransformationMatrix4x4();
-        trans.createTranslationMatrix( new Vector3D(0,0,-2));
-        SceneObject ellipse = new Ellipsoid(0.1,0.6,0.2,trans);
-        sceneSimple.getSceneObjects().add(ellipse);
-        ellipse.setGizmo(true);
-        ellipse.setScene(sceneSimple);
-        ellipse.setMaterial(groundMat);
+      //  trans.createTranslationMatrix( new Vector3D(0,1,-4));
+//        SceneObject ellipse = new Ellipsoid(0.1,0.6,0.2,trans);
+//        sceneSimple.getSceneObjects().add(ellipse);
+//        ellipse.setGizmo(true);
+//        ellipse.setScene(sceneSimple);
+//        ellipse.setMaterial(groundMat);
 
+        //Cylinder ellipsoid
+        //trans.createXScaleMatrix( 1.);//(0,5,0));
+        trans.createZRotationMatrix( 150.);
 
+        trans.createTranslationMatrix( new Vector3D(0,0,-1));
+        //trans.createYScaleMatrix( 2.);//new math.Vector3D(0,5,0));
+        SceneObject ellipC = new EllipticalCylinder(0.1,0.6,0.2,trans);
+        sceneSimple.getSceneObjects().add(ellipC);
+        ellipC.setGizmo(true);
+        ellipC.setScene(sceneSimple);
+        ellipC.setMaterial(groundMat);
 
         /*for (SceneObject s : sceneObjects) {
 
