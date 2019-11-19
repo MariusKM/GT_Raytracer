@@ -68,7 +68,8 @@ public class Quadrik3 extends SceneObject {
      * Sehe ob ein Punkt in der Quadrik liegt
      */
     public boolean isInside(Vector3 p) {
-        return a * p.x * p.x + b * p.y * p.y + c * p.z * p.z + 2.0 * (d * p.x * p.y + e * p.x * p.z + f * p.y * p.z + g * p.x + h * p.y + j * p.z) + k <= 0.0;
+        double sum = a * p.x * p.x + b * p.y * p.y + c * p.z * p.z + 2.0 * (d * p.x * p.y + e * p.x * p.z + f * p.y * p.z + g * p.x + h * p.y + j * p.z) + k;
+        return sum<= 0.0;
     }
 
     /* (non-Javadoc)
@@ -84,7 +85,7 @@ public class Quadrik3 extends SceneObject {
 
 
     @Override
-    public boolean intersect(Ray3 ray3, SceneObject object) {
+    public boolean intersect(Ray3 ray3) {
         double p1, p2, p3, r1, r2, r3;
         // Start Vektor
         p1 = ray3.getOrigin().x;
@@ -113,7 +114,7 @@ public class Quadrik3 extends SceneObject {
         double sqrtD = Math.sqrt(D);
         // Schnittpunkt 1 berechnen
         double t1 = (-Bq - sqrtD) / Aq;
-        // Schnittpunkt 1 berechnen
+        // Schnittpunkt 2 berechnen
         double t2 = (-Bq + sqrtD) / Aq;
 
         // siehe zu dass der kleiner Schnittpunkt der erste ist
@@ -152,7 +153,7 @@ public class Quadrik3 extends SceneObject {
         //return new IntersectionInfo( t2-Constants.nearzero, Constants.infinity, ray, this, this);
     }
 
-    public boolean intersectBody(Ray3 ray3, SceneObject object) {
+    public boolean intersectBody(Ray3 ray3) {
         double p1, p2, p3, r1, r2, r3;
         // Start Vektor
         p1 = ray3.getOrigin().x;
@@ -181,7 +182,7 @@ public class Quadrik3 extends SceneObject {
         double sqrtD = Math.sqrt(D);
         // Schnittpunkt 1 berechnen
         double t1 = (-Bq - sqrtD) / Aq;
-        // Schnittpunkt 1 berechnen
+        // Schnittpunkt 2 berechnen
         double t2 = (-Bq + sqrtD) / Aq;
 
         // siehe zu dass der kleiner Schnittpunkt der erste ist
@@ -201,24 +202,24 @@ public class Quadrik3 extends SceneObject {
             ray3.setT1((float) (t2 + Constants.nearzero));
             ray3.setNearest(this);
             return true;
-            //new IntersectionInfo( t1-Constants.nearzero, t2+Constants.nearzero, ray, this, this);
+
         } else {
             if (isInside(ray3.getOrigin())) {
                 ray3.setT0(0);
                 ray3.setT1((float) (t1 + Constants.nearzero));
 
-                return true;//new IntersectionInfo( 0, t1+Constants.nearzero, ray, this, this);
+                return true;
             } else {
                 ray3.setT0((float) (t1 + Constants.nearzero));
                 ray3.setT1((float) (t2 - Constants.nearzero));
                 ray3.setNearest(this);
-                return true; //IntersectionInfo( t1+Constants.nearzero, t2-Constants.nearzero, ray, this, this);
+                return true;
             }
 
         }
 
-        //return new IntersectionInfo( t2-Constants.nearzero, Constants.infinity, ray, this, this);
-    }
+
+}
 
     /* (non-Javadoc)
      * @see objects.IObject#transform(math.TransformationMatrix4x4)
@@ -286,7 +287,7 @@ public class Quadrik3 extends SceneObject {
     public boolean shadowCheck(SceneSimple scene, Ray3 myRay3) {
         for (SceneObject s : scene.getSceneObjects()) {
             if (!s.equals(this) && !s.isGizmo()) {
-                boolean intersect = s.intersect(myRay3, s);
+                boolean intersect = s.intersect(myRay3);
 
                 if (intersect) {
                     return true;

@@ -6,7 +6,7 @@ abstract class SceneObject {
     private boolean isGizmo = false;
 
 
-    public abstract boolean intersect(Ray3 ray3, SceneObject object);
+    public abstract boolean intersect(Ray3 ray3);
 
     public abstract int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t);
 
