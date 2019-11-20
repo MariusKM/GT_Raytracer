@@ -4,13 +4,14 @@ abstract class SceneObject {
     private Material material;
     private SceneSimple scene;
     private boolean isGizmo = false;
+    private float speed = 0.05f;
 
-
-    public abstract boolean intersect(Ray ray, SceneObject object);
+    public abstract boolean intersect(Ray3 ray3);
 
     public abstract int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t);
+    public abstract int shadeCookTorrance(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t);
 
-    public abstract boolean shadowCheck( SceneSimple scene, Ray myRay);
+    public abstract boolean shadowCheck( SceneSimple scene, Ray3 myRay3);
 
     public boolean isShade() {
         return shade;
@@ -42,5 +43,12 @@ abstract class SceneObject {
 
     public void setGizmo(boolean gizmo) {
         isGizmo = gizmo;
+    }
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 }

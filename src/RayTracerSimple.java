@@ -1,14 +1,15 @@
 
 
+import math.Matrix4x4;
+import math.TransformationMatrix4x4;
+import math.Vector3D;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Vector;   // use java vector as a list
-import java.lang.Thread;
-import java.awt.Color;
 import java.awt.Color;
 
 import static java.lang.Math.*;
@@ -20,7 +21,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static int resX = 1024, resY = 1024;
     static boolean usePerspective = true;
-    static int numSpheres = 50;
+    static int numSpheres = 25;
     static SceneObject[] sceneObjects;
     static int[] pixels;
     static Camera cam;
@@ -29,7 +30,7 @@ public class RayTracerSimple extends java.applet.Applet {
     static int delta_timeMS;
     static float delta_time;
     static long last_time;
-    static Color BG_Color = new Color(0.075f,0.075f,0.075f);
+    static Color BG_Color = new Color(0.1f,0.1f,0.1f);
 
     public static boolean isExit() {
         return exit;
@@ -51,13 +52,16 @@ public class RayTracerSimple extends java.applet.Applet {
             handleAnimation();
             paintPix();
             drawGUI();
+           // exit = true;
         }
         while(!exit);
 
-        String path = "C:/Users/mariu/Workspaces/uni/GT Ray Tracing";
-        // savePic(image, "jpeg", path + random() + ".jpeg");
+        String path = "C:/Users/mariu/Workspaces/uni/GT Ray3 Tracing";
+        //savePic(image, "jpeg", path + random() + ".jpeg");
     }
-
+/*
+Do the animation stuff
+ */
     static void handleAnimation(){
         float upperLimit = 1.5f;
         float lowerLimit = -1f;
@@ -65,12 +69,18 @@ public class RayTracerSimple extends java.applet.Applet {
         for (SceneObject s: sceneSimple.getSceneObjects()
              ) {
 
-            if (s instanceof SphereObject && !s.isGizmo()){
+            if (s instanceof Ellipsoid && !s.isGizmo()){
 
 
-                 Vector3 newPos = new Vector3(((SphereObject) s).getCenter());
+                TransformationMatrix4x4 trans = new TransformationMatrix4x4();
+                trans.createTranslationMatrix( new Vector3D(0,s.getSpeed()*delta_time,0));
 
-                 if (newPos.y > upperLimit || newPos.y < lowerLimit){
+                ((Ellipsoid) s).transform(trans);
+                trans = new TransformationMatrix4x4();
+                //trans.createYRotationMatrix(s.getSpeed()*delta_time);
+                trans.createRotationMatrix(s.getSpeed()*delta_time,s.getSpeed()*delta_time,s.getSpeed()*delta_time);
+                ((Ellipsoid) s).transform(trans);
+               /*  if (newPos.y > upperLimit || newPos.y < lowerLimit){
 
                      ((SphereObject) s).setSpeed(((SphereObject) s).getSpeed() *-1);
                  }
@@ -78,7 +88,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
 
                  newPos.add(new Vector3(0,((SphereObject) s).getSpeed()*delta_time,0));
-                ((SphereObject) s).setCenter(newPos);
+                ((SphereObject) s).setCenter(newPos);*/
 
             }
         }
@@ -123,7 +133,9 @@ public class RayTracerSimple extends java.applet.Applet {
                 Vector3 rayDir;
                 if (usePerspective) {
                     Vector3 pixelPos = cam.pixelCenterCoordinate(x, y);
+
                     rayDir = pixelPos.sub(cam.getPosition());
+
 
                 } else {
                     float pixelPosX = (2 * (x + 0.5f) / (float) resX - 1) * cam.getAspectRatio() * cam.getScale();
@@ -134,31 +146,34 @@ public class RayTracerSimple extends java.applet.Applet {
 
                 rayDir.normalize();
 
-                Ray myRay = new Ray(cam.getPosition(), rayDir);
+                Ray3 myRay3 = new Ray3(cam.getPosition(), rayDir);
                 boolean intersect = false;
                 SceneObject temp;
                 SceneObject intersectObj;
 
                 for (SceneObject s : sceneSimple.getSceneObjects()) {
-                    intersect = s.intersect(myRay, s);
+                    intersect = s.intersect(myRay3);
                   /* if (intersect){
                         insideCounter++;
                     }*/
 
                 }
-
-                if (myRay.getNearest() != null) {
-                    temp = myRay.getNearest();
+                int indexer = usePerspective ? (resY-y-1)* resY + x:(y * resY + x) ;
+                if (myRay3.getNearest() != null) {
+                    temp = myRay3.getNearest();
                     //outsideCounter++;
 
                     intersectObj = temp;
-                    int pixelColor = (intersectObj.isShade()) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT()) : Color.WHITE.getRGB();
+                    //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) : Color.WHITE.getRGB();
+                    int pixelColor = (intersectObj.isShade()) ?   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) : Color.WHITE.getRGB();
 
-                    pixels[(resY-y-1)* resY + x] = pixelColor;
+                    pixels[indexer] = pixelColor;
 
                 } else {
-                    pixels[(resY-y-1) * resY + x] = BG_Color.getRGB();
+                    pixels[indexer] = BG_Color.getRGB();
                 }
+
+
 
 
             }
@@ -166,39 +181,85 @@ public class RayTracerSimple extends java.applet.Applet {
     }
 
     static void initScene() {
-        cam = new Camera(new Vector3(0, 0, 0), new Vector3(0, 0, -1), 90, resX, resY);
+        cam = new Camera(new Vector3(0, 0.5f, 1), new Vector3(0, 0.5f, -1), 90, resX, resY);
 
         KeyHandler keyHandler = new KeyHandler();
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0f, 1.25f, -1.25f), 20, Color.white);
+        sceneLight = new Light(new Vector3(0f, 1f, -3), 10, Color.white);
 
-        sceneObjects = createSpheres(numSpheres, 0.15f, 0.01f);
-
-        SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05f);
-        lightObject.setShade(false);
-        lightObject.setGizmo(true);
-        sceneSimple.getSceneObjects().add(lightObject);
-        lightObject.setScene(sceneSimple);
-
-        PlaneObject groundPlane = new PlaneObject(new Vector3(0, -2, 0), new Vector3(0, 1, 0));
+       // PlaneObject groundPlane = new PlaneObject(new Vector3(0, -2, 0), new Vector3(0, 1, 0));
         Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0);
-        groundPlane.setMaterial(groundMat);
-        sceneSimple.getSceneObjects().add(groundPlane);
-        groundPlane.setScene(sceneSimple);
+       // groundPlane.setMaterial(groundMat);
+       // sceneSimple.getSceneObjects().add(groundPlane);
+      //  groundPlane.setScene(sceneSimple);
+          sceneObjects = createSceneObjects(numSpheres, 0.15f, 0.01f);//createSpheres(numSpheres, 0.15f, 0.01f);
 
-        SphereObject testSphere = new SphereObject(new Vector3(0,0,-2), 0.15f);
-        testSphere.setMaterial(groundMat);
-        sceneSimple.getSceneObjects().add(testSphere);
-        testSphere.setScene(sceneSimple);
+         SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05f);
+         lightObject.setShade(false);
+         lightObject.setGizmo(true);
+        // sceneSimple.getSceneObjects().add(lightObject);
+         lightObject.setScene(sceneSimple);
+         lightObject.setMaterial(groundMat);
+        TransformationMatrix4x4 trans = new TransformationMatrix4x4();
+        trans.createTranslationMatrix( new Vector3D(0,1,-2));
+        SceneObject ellipse = new Ellipsoid(0.4,0.7,0.4,trans);
+      //  sceneSimple.getSceneObjects().add(ellipse);
+       // ellipse.setShade(false);
+        ellipse.setGizmo(true);
+        ellipse.setScene(sceneSimple);
+        ellipse.setMaterial(groundMat);
+
+        SceneObject ellipse2 = new Ellipsoid(0.7,0.4,0.4,trans);
+       // sceneSimple.getSceneObjects().add(ellipse2);
+        //ellipse2.setShade(false);
+        ellipse2.setGizmo(true);
+        ellipse2.setScene(sceneSimple);
+        ellipse2.setMaterial(groundMat);
+
+        ComplexObject xobj = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Differenz");
+        ComplexObject xobj2 = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Schnitt");
+        ComplexObject xobj3 = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Vereinigung");
+        //xobj.setShade(false);
+
+        sceneSimple.getSceneObjects().add(xobj3);
+       // sceneSimple.getSceneObjects().add(xobj2);
+       // sceneSimple.getSceneObjects().add(xobj3);
+
+        xobj.setScene(sceneSimple);
+        xobj.setMaterial(groundMat);
+        xobj2.setScene(sceneSimple);
+        xobj2.setMaterial(groundMat);
+        xobj3.setScene(sceneSimple);
+        xobj3.setMaterial(groundMat);
+
+
+
+
         for (SceneObject s : sceneObjects) {
 
-            Material defaultMat = new Material(new Vector3((float )(random()*0.5f +0.5f), (float )(0.5f * random()), (float) (0.2 * random())), 0);
+            Material defaultMat = new Material(new Vector3((float )(random()*0.5f +0.5f), (float )(0.5f * random()), (float) (0.2 * random())), 0.25f,0.3f);
             s.setMaterial(defaultMat);
             sceneSimple.getSceneObjects().add(s);
             s.setScene(sceneSimple);
         }
+    }
+    static SceneObject[] createSceneObjects(int numObjects, float maxRad, float minRad) {
+        SceneObject[] objects = new SceneObject[numObjects];
+        Vector3 objectPos;
+        float radiusX,radiusY,radiusZ;
+        for (int i = 0; i < numObjects; i++) {
+            objectPos = randomVecInRange(-0.5f, 1, -0.75f, 1, -0.25, 0);
+            radiusX = (float)(random() * maxRad + minRad);
+            radiusY = (float)(random() * maxRad + minRad);
+            radiusZ = (float)(random() * maxRad + minRad);
+            TransformationMatrix4x4 trans = new TransformationMatrix4x4();
+            trans.createTranslationMatrix( new Vector3D(objectPos.x,objectPos.y,objectPos.z));
+            SceneObject ellipse = new Ellipsoid(0.9,0.6,0.2,trans);
+            objects[i] = new Ellipsoid( radiusX,radiusY,radiusZ,trans);
+        }
+        return objects;
     }
 
     static SceneObject[] createSpheres(int numSpheres, float maxRad, float minRad) {
@@ -206,7 +267,7 @@ public class RayTracerSimple extends java.applet.Applet {
         Vector3 spherePos;
         float sphereRadius;
         for (int i = 0; i < numSpheres; i++) {
-            spherePos = randomVecInRange(-1, 1, -1.5f, 1, -1, 0);
+            spherePos = randomVecInRange(-0.5f, 1, -0.75f, 1, -0.5, 0);
             sphereRadius = (float)(random() * maxRad + minRad);
             spheres[i] = new SphereObject(spherePos, sphereRadius);
         }
@@ -273,6 +334,9 @@ public class RayTracerSimple extends java.applet.Applet {
         return Math.max(min, Math.min(max, val));
     }
 
+    public static float clampF(float val, float min, float max) {
+        return Math.max(min, Math.min(max, val));
+    }
 
     static Color blend(Color a, Color b) {
 
