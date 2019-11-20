@@ -91,6 +91,7 @@ public class Quadrik3 extends SceneObject {
         p1 = ray3.getOrigin().x;
         p2 = ray3.getOrigin().y;
         p3 = ray3.getOrigin().z;
+
         // Richtungs Vektor
         r1 = ray3.getDirection().x;
         r2 = ray3.getDirection().y;
@@ -106,7 +107,7 @@ public class Quadrik3 extends SceneObject {
         // Term berechnen  ((Bq2 - 4AqCq) ABC Formel
         double D = Bq * Bq - Aq * Cq;
 
-        // checken D kleiner null, oder Aq gegen null, dann keinen schnittPunkt
+        // checken ob D kleiner null, oder Aq gegen null, dann keinen schnittPunkt
         if ((D < 0.0) || (Math.abs(Aq) < Constants.nearzero)) {
             return false;
         }
@@ -128,29 +129,25 @@ public class Quadrik3 extends SceneObject {
             return false;
         }
 
-        //
         if (isInside(ray3.getPoint(0.5f * (float) (t1 + t2)))) {
             ray3.setT0((float) (t1 - Constants.nearzero));
             ray3.setT1((float) (t2 + Constants.nearzero));
             ray3.setNearest(this);
             return true;
-            //new IntersectionInfo( t1-Constants.nearzero, t2+Constants.nearzero, ray, this, this);
         } else {
             if (isInside(ray3.getOrigin())) {
                 ray3.setT0(0);
                 ray3.setT1((float) (t1 + Constants.nearzero));
+                return true;
 
-                return true;//new IntersectionInfo( 0, t1+Constants.nearzero, ray, this, this);
             } else {
                 ray3.setT0((float) (t1 + Constants.nearzero));
                 ray3.setT1((float) (t2 - Constants.nearzero));
                 ray3.setNearest(this);
-                return true; //IntersectionInfo( t1+Constants.nearzero, t2-Constants.nearzero, ray, this, this);
+                return true;
             }
 
         }
-
-        //return new IntersectionInfo( t2-Constants.nearzero, Constants.infinity, ray, this, this);
     }
 
     public boolean intersectBody(Ray3 ray3) {
@@ -196,7 +193,6 @@ public class Quadrik3 extends SceneObject {
             return false;
         }
 
-        //
         if (isInside(ray3.getPoint(0.5f * (float) (t1 + t2)))) {
             ray3.setT0((float) (t1 - Constants.nearzero));
             ray3.setT1((float) (t2 + Constants.nearzero));
@@ -217,8 +213,6 @@ public class Quadrik3 extends SceneObject {
             }
 
         }
-
-
 }
 
     public void transform(math.TransformationMatrix4x4 m) {
