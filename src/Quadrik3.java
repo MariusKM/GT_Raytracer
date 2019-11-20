@@ -57,22 +57,22 @@ public class Quadrik3 extends SceneObject {
     }
 
 
-    /* (non-Javadoc)
+    /*
      * Berechne den Wert der Quadrik an dem Punkt P
      */
     public double q(Point3D p) {
         return a * p.x * p.x + b * p.y * p.y + c * p.z * p.z + 2.0 * (d * p.x * p.y + e * p.x * p.z + f * p.y * p.z + g * p.x + h * p.y + j * p.z) + k;
     }
 
-    /* (non-Javadoc)
-     * Sehe ob ein Punkt in der Quadrik liegt
+    /*
+     * Schaue ob ein Punkt in der Quadrik liegt
      */
     public boolean isInside(Vector3 p) {
         double sum = a * p.x * p.x + b * p.y * p.y + c * p.z * p.z + 2.0 * (d * p.x * p.y + e * p.x * p.z + f * p.y * p.z + g * p.x + h * p.y + j * p.z) + k;
         return sum<= 0.0;
     }
 
-    /* (non-Javadoc)
+    /*
      * berechne die Flächen Normale der Quadrik bei dem Punkt P
      */
     public Vector3 normal(Vector3 p) {
@@ -221,9 +221,6 @@ public class Quadrik3 extends SceneObject {
 
 }
 
-    /* (non-Javadoc)
-     * @see objects.IObject#transform(math.TransformationMatrix4x4)
-     */
     public void transform(math.TransformationMatrix4x4 m) {
         Matrix4x4 im = m.getInverseMatrix();
         matrix = MatrixOps.multiply(MatrixOps.multiply(MatrixOps.transpose(im), matrix),im);

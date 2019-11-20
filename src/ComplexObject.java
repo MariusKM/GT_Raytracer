@@ -8,31 +8,32 @@ import java.util.ArrayList;
 public class ComplexObject extends SceneObject {
 
     private String operation="Vereinigung";
-    public ArrayList<Quadrik3> list = new ArrayList<Quadrik3>();
     public Quadrik3 quadA, quadB;
     public Quadrik3 intersectObj;
     public Vector3 normal;
 
     ComplexObject(Quadrik3 a,Quadrik3 b, String operation ){
-        list.add(a);//ugly
-        list.add(b);
         this.quadA = a;
         this.quadB = b;
         this.operation=operation;
     }
 
 
-    /* (non-Javadoc)
-     * berechne die Flächen Normale der Quadrik bei dem Punkt P
+    /*
+     * Berechne die Flächen Normale der Quadrik bei dem Punkt P
      */
     public Vector3 normal(Vector3 p) {
-        Vector3 res=null;
-        for(Quadrik3 a : list) {
-           if (a.isInside(p)){
-               res = a.normal(p);
-           }
-        }
-        return res;
+       Vector3 res = null;
+
+       if (quadA.isInside(p)){
+           res = quadA.normal(p);
+       }
+
+       if (quadB.isInside(p)){
+           res = quadB.normal(p);
+       }
+
+       return res;
     }
 
 
@@ -86,24 +87,21 @@ public class ComplexObject extends SceneObject {
                 }
                 break;
         }
-        //lastIntersection();
-
-
 
         return result;
     }
 
-    /* (non-Javadoc)
-     * @see objects.IObject#transform(math.TransformationMatrix4x4)
-     */
     public void transform(math.TransformationMatrix4x4 m) {
         //if (list.size()==0) return;
         //Transform each object
-        for(Quadrik3 a : list) {
-            Matrix4x4 im = m.getInverseMatrix();
-            a.setMatrix( MatrixOps.multiply(MatrixOps.multiply(MatrixOps.transpose(im), a.getMatrix()), im));
-            a.setConstantsFromMatrix();
-        }
+
+        Matrix4x4 im = m.getInverseMatrix();
+        quadA.setMatrix( MatrixOps.multiply(MatrixOps.multiply(MatrixOps.transpose(im), quadA.getMatrix()), im));
+        quadA.setConstantsFromMatrix();
+
+        quadB.setMatrix( MatrixOps.multiply(MatrixOps.multiply(MatrixOps.transpose(im), quadB.getMatrix()), im));
+        quadB.setConstantsFromMatrix();
+
     }
 
     @Override
