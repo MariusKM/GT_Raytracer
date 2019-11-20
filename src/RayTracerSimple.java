@@ -1,8 +1,6 @@
 
 
-import math.Matrix4x4;
 import math.TransformationMatrix4x4;
-import math.Vector;
 import math.Vector3D;
 
 import javax.imageio.ImageIO;
@@ -57,7 +55,7 @@ public class RayTracerSimple extends java.applet.Applet {
         }
         while(!exit);
 
-        String path = "C:/Users/mariu/Workspaces/uni/GT Ray3 Tracing";
+        String path = "C:/Users/mariu/Workspaces/uni/GT Ray Tracing";
         //savePic(image, "jpeg", path + random() + ".jpeg");
     }
 /*
@@ -151,26 +149,26 @@ Do the animation stuff
 
                 rayDir.normalize();
 
-                Ray3 myRay3 = new Ray3(cam.getPosition(), rayDir);
+                Ray myRay = new Ray(cam.getPosition(), rayDir);
                 boolean intersect = false;
                 SceneObject temp;
                 SceneObject intersectObj;
 
                 for (SceneObject s : sceneSimple.getSceneObjects()) {
                     if (s instanceof PlaneObject){
-                        intersect = s.intersect(myRay3);
+                        intersect = s.intersect(myRay);
                     }else{
-                        intersect = s.intersect(myRay3);
+                        intersect = s.intersect(myRay);
                     }
 
 
                 }
                 int indexer = usePerspective ? (resY-y-1)* resY + x:(y * resY + x) ;
-                if (myRay3.getNearest() != null) {
-                    temp = myRay3.getNearest();
+                if (myRay.getNearest() != null) {
+                    temp = myRay.getNearest();
                     intersectObj = temp;
-                    //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) : Color.WHITE.getRGB();
-                    int pixelColor = (intersectObj.isShade()) ?   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) : Color.WHITE.getRGB();
+                    //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
+                    int pixelColor = (intersectObj.isShade()) ?   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
 
                     pixels[indexer] = pixelColor;
 
@@ -192,7 +190,7 @@ Do the animation stuff
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0f, 1f, -3), 10, Color.white);
+        sceneLight = new Light(new Vector3(0f, 1.5f, -0.25f), 10, Color.white);
 
           PlaneObject groundPlane = new PlaneObject(new Vector3(0, 0, 0), new Vector3(0, 1, 0));
           Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.3f,0.4f);
@@ -223,9 +221,9 @@ Do the animation stuff
         ellipse2.setScene(sceneSimple);
         ellipse2.setMaterial(groundMat);*/
 
-        ComplexObject xobj = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Differenz");
-        ComplexObject xobj2 = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Schnitt");
-        ComplexObject xobj3 = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Vereinigung");
+        ComplexObject xobj = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2,"Differenz");
+        ComplexObject xobj2 = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2,"Schnitt");
+        ComplexObject xobj3 = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2,"Vereinigung");
         //xobj.setShade(false);
 
         sceneSimple.getSceneObjects().add(xobj);

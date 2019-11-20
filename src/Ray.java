@@ -1,4 +1,4 @@
-public class Ray3 {
+public class Ray {
 //TODO  SWITCH TO USEING T FOR HITPOIINT INSTEAD OF SAVING VECTOR3
     private Vector3 Origin;
     private Vector3 Direction;
@@ -48,7 +48,7 @@ public class Ray3 {
         this.nearest = nearest;
     }
 
-    public Ray3(Vector3 or, Vector3 dir){
+    public Ray(Vector3 or, Vector3 dir){
         this.Origin = or;
         this.Direction = dir;
         t0 = 10000;
@@ -56,7 +56,7 @@ public class Ray3 {
 
     }
 
-    public Ray3(Ray3 ray){
+    public Ray(Ray ray){
         this.Origin = ray.getOrigin();
         this.Direction = ray.getDirection();
         t0 = ray.getT0();

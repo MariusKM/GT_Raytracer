@@ -1,5 +1,3 @@
-import math.Vector;
-
 import java.awt.*;
 
 class SphereObject extends SceneObject {
@@ -129,8 +127,8 @@ class SphereObject extends SceneObject {
         finalCol.mult(t1);
 
         // SHADOWS && INTENSITY
-        Ray3 shadowRay3 = new Ray3(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay3);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -175,8 +173,8 @@ class SphereObject extends SceneObject {
         lightDir.normalize();
         float lightDist = center.distance(light.getPosition());
         //System.out.println(lightDist);
-        Ray3 shadowRay3 = new Ray3(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay3);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -208,18 +206,18 @@ class SphereObject extends SceneObject {
         return (pixelCol);
     }
 
-    public boolean intersect(Ray3 Ray3) {
+    public boolean intersect(Ray Ray) {
         /*
         a =1\\
         b=2D(Origin-C)
         c=|O-C|^2-R^2    */
         SphereObject sphere = this;
 
-        Vector3 L = Ray3.getOrigin().sub(sphere.getCenter());
-        Vector3 dir = Ray3.getDirection();
+        Vector3 L = Ray.getOrigin().sub(sphere.getCenter());
+        Vector3 dir = Ray.getDirection();
         dir.normalize();
         float a = dir.dotProduct(dir);// directional math.Vector sq
-        float b = 2 * Ray3.getDirection().dotProduct(L);
+        float b = 2 * Ray.getDirection().dotProduct(L);
         float c = L.dotProduct(L) - sphere.getRadiusSq();
         float[] quadraticResults = RayTracerSimple.solveQuadratic(a, b, c);
 
@@ -245,9 +243,9 @@ class SphereObject extends SceneObject {
                 return false; // both t0 and t1 are negative, keine schnittpunkte
             }
         }
-        if (t0 < Ray3.getT0()) {
-            Ray3.setT0(t0);
-            Ray3.setNearest(sphere);
+        if (t0 < Ray.getT0()) {
+            Ray.setT0(t0);
+            Ray.setNearest(sphere);
         }
 
 
@@ -255,10 +253,10 @@ class SphereObject extends SceneObject {
     }
 
 
-    public boolean shadowCheck( SceneSimple scene, Ray3 myRay3) {
+    public boolean shadowCheck( SceneSimple scene, Ray myRay) {
         for (SceneObject s : scene.getSceneObjects()) {
             if (!s.equals(this) && !s.isGizmo()) {
-                boolean intersect = s.intersect(myRay3);
+                boolean intersect = s.intersect(myRay);
 
                 if (intersect) {
                     return true;

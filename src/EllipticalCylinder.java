@@ -1,6 +1,6 @@
 import math.TransformationMatrix4x4;
 
-public class EllipticalCylinder extends Quadrik3{
+public class EllipticalCylinder extends Quadrik {
     /**
      * constructor
      * @param rx radius in x-direction

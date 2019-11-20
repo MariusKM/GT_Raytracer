@@ -108,11 +108,6 @@ public abstract class Object implements IObject {
 		trans.transform(m);
 	}
 
-	/* (non-Javadoc)
-	 * @see objects.IObject#UniformRandomPoint(math.Point3D, math.Vector3D, math.Point2D, math.Point3D)
-	 */
-	public void UniformRandomPoint(Point3D point, Vector3D normal, Point3D prand) {
-	}
 
 	/* (non-Javadoc)
 	 * @see objects.IObject#getArea()

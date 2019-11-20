@@ -159,47 +159,9 @@ public class VectorOps {
 
     }
 
-    /**
-     * creates a diffuse vector from a 2D random point
-     * @param uvw [in] onb
-     * @param p [in] 2d-point
-     */
-    public static Vector3D createDiffuseVector( OrthonormalBasis uvw, Point2D p ) {
-        double phi = Constants.two_pi * p.x;
 
-        double sint = Math.sqrt( p.y );
-        double cost = Math.sqrt( 1.0 - p.y );
 
-        return uvw.transform( new Vector3D( Math.cos(phi)*sint, Math.sin(phi)*sint, cost ) );
-    }
 
-    /**
-     * perturbs the vector down and around
-     * @param vec [in] vector
-     * @param down
-     * @param around
-     */
-    public static Vector3D perturb( Vector3D vec, double down, double around )
-    {
-        OrthonormalBasis uvw = new OrthonormalBasis();
-
-        uvw.createFromU( vec );
-
-        Matrix4x4 rthere = uvw.getCanonicalToBasisMatrix();
-        Matrix4x4 rback = uvw.getBasisToCanonicalMatrix();
-
-        Vector3D a = MatrixOps.transform( rthere, vec );
-
-        Matrix4x4 rx = new Matrix4x4();
-        rx.createXRotationMatrix( around );
-        Matrix4x4 ry = new Matrix4x4();
-        ry.createYRotationMatrix( down );
-
-        a = MatrixOps.transform( ry, a );
-        a = MatrixOps.transform( rx, a );
-        a = MatrixOps.transform( rback, a );
-        return a;
-    }
 
 
 }

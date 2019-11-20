@@ -1,19 +1,17 @@
-import math.Constants;
 import math.Matrix4x4;
 import math.MatrixOps;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class ComplexObject extends SceneObject {
 
     private String operation="Vereinigung";
-    public Quadrik3 quadA, quadB;
-    public Quadrik3 intersectObj;
+    public Quadrik quadA, quadB;
+    public Quadrik intersectObj;
     public Vector3 normal;
     private float Tintersectzion;
 
-    ComplexObject(Quadrik3 a,Quadrik3 b, String operation ){
+    ComplexObject(Quadrik a, Quadrik b, String operation ){
         this.quadA = a;
         this.quadB = b;
         this.operation=operation;
@@ -39,11 +37,11 @@ public class ComplexObject extends SceneObject {
 
 
     @Override
-    public boolean intersect(Ray3 ray3) {
+    public boolean intersect(Ray ray) {
         //TODO: Cases für schnittpunkte Regeln, zwei Rays verwenden!!!!
-        Ray3 rayA, rayB;
-        rayA = new Ray3(ray3);
-        rayB = new Ray3(ray3);
+        Ray rayA, rayB;
+        rayA = new Ray(ray);
+        rayB = new Ray(ray);
 
 
         boolean result =false;
@@ -54,7 +52,7 @@ public class ComplexObject extends SceneObject {
 
                 if(result){
                     // zweiten Eintrittspunkt wählen
-                    Quadrik3 temp;
+                    Quadrik temp;
                     if (rayA.getT0()<rayB.getT0()){
                          temp = quadB;
                          Tintersectzion = rayB.getT0();
@@ -63,7 +61,7 @@ public class ComplexObject extends SceneObject {
                         Tintersectzion = rayA.getT0();
                     }
                     intersectObj = temp;
-                    ray3.setNearest(this);
+                    ray.setNearest(this);
                 }
                 break;
 
@@ -74,7 +72,7 @@ public class ComplexObject extends SceneObject {
                 result = quadA.intersect(rayA) & !quadB.intersect(rayB);
 
                 if(result){
-                    Quadrik3 temp;
+                    Quadrik temp;
                     if (rayA.getT0()<rayB.getT0()){
                         temp = quadA;
                         Tintersectzion = rayA.getT0();
@@ -95,7 +93,7 @@ public class ComplexObject extends SceneObject {
 
                     }
                     intersectObj = temp;
-                    ray3.setNearest(this);
+                    ray.setNearest(this);
                 }
                 break;
 
@@ -106,9 +104,9 @@ public class ComplexObject extends SceneObject {
                 boolean resultB =  quadB.intersect(rayB);
                 if(resultA||resultB){
 
-                    Quadrik3 temp = (resultA) ? (Quadrik3)rayA.getNearest(): (Quadrik3)rayB.getNearest();
+                    Quadrik temp = (resultA) ? (Quadrik)rayA.getNearest(): (Quadrik)rayB.getNearest();
                     intersectObj = temp;
-                    ray3.setNearest(this);
+                    ray.setNearest(this);
                 }
                 break;
         }
@@ -150,8 +148,8 @@ public class ComplexObject extends SceneObject {
         lightDir.normalize();
         float lightDist = intersection.distance(light.getPosition());
         //System.out.println(lightDist);
-        Ray3 shadowRay3 = new Ray3(intersection, lightDir);
-        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay3);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -281,8 +279,8 @@ public class ComplexObject extends SceneObject {
         finalCol.mult(t1);
 
         // SHADOWS && INTENSITY
-        Ray3 shadowRay3 = new Ray3(intersection, lightDir);
-        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay3);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -306,22 +304,22 @@ public class ComplexObject extends SceneObject {
     }
 
     @Override
-    public boolean shadowCheck(SceneSimple scene, Ray3 myRay3) {
+    public boolean shadowCheck(SceneSimple scene, Ray myRay) {
         for (SceneObject s : scene.getSceneObjects()) {
-            Vector3 offset = new Vector3(myRay3.getDirection());
+            Vector3 offset = new Vector3(myRay.getDirection());
             offset.mult(-1);
             offset.mult(0.00001f);
-            offset.add(myRay3.getOrigin());
-            myRay3.setOrigin(offset);
+            offset.add(myRay.getOrigin());
+            myRay.setOrigin(offset);
             if (!s.equals(this) && !s.isGizmo()) {
                 boolean intersect;
                 if(s instanceof Ellipsoid){
-                    intersect =((Ellipsoid) s).intersect(myRay3);
+                    intersect =((Ellipsoid) s).intersect(myRay);
                 }else if ( s instanceof ComplexObject) {
 
-                    intersect =((ComplexObject) s).intersect(myRay3);
+                    intersect =((ComplexObject) s).intersect(myRay);
                 }else{
-                    intersect = s.intersect(myRay3);
+                    intersect = s.intersect(myRay);
                 }
 
                 if (intersect) {

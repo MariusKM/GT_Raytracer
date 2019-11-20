@@ -2,7 +2,7 @@ import math.*;
 
 import java.awt.*;
 
-public class Quadrik3 extends SceneObject {
+public class Quadrik extends SceneObject {
 
 
     // a*x^2+b*y^2+c*z^2+2*d*x*y+2*e*x*z+2*f*y*z+2*g*x+2*h*y+2*j*z+k<=0
@@ -12,9 +12,9 @@ public class Quadrik3 extends SceneObject {
     private Matrix4x4 matrix; // constants as matrix
 
 
-    public Quadrik3(double a, double b, double c,
-                    double d, double e, double f,
-                    double g, double h, double j, double k) {
+    public Quadrik(double a, double b, double c,
+                   double d, double e, double f,
+                   double g, double h, double j, double k) {
         super();
         this.a = a;
         this.b = b;
@@ -85,17 +85,17 @@ public class Quadrik3 extends SceneObject {
 
 
     @Override
-    public boolean intersect(Ray3 ray3) {
+    public boolean intersect(Ray ray) {
         double p1, p2, p3, r1, r2, r3;
         // Start Vektor
-        p1 = ray3.getOrigin().x;
-        p2 = ray3.getOrigin().y;
-        p3 = ray3.getOrigin().z;
+        p1 = ray.getOrigin().x;
+        p2 = ray.getOrigin().y;
+        p3 = ray.getOrigin().z;
 
         // Richtungs Vektor
-        r1 = ray3.getDirection().x;
-        r2 = ray3.getDirection().y;
-        r3 = ray3.getDirection().z;
+        r1 = ray.getDirection().x;
+        r2 = ray.getDirection().y;
+        r3 = ray.getDirection().z;
         //  Aqt^2 +Bqt^2 +Cq = 0 Einzelne Terme berechnen
 
         // nach Aq (s)
@@ -129,37 +129,37 @@ public class Quadrik3 extends SceneObject {
             return false;
         }
 
-        if (isInside(ray3.getPoint(0.5f * (float) (t1 + t2)))) {
-            ray3.setT0((float) (t1 - Constants.nearzero));
-            ray3.setT1((float) (t2 + Constants.nearzero));
-            ray3.setNearest(this);
+        if (isInside(ray.getPoint(0.5f * (float) (t1 + t2)))) {
+            ray.setT0((float) (t1 - Constants.nearzero));
+            ray.setT1((float) (t2 + Constants.nearzero));
+            ray.setNearest(this);
             return true;
         } else {
-            if (isInside(ray3.getOrigin())) {
-                ray3.setT0(0);
-                ray3.setT1((float) (t1 + Constants.nearzero));
+            if (isInside(ray.getOrigin())) {
+                ray.setT0(0);
+                ray.setT1((float) (t1 + Constants.nearzero));
                 return true;
 
             } else {
-                ray3.setT0((float) (t1 + Constants.nearzero));
-                ray3.setT1((float) (t2 - Constants.nearzero));
-                ray3.setNearest(this);
+                ray.setT0((float) (t1 + Constants.nearzero));
+                ray.setT1((float) (t2 - Constants.nearzero));
+                ray.setNearest(this);
                 return true;
             }
 
         }
     }
 
-    public boolean intersectBody(Ray3 ray3) {
+    public boolean intersectBody(Ray ray) {
         double p1, p2, p3, r1, r2, r3;
         // Start Vektor
-        p1 = ray3.getOrigin().x;
-        p2 = ray3.getOrigin().y;
-        p3 = ray3.getOrigin().z;
+        p1 = ray.getOrigin().x;
+        p2 = ray.getOrigin().y;
+        p3 = ray.getOrigin().z;
         // Richtungs Vektor
-        r1 = ray3.getDirection().x;
-        r2 = ray3.getDirection().y;
-        r3 = ray3.getDirection().z;
+        r1 = ray.getDirection().x;
+        r2 = ray.getDirection().y;
+        r3 = ray.getDirection().z;
         //  Aqt^2 +Bqt^2 +Cq = 0 Einzelne Terme berechnen
 
         // nach Aq (s)
@@ -193,22 +193,22 @@ public class Quadrik3 extends SceneObject {
             return false;
         }
 
-        if (isInside(ray3.getPoint(0.5f * (float) (t1 + t2)))) {
-            ray3.setT0((float) (t1 - Constants.nearzero));
-            ray3.setT1((float) (t2 + Constants.nearzero));
-            ray3.setNearest(this);
+        if (isInside(ray.getPoint(0.5f * (float) (t1 + t2)))) {
+            ray.setT0((float) (t1 - Constants.nearzero));
+            ray.setT1((float) (t2 + Constants.nearzero));
+            ray.setNearest(this);
             return true;
 
         } else {
-            if (isInside(ray3.getOrigin())) {
-                ray3.setT0(0);
-                ray3.setT1((float) (t1 + Constants.nearzero));
+            if (isInside(ray.getOrigin())) {
+                ray.setT0(0);
+                ray.setT1((float) (t1 + Constants.nearzero));
 
                 return true;
             } else {
-                ray3.setT0((float) (t1 + Constants.nearzero));
-                ray3.setT1((float) (t2 - Constants.nearzero));
-                ray3.setNearest(this);
+                ray.setT0((float) (t1 + Constants.nearzero));
+                ray.setT1((float) (t2 - Constants.nearzero));
+                ray.setNearest(this);
                 return true;
             }
 
@@ -244,8 +244,8 @@ public class Quadrik3 extends SceneObject {
         lightDir.normalize();
         float lightDist = intersection.distance(light.getPosition());
         //System.out.println(lightDist);
-        Ray3 shadowRay3 = new Ray3(intersection, lightDir);
-        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay3);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -372,8 +372,8 @@ public class Quadrik3 extends SceneObject {
         finalCol.mult(t1);
 
         // SHADOWS && INTENSITY
-        Ray3 shadowRay3 = new Ray3(intersection, lightDir);
-        boolean shadow = false; //shadowCheck(this.getScene(), shadowRay3);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = false; //shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -397,19 +397,19 @@ public class Quadrik3 extends SceneObject {
     }
 
     @Override
-    public boolean shadowCheck(SceneSimple scene, Ray3 myRay3) {
+    public boolean shadowCheck(SceneSimple scene, Ray myRay) {
         for (SceneObject s : scene.getSceneObjects()) {
-            Vector3 offset = new Vector3(myRay3.getDirection());
+            Vector3 offset = new Vector3(myRay.getDirection());
             offset.mult(-1);
             offset.mult(0.00001f);
-            offset.add(myRay3.getOrigin());
-            myRay3.setOrigin(offset);
+            offset.add(myRay.getOrigin());
+            myRay.setOrigin(offset);
             if (!s.equals(this) && !s.isGizmo()) {
                 boolean intersect;
                 if(s instanceof Ellipsoid){
-                     intersect =((Ellipsoid) s).intersect(myRay3);
+                     intersect =((Ellipsoid) s).intersect(myRay);
                 }else{
-                     intersect = s.intersect(myRay3);
+                     intersect = s.intersect(myRay);
                 }
                 if (intersect) {
                     return true;

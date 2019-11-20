@@ -1,6 +1,6 @@
 // ellipsoid
 import math.*;
-public class Ellipsoid extends Quadrik3 {
+public class Ellipsoid extends Quadrik {
 
     /**
      * constructor

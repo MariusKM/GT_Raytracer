@@ -10,21 +10,21 @@ public class PlaneObject extends SceneObject {
         this.planeNormal = planeNormal;
     }
 @Override
-    public boolean intersect(Ray3 Ray3) {
+    public boolean intersect(Ray Ray) {
 
         //s = (k – np)/(nv)
         Vector3 normal = new Vector3(this.planeNormal);
-        Vector3 rayDir = new Vector3(Ray3.getDirection());
+        Vector3 rayDir = new Vector3(Ray.getDirection());
         float zaehler = normal.dotProduct(rayDir);
 
-        Vector3 vecToOrigin = this.pointOnPlane.sub(Ray3.getOrigin());
+        Vector3 vecToOrigin = this.pointOnPlane.sub(Ray.getOrigin());
         float t = vecToOrigin.dotProduct(normal) / zaehler;
         if (t >= 0) {
-            if (t < Ray3.getT0()) {
-                Ray3.setT0(t);
-                Ray3.setNearest(this);
+            if (t < Ray.getT0()) {
+                Ray.setT0(t);
+                Ray.setNearest(this);
             }
-            Ray3.setT0(t);
+            Ray.setT0(t);
             return true;
         }
 
@@ -54,8 +54,8 @@ public class PlaneObject extends SceneObject {
         float lightDist = pointOnPlane.distance(light.getPosition());
         //System.out.println(lightDist);
 
-        Ray3 shadowRay3 = new Ray3(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay3);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -187,8 +187,8 @@ public class PlaneObject extends SceneObject {
         finalCol.mult(t1);
 
         // SHADOWS && INTENSITY
-        Ray3 shadowRay3 = new Ray3(intersection, lightDir);
-        boolean shadow =false; //shadowCheck(this.getScene(), shadowRay3);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow =false; //shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -211,10 +211,10 @@ public class PlaneObject extends SceneObject {
         return (pixelCol);
     }
 
-    public boolean shadowCheck(SceneSimple scene, Ray3 myRay3) {
+    public boolean shadowCheck(SceneSimple scene, Ray myRay) {
         for (SceneObject s : scene.getSceneObjects()) {
             if (!s.equals(this) && !s.isGizmo()) {
-                boolean intersect = s.intersect(myRay3);
+                boolean intersect = s.intersect(myRay);
 
                 if (intersect) {
                     return true;

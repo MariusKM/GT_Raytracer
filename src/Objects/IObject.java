@@ -26,12 +26,7 @@ public interface IObject {
 	 */
 	public Vector3D normal(Point3D p);
 	
-	/**
-	 * calculates the intersection with an ray
-	 * @param ray
-	 * @return the intersection info
-	 */
-	public IntersectionInfo calcIntersection(Ray ray);
+
 	
 	/**
 	 * transforms the object with the matrix m
@@ -40,7 +35,6 @@ public interface IObject {
 	public void transform(TransformationMatrix4x4 m);
 
 
-	public void calculateTextureCoordinates(IntersectionInfo ri);
 	
 	/**
 	 * translate the object with vector v
