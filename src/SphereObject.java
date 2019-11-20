@@ -208,12 +208,12 @@ class SphereObject extends SceneObject {
         return (pixelCol);
     }
 
-    public boolean intersect(Ray3 Ray3, SceneObject object) {
+    public boolean intersect(Ray3 Ray3) {
         /*
         a =1\\
         b=2D(Origin-C)
         c=|O-C|^2-R^2    */
-        SphereObject sphere = (SphereObject) object;
+        SphereObject sphere = this;
 
         Vector3 L = Ray3.getOrigin().sub(sphere.getCenter());
         Vector3 dir = Ray3.getDirection();
@@ -258,7 +258,7 @@ class SphereObject extends SceneObject {
     public boolean shadowCheck( SceneSimple scene, Ray3 myRay3) {
         for (SceneObject s : scene.getSceneObjects()) {
             if (!s.equals(this) && !s.isGizmo()) {
-                boolean intersect = s.intersect(myRay3, s);
+                boolean intersect = s.intersect(myRay3);
 
                 if (intersect) {
                     return true;

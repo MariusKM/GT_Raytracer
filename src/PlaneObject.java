@@ -10,7 +10,7 @@ public class PlaneObject extends SceneObject {
         this.planeNormal = planeNormal;
     }
 
-    public boolean intersect(Ray3 Ray3, SceneObject plane) {
+    public boolean intersect(Ray3 Ray3) {
 
         //s = (k – np)/(nv)
         Vector3 normal = new Vector3(this.planeNormal);
@@ -22,7 +22,7 @@ public class PlaneObject extends SceneObject {
         if (t >= 0) {
             if (t < Ray3.getT0()) {
                 Ray3.setT0(t);
-                Ray3.setNearest(plane);
+                Ray3.setNearest(this);
             }
             Ray3.setT0(t);
             return true;
@@ -214,7 +214,7 @@ public class PlaneObject extends SceneObject {
     public boolean shadowCheck(SceneSimple scene, Ray3 myRay3) {
         for (SceneObject s : scene.getSceneObjects()) {
             if (!s.equals(this) && !s.isGizmo()) {
-                boolean intersect = s.intersect(myRay3, s);
+                boolean intersect = s.intersect(myRay3);
 
                 if (intersect) {
                     return true;

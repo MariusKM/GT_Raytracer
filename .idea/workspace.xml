@@ -39,6 +39,7 @@
       <find>direction</find>
       <find>materi</find>
       <find>setnea</find>
+      <find>isinsi</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -52,7 +53,7 @@
   <component name="ProjectId" id="1SyJWlN7BohqslggXNmnNwhgkf5" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../GT3/Ricochet/Ricochet-Client" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -174,6 +175,7 @@
       <configuration name="Application">
         <watch expression="myRay.nearest" />
         <watch expression="myRay" />
+        <watch expression="((ComplexObject)this).material" custom="ComplexObject" />
       </configuration>
     </watches-manager>
   </component>
