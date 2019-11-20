@@ -215,7 +215,7 @@ Do the animation stuff
         ComplexObject xobj3 = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Vereinigung");
         //xobj.setShade(false);
 
-        sceneSimple.getSceneObjects().add(xobj);
+        sceneSimple.getSceneObjects().add(xobj3);
        // sceneSimple.getSceneObjects().add(xobj2);
        // sceneSimple.getSceneObjects().add(xobj3);
 

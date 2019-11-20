@@ -38,6 +38,7 @@ public class ComplexObject extends SceneObject {
 
     @Override
     public boolean intersect(Ray3 ray3) {
+        //TODO: Cases für schnittpunkte Regeln, zwei Rays verwenden!!!!
         boolean result =false;
         switch(operation) {
             case "Schnitt":
@@ -45,6 +46,13 @@ public class ComplexObject extends SceneObject {
                 boolean result1 = quadA.intersect(ray3);
                 boolean result2 = quadB.intersect(ray3);
                 result = result1 && result2 ;
+                if(result){
+                    Quadrik3 temp = quadB;
+                    intersectObj = temp;
+                    ray3.setNearest(this);
+                }else{
+                    ray3.setNearest(null);
+                }
                 break;
 
             case "Differenz":
@@ -52,22 +60,34 @@ public class ComplexObject extends SceneObject {
                 // A und nicht B A
                 result = quadA.intersect(ray3) & !quadB.intersect(ray3);
 
+                if(result){
+                    SceneObject temp = ray3.getNearest();
+                    if (temp == quadA){
+
+                    }
+                    intersectObj = (Quadrik3)temp;
+                    ray3.setNearest(this);
+                }else{
+                    ray3.setNearest(null);
+                }
+
                 break;
 
             default://fall through
             case "Vereinigung":
                 // Sobald A oder B
                 result = quadA.intersect(ray3) || quadB.intersect(ray3);
+                if(result){
+                    SceneObject temp = ray3.getNearest();
+                    intersectObj = (Quadrik3)temp;
+                    ray3.setNearest(this);
+                }else{
+                    ray3.setNearest(null);
+                }
                 break;
         }
         //lastIntersection();
-         if(result){
-             SceneObject temp = ray3.getNearest();
-             intersectObj = (Quadrik3)temp;
-             ray3.setNearest(this);
-         }else{
-             ray3.setNearest(null);
-         }
+
 
 
         return result;
@@ -98,7 +118,7 @@ public class ComplexObject extends SceneObject {
         intersection.add(sceneOrigin);
 
         // find surface normal
-        normal =intersectObj.normal(intersection); //normal(intersection);//new Vector3(this.normal);
+        normal = intersectObj.normal(intersection); //normal(intersection);//new Vector3(this.normal);
 
 
         // get light direction
