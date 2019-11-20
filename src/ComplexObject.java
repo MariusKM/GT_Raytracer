@@ -27,11 +27,9 @@ public class ComplexObject extends SceneObject {
        if (quadA.isInside(p)){
            res = quadA.normal(p);
        }
-
        if (quadB.isInside(p)){
            res = quadB.normal(p);
        }
-
        return res;
     }
 
@@ -288,8 +286,6 @@ public class ComplexObject extends SceneObject {
             intensity = (float)(normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
             intensity *= light.getIntensity();
         }
-
-
 
 
         finalCol.mult(intensity);

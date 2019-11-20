@@ -124,8 +124,8 @@ public class Quadrik extends SceneObject {
             t1 = t2;
             t2 = temp;
         }
-        // wenn t2 <= 0 dann keinen schnittpunkt
-        if (t2 < 0.0) {
+        // wenn t1 <= 0 dann keinen schnittpunkt
+        if (t1 < 0.0) {
             return false;
         }
 
@@ -289,7 +289,8 @@ public class Quadrik extends SceneObject {
         intersection.add(sceneOrigin);
 
         // find surface normal
-        normal = normal(intersection);
+        normal = normal(intersection); //normal(intersection);//new Vector3(this.normal);
+
 
 
         // get light direction
@@ -373,7 +374,7 @@ public class Quadrik extends SceneObject {
 
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = false; //shadowCheck(this.getScene(), shadowRay);
+        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -381,8 +382,6 @@ public class Quadrik extends SceneObject {
             intensity = (float)(normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
             intensity *= light.getIntensity();
         }
-
-
 
 
         finalCol.mult(intensity);
