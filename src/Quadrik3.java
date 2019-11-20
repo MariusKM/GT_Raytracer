@@ -417,9 +417,9 @@ public class Quadrik3 extends SceneObject {
             if (!s.equals(this) && !s.isGizmo()) {
                 boolean intersect;
                 if(s instanceof Ellipsoid){
-                     intersect =((Ellipsoid) s).intersect(myRay3, s);
+                     intersect =((Ellipsoid) s).intersect(myRay3);
                 }else{
-                     intersect = s.intersect(myRay3, s);
+                     intersect = s.intersect(myRay3);
                 }
 
 

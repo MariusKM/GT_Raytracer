@@ -209,7 +209,7 @@ Do the animation stuff
        // ellipse.setShade(false);
         ellipse.setGizmo(true);
         ellipse.setScene(sceneSimple);
-        ellipse.setMaterial(groundMat);*/
+        ellipse.setMaterial(groundMat);
 
         SceneObject ellipse2 = new Ellipsoid(0.7,0.4,0.4,trans);
        // sceneSimple.getSceneObjects().add(ellipse2);
@@ -237,7 +237,7 @@ Do the animation stuff
 
 
 
-        /*for (SceneObject s : sceneObjects) {
+        for (SceneObject s : sceneObjects) {
 
             Material defaultMat = new Material(new Vector3((float )(random()*0.5f +0.5f), (float )(0.5f * random()), (float) (0.2 * random())), 0.25f,0.3f);
             s.setMaterial(defaultMat);
