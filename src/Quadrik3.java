@@ -261,7 +261,6 @@ public class Quadrik3 extends SceneObject {
             intensity = 1.0f;
 
 
-        // int clampedIntensity = RayTracerSimple.clamp((int)intensity,0, 255);
 
         Color lightColor = light.getColor();
 
@@ -412,8 +411,6 @@ public class Quadrik3 extends SceneObject {
                 }else{
                      intersect = s.intersect(myRay3);
                 }
-
-
                 if (intersect) {
                     return true;
                 }

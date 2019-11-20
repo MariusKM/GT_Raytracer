@@ -56,6 +56,15 @@ public class Ray3 {
 
     }
 
+    public Ray3(Ray3 ray){
+        this.Origin = ray.getOrigin();
+        this.Direction = ray.getDirection();
+        t0 = ray.getT0();
+        nearest = ray.getNearest();
+
+    }
+
+
     /**
      * returns the point start+t*direction
      * @param t [in] distance

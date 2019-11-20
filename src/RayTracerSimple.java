@@ -2,6 +2,7 @@
 
 import math.Matrix4x4;
 import math.TransformationMatrix4x4;
+import math.Vector;
 import math.Vector3D;
 
 import javax.imageio.ImageIO;
@@ -80,7 +81,12 @@ Do the animation stuff
                 //trans.createYRotationMatrix(s.getSpeed()*delta_time);
                 trans.createRotationMatrix(s.getSpeed()*delta_time,s.getSpeed()*delta_time,s.getSpeed()*delta_time);
                 ((Ellipsoid) s).transform(trans);
-               /*  if (newPos.y > upperLimit || newPos.y < lowerLimit){
+
+
+            }else if (s instanceof SphereObject && !s.isGizmo()){
+
+                Vector3 newPos = ((SphereObject) s).getCenter();
+                   if (newPos.y > upperLimit || newPos.y < lowerLimit){
 
                      ((SphereObject) s).setSpeed(((SphereObject) s).getSpeed() *-1);
                  }
@@ -88,8 +94,7 @@ Do the animation stuff
 
 
                  newPos.add(new Vector3(0,((SphereObject) s).getSpeed()*delta_time,0));
-                ((SphereObject) s).setCenter(newPos);*/
-
+                ((SphereObject) s).setCenter(newPos);
             }
         }
 
@@ -152,17 +157,17 @@ Do the animation stuff
                 SceneObject intersectObj;
 
                 for (SceneObject s : sceneSimple.getSceneObjects()) {
-                    intersect = s.intersect(myRay3);
-                  /* if (intersect){
-                        insideCounter++;
-                    }*/
+                    if (s instanceof PlaneObject){
+                        intersect = s.intersect(myRay3);
+                    }else{
+                        intersect = s.intersect(myRay3);
+                    }
+
 
                 }
                 int indexer = usePerspective ? (resY-y-1)* resY + x:(y * resY + x) ;
                 if (myRay3.getNearest() != null) {
                     temp = myRay3.getNearest();
-                    //outsideCounter++;
-
                     intersectObj = temp;
                     //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) : Color.WHITE.getRGB();
                     int pixelColor = (intersectObj.isShade()) ?   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay3.getT0()) : Color.WHITE.getRGB();
@@ -189,50 +194,50 @@ Do the animation stuff
         sceneSimple = new SceneSimple();
         sceneLight = new Light(new Vector3(0f, 1f, -3), 10, Color.white);
 
-       // PlaneObject groundPlane = new PlaneObject(new Vector3(0, -2, 0), new Vector3(0, 1, 0));
-        Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0);
-       // groundPlane.setMaterial(groundMat);
-       // sceneSimple.getSceneObjects().add(groundPlane);
-      //  groundPlane.setScene(sceneSimple);
+          PlaneObject groundPlane = new PlaneObject(new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+          Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.3f,0.4f);
+          groundPlane.setMaterial(groundMat);
+          sceneSimple.getSceneObjects().add(groundPlane);
+          groundPlane.setScene(sceneSimple);
           sceneObjects = createSceneObjects(numSpheres, 0.15f, 0.01f);//createSpheres(numSpheres, 0.15f, 0.01f);
 
          SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05f);
          lightObject.setShade(false);
          lightObject.setGizmo(true);
-        // sceneSimple.getSceneObjects().add(lightObject);
+         sceneSimple.getSceneObjects().add(lightObject);
          lightObject.setScene(sceneSimple);
          lightObject.setMaterial(groundMat);
         TransformationMatrix4x4 trans = new TransformationMatrix4x4();
         trans.createTranslationMatrix( new Vector3D(0,1,-2));
         SceneObject ellipse = new Ellipsoid(0.4,0.7,0.4,trans);
-      //  sceneSimple.getSceneObjects().add(ellipse);
-       // ellipse.setShade(false);
+      /* sceneSimple.getSceneObjects().add(ellipse);
+        ellipse.setShade(false);
         ellipse.setGizmo(true);
         ellipse.setScene(sceneSimple);
-        ellipse.setMaterial(groundMat);
+        ellipse.setMaterial(groundMat);*/
 
         SceneObject ellipse2 = new Ellipsoid(0.7,0.4,0.4,trans);
-       // sceneSimple.getSceneObjects().add(ellipse2);
+       /* sceneSimple.getSceneObjects().add(ellipse2);
         //ellipse2.setShade(false);
         ellipse2.setGizmo(true);
         ellipse2.setScene(sceneSimple);
-        ellipse2.setMaterial(groundMat);
+        ellipse2.setMaterial(groundMat);*/
 
         ComplexObject xobj = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Differenz");
         ComplexObject xobj2 = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Schnitt");
         ComplexObject xobj3 = new ComplexObject((Quadrik3)ellipse,(Quadrik3)ellipse2,"Vereinigung");
         //xobj.setShade(false);
 
-        sceneSimple.getSceneObjects().add(xobj3);
+        sceneSimple.getSceneObjects().add(xobj);
        // sceneSimple.getSceneObjects().add(xobj2);
        // sceneSimple.getSceneObjects().add(xobj3);
-
+        Material CSGmat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.25f,0.3f);
         xobj.setScene(sceneSimple);
-        xobj.setMaterial(groundMat);
+        xobj.setMaterial(CSGmat);
         xobj2.setScene(sceneSimple);
-        xobj2.setMaterial(groundMat);
+        xobj2.setMaterial(CSGmat);
         xobj3.setScene(sceneSimple);
-        xobj3.setMaterial(groundMat);
+        xobj3.setMaterial(CSGmat);
 
 
 

@@ -9,7 +9,7 @@ public class PlaneObject extends SceneObject {
         this.pointOnPlane = pointOnPlane;
         this.planeNormal = planeNormal;
     }
-
+@Override
     public boolean intersect(Ray3 Ray3) {
 
         //s = (k – np)/(nv)
@@ -31,7 +31,7 @@ public class PlaneObject extends SceneObject {
 
         return false;
     }
-
+    @Override
     public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
 
         Vector3 intersection, normal, lightDir;
