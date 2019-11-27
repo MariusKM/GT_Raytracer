@@ -5,16 +5,17 @@ import java.awt.*;
 
 public class ComplexObject extends SceneObject {
 
-    private String operation="Vereinigung";
+    private enum operation{VEREINIGUNG, DIFFERENZ, SCHNITT };
+    private operation operation;
     public Quadrik quadA, quadB;
     public Quadrik intersectObj;
     public Vector3 normal;
     private float Tintersectzion;
 
-    ComplexObject(Quadrik a, Quadrik b, String operation ){
+    ComplexObject(Quadrik a, Quadrik b, operation op){
         this.quadA = a;
         this.quadB = b;
-        this.operation=operation;
+        this.operation = op;
     }
 
 
@@ -44,7 +45,7 @@ public class ComplexObject extends SceneObject {
 
         boolean result =false;
         switch(operation) {
-            case "Schnitt":
+            case SCHNITT:
                 // zwingend A und B
                 result =  quadA.intersect(rayA) && quadB.intersect(rayB);
 
@@ -63,7 +64,7 @@ public class ComplexObject extends SceneObject {
                 }
                 break;
 
-            case "Differenz":
+            case DIFFERENZ:
                 // quasi: A ohne B
                 // A und nicht B A
 
@@ -96,7 +97,7 @@ public class ComplexObject extends SceneObject {
                 break;
 
             default://fall through
-            case "Vereinigung":
+            case VEREINIGUNG:
                 // Sobald A oder B
                 boolean resultA = quadA.intersect(rayA);
                 boolean resultB =  quadB.intersect(rayB);
@@ -139,7 +140,6 @@ public class ComplexObject extends SceneObject {
         // find surface normal
         normal = intersectObj.normal(intersection); //normal(intersection);//new Vector3(this.normal);
 
-
         // get light direction
         lightDir = new Vector3(light.getPosition());
         lightDir.sub(lightDir, intersection);
@@ -153,7 +153,7 @@ public class ComplexObject extends SceneObject {
             return Color.black.getRGB();
         } else {
             intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
-            intensity *= light.getIntensity();
+            intensity = intensity * (float) light.getIntensity();
         }
 
         if (intensity < 0.0)
@@ -166,10 +166,15 @@ public class ComplexObject extends SceneObject {
         // int clampedIntensity = RayTracerSimple.clamp((int)intensity,0, 255);
 
         Color lightColor = light.getColor();
-
+        //quadrieren
+        Color entgammasiertColor = new Color((int)Math.pow(lightColor.getAlpha(),2), (int) Math.pow(lightColor.getRed(),2),(int) Math.pow(lightColor.getGreen(),2), (int)Math.pow(lightColor.getBlue(),2));
+        lightColor = entgammasiertColor;
         Color shadedLight = new Color((int) (lightColor.getRed() * ((float) intensity)), (int) (lightColor.getGreen() * ((float) intensity)), (int) (lightColor.getBlue() * ((float) intensity)));
         Vector3 albedo = this.getMaterial().getAlbedoColor();
-        Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
+        //Without Gamma
+        // Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
+        //Wurzel ziehen Gammakorrektur
+        Color objectColor = new Color((int) (Math.sqrt(shadedLight.getRed() * albedo.x)), (int) (Math.sqrt(shadedLight.getGreen() * albedo.y)), (int) (Math.sqrt(shadedLight.getBlue() * albedo.z)));
 
         int pixelCol = objectColor.getRGB();
 
