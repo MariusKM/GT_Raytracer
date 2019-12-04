@@ -44,7 +44,7 @@ class SphereObject extends SceneObject {
 
         // find surface normal
         normal = new Vector3(intersection);
-        normal.sub(center);
+        normal.sub(normal,center);
         normal.normalize();
 
         // get light direction
@@ -164,7 +164,7 @@ class SphereObject extends SceneObject {
 
         // find surface normal
         normal = new Vector3(intersection);
-        normal.sub(center);
+        normal.sub(normal,center);
         normal.normalize();
 
         // get light direction

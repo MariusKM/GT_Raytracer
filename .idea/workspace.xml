@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ComplexObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ComplexObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RayTracerSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerSimple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SphereObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SphereObject.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,5 +83,32 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="808" y="428" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575487202747" />
+    <state width="1860" height="263" key="GridCell.Tab.0.bottom" timestamp="1575487673627">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1860" height="263" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575487673627" />
+    <state width="1860" height="263" key="GridCell.Tab.0.center" timestamp="1575487673627">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1860" height="263" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575487673627" />
+    <state width="1860" height="263" key="GridCell.Tab.0.left" timestamp="1575487673627">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1860" height="263" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575487673627" />
+    <state width="1860" height="263" key="GridCell.Tab.0.right" timestamp="1575487673627">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1860" height="263" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575487673627" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/SphereObject.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

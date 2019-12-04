@@ -168,7 +168,7 @@ Do the animation stuff
                     temp = myRay.getNearest();
                     intersectObj = temp;
                     //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
-                    int pixelColor = (intersectObj.isShade()) ?   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
+                    int pixelColor = (intersectObj.isShade()) ?   intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
 
                     pixels[indexer] = pixelColor;
 
@@ -197,7 +197,7 @@ Do the animation stuff
           groundPlane.setMaterial(groundMat);
           sceneSimple.getSceneObjects().add(groundPlane);
           groundPlane.setScene(sceneSimple);
-          sceneObjects = createSceneObjects(numSpheres, 0.15f, 0.01f);//createSpheres(numSpheres, 0.15f, 0.01f);
+          sceneObjects = createSpheres(5, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
 
          SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05f);
          lightObject.setShade(false);
@@ -226,7 +226,7 @@ Do the animation stuff
         ComplexObject xobj3 = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2,ComplexObject.Operation.DIFFERENZ);
         //xobj.setShade(false);
 
-        sceneSimple.getSceneObjects().add(xobj);
+    //    sceneSimple.getSceneObjects().add(xobj);
        // sceneSimple.getSceneObjects().add(xobj2);
        // sceneSimple.getSceneObjects().add(xobj3);
         Material CSGmat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.25f,0.3f);
