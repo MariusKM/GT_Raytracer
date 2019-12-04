@@ -5,14 +5,14 @@ import java.awt.*;
 
 public class ComplexObject extends SceneObject {
 
-    private enum operation{VEREINIGUNG, DIFFERENZ, SCHNITT };
-    private operation operation;
+    public enum Operation{VEREINIGUNG, DIFFERENZ, SCHNITT };
+    private Operation operation;
     public Quadrik quadA, quadB;
     public Quadrik intersectObj;
     public Vector3 normal;
     private float Tintersectzion;
 
-    ComplexObject(Quadrik a, Quadrik b, operation op){
+    ComplexObject(Quadrik a, Quadrik b, Operation op){
         this.quadA = a;
         this.quadB = b;
         this.operation = op;

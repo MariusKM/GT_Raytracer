@@ -221,9 +221,9 @@ Do the animation stuff
         ellipse2.setScene(sceneSimple);
         ellipse2.setMaterial(groundMat);*/
 
-        ComplexObject xobj = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2,"Differenz");
-        ComplexObject xobj2 = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2,"Schnitt");
-        ComplexObject xobj3 = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2,"Vereinigung");
+        ComplexObject xobj = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2, ComplexObject.Operation.DIFFERENZ);
+        ComplexObject xobj2 = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2,ComplexObject.Operation.DIFFERENZ);
+        ComplexObject xobj3 = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2,ComplexObject.Operation.DIFFERENZ);
         //xobj.setShade(false);
 
         sceneSimple.getSceneObjects().add(xobj);
