@@ -1,5 +1,6 @@
 import math.Matrix4x4;
 import math.MatrixOps;
+import math.Vector3;
 
 import java.awt.*;
 
@@ -138,7 +139,7 @@ public class ComplexObject extends SceneObject {
         intersection.add(sceneOrigin);
 
         // find surface normal
-        normal = intersectObj.normal(intersection); //normal(intersection);//new Vector3(this.normal);
+        normal = intersectObj.normal(intersection); //normal(intersection);//new math.Vector3(this.normal);
 
         // get light direction
         lightDir = new Vector3(light.getPosition());
@@ -198,7 +199,7 @@ public class ComplexObject extends SceneObject {
         intersection.add(sceneOrigin);
 
         // find surface normal
-        normal = intersectObj.normal(intersection); //normal(intersection);//new Vector3(this.normal);
+        normal = intersectObj.normal(intersection); //normal(intersection);//new math.Vector3(this.normal);
 
 
 

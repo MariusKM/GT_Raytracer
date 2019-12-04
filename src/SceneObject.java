@@ -1,3 +1,5 @@
+import math.Vector3;
+
 abstract class SceneObject {
 
     private boolean shade = true;

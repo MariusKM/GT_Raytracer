@@ -289,7 +289,7 @@ public class Quadrik extends SceneObject {
         intersection.add(sceneOrigin);
 
         // find surface normal
-        normal = normal(intersection); //normal(intersection);//new Vector3(this.normal);
+        normal = normal(intersection); //normal(intersection);//new math.Vector3(this.normal);
 
 
 

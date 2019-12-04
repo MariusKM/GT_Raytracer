@@ -1,3 +1,6 @@
+import math.RenderUtil;
+import math.Vector3;
+
 import java.awt.*;
 
 public class PlaneObject extends SceneObject {
@@ -37,7 +40,6 @@ public class PlaneObject extends SceneObject {
         Vector3 intersection, normal, lightDir;
         float intensity;
 
-
         // berechne intersection Point
         intersection = new Vector3(rayDir);
         intersection.mult(t);
@@ -55,7 +57,7 @@ public class PlaneObject extends SceneObject {
         //System.out.println(lightDist);
 
         Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay);
+        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return Color.black.getRGB();
@@ -71,12 +73,6 @@ public class PlaneObject extends SceneObject {
         if (intensity > 1.0)
             intensity = 1.0f;
 
-
-
-
-
-
-
         Color lightColor = light.getColor();
 
         Color shadedLight = new Color((int) (lightColor.getRed() * ((float) intensity )), (int) (lightColor.getGreen() * ((float) intensity)), (int) (lightColor.getBlue() * ((float) intensity)));
@@ -90,7 +86,32 @@ public class PlaneObject extends SceneObject {
         return (pixelCol);
     }
 
-    @Override
+    public int shadeCookTorrance(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t){
+        // berechne intersection Point
+        Vector3 intersection, normal, lightDir;
+        intersection = new Vector3(rayDir);
+        intersection.mult(t);
+        intersection.add(sceneOrigin);
+
+        // find surface normal
+        normal = new Vector3(planeNormal);
+
+        // get light direction
+        lightDir = new Vector3(light.getPosition());
+        lightDir.sub(lightDir, intersection);
+        lightDir.normalize();
+        float lightDist = pointOnPlane.distance(light.getPosition());
+        Vector3 rayDirN = new Vector3(rayDir);
+        rayDirN.mult(-1);
+        Vector3 lightCol = new Vector3( light.getColor().getRed()/255,light.getColor().getGreen()/255,light.getColor().getBlue()/255);
+        Vector3 objectCol = RenderUtil.CookTorrance(getMaterial().getAlbedoColor(),new Vector3(1,1,1),normal,lightDir,rayDirN,lightCol,getMaterial().getRoughness());
+        Color finalColorRGB = new Color(RayTracerSimple.clampF(objectCol.x,0,1), RayTracerSimple.clampF(objectCol.y,0,1), RayTracerSimple.clampF(objectCol.z,0,1) );
+        int pixelCol = finalColorRGB.getRGB();
+
+        return  pixelCol;
+    }
+
+  /*  @Override
     public int shadeCookTorrance(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
         Vector3 intersection, normal, lightDir;
         float intensity;
@@ -158,14 +179,15 @@ public class PlaneObject extends SceneObject {
         kd.mult(1-metalness);
 
 
+
         //G
         float halfRoughness = roughness/2;
         // termG1 = N·V / (N·V(1 – r/2) + r/2);
         Vector3 normalG = new Vector3(normal);
-        float termG1 =  normalG.dotProduct(rayDir)/ ( normalG.dotProduct(rayDir)*(1-(halfRoughness))+(halfRoughness));
+        float termG1 =  normalG.dotProduct(rayDir)/ ( normalG.dotProduct(rayDir)*(1-halfRoughness)+halfRoughness);
 
-        //termG2 =  N·L / (N·L(1 – r/2) + r
-        float termG2 = normalG.dotProduct(lightDir)/(normalG.dotProduct(lightDir)*(1-halfRoughness)+roughness);
+        //termG2 =  N·L / (N·L(1 – r/2) + r/2)
+        float termG2 = normalG.dotProduct(lightDir)/(normalG.dotProduct(lightDir)*(1-halfRoughness)+halfRoughness);
 
         //G = N·V / (N·V(1 – r/2) + r/2) * N·L / (N·L(1 – r/2) + r/
 
@@ -209,7 +231,7 @@ public class PlaneObject extends SceneObject {
         int pixelCol = finalColorRGB.getRGB();
 
         return (pixelCol);
-    }
+    }*/
 
     public boolean shadowCheck(SceneSimple scene, Ray myRay) {
         for (SceneObject s : scene.getSceneObjects()) {

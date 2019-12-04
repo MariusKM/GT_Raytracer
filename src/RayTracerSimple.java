@@ -1,6 +1,7 @@
 
 
 import math.TransformationMatrix4x4;
+import math.Vector3;
 import math.Vector3D;
 
 import javax.imageio.ImageIO;
@@ -29,7 +30,7 @@ public class RayTracerSimple extends java.applet.Applet {
     static int delta_timeMS;
     static float delta_time;
     static long last_time;
-    static Color BG_Color = new Color(0.1f,0.1f,0.1f);
+    static Color BG_Color = new Color(0.1f, 0.1f, 0.1f);
 
     public static boolean isExit() {
         return exit;
@@ -40,58 +41,58 @@ public class RayTracerSimple extends java.applet.Applet {
     }
 
     static JFrame frame = new JFrame();
-    static  JLabel graphics = new JLabel();
+    static JLabel graphics = new JLabel();
 
     public static void main(String args[]) {
 
         initScene();
         last_time = System.nanoTime();
-        do{
+        do {
             handleTime();
             handleAnimation();
             paintPix();
             drawGUI();
-           // exit = true;
+            // exit = true;
         }
-        while(!exit);
+        while (!exit);
 
         String path = "C:/Users/mariu/Workspaces/uni/GT Ray Tracing";
         //savePic(image, "jpeg", path + random() + ".jpeg");
     }
-/*
-Do the animation stuff
- */
-    static void handleAnimation(){
+
+    /*
+    Do the animation stuff
+     */
+    static void handleAnimation() {
         float upperLimit = 1.5f;
         float lowerLimit = -1f;
 
-        for (SceneObject s: sceneSimple.getSceneObjects()
-             ) {
+        for (SceneObject s : sceneSimple.getSceneObjects()
+        ) {
 
-            if (s instanceof Ellipsoid && !s.isGizmo()){
+            if (s instanceof Ellipsoid && !s.isGizmo()) {
 
 
                 TransformationMatrix4x4 trans = new TransformationMatrix4x4();
-                trans.createTranslationMatrix( new Vector3D(0,s.getSpeed()*delta_time,0));
+                trans.createTranslationMatrix(new Vector3D(0, s.getSpeed() * delta_time, 0));
 
                 ((Ellipsoid) s).transform(trans);
                 trans = new TransformationMatrix4x4();
                 //trans.createYRotationMatrix(s.getSpeed()*delta_time);
-                trans.createRotationMatrix(s.getSpeed()*delta_time,s.getSpeed()*delta_time,s.getSpeed()*delta_time);
+                trans.createRotationMatrix(s.getSpeed() * delta_time, s.getSpeed() * delta_time, s.getSpeed() * delta_time);
                 ((Ellipsoid) s).transform(trans);
 
 
-            }else if (s instanceof SphereObject && !s.isGizmo()){
+            } else if (s instanceof SphereObject && !s.isGizmo()) {
 
                 Vector3 newPos = ((SphereObject) s).getCenter();
-                   if (newPos.y > upperLimit || newPos.y < lowerLimit){
+                if (newPos.y > upperLimit || newPos.y < lowerLimit) {
 
-                     ((SphereObject) s).setSpeed(((SphereObject) s).getSpeed() *-1);
-                 }
+                    ((SphereObject) s).setSpeed(((SphereObject) s).getSpeed() * -1);
+                }
 
 
-
-                 newPos.add(new Vector3(0,((SphereObject) s).getSpeed()*delta_time,0));
+                newPos.add(new Vector3(0, ((SphereObject) s).getSpeed() * delta_time, 0));
                 ((SphereObject) s).setCenter(newPos);
             }
         }
@@ -99,27 +100,27 @@ Do the animation stuff
     }
 
 
-    static void handleTime(){
+    static void handleTime() {
 
         long time = System.nanoTime();
         delta_timeMS = (int) ((time - last_time) / 1000000);
-        delta_time = ((float)delta_timeMS)/1000;
+        delta_time = ((float) delta_timeMS) / 1000;
         last_time = time;
         //System.out.println("last frame took :: "+delta_time+"s");
     }
 
     static void drawGUI() {
 
-         if (exit){
-             return;
-         }
+        if (exit) {
+            return;
+        }
         Image image = Toolkit.getDefaultToolkit()
                 .createImage(new MemoryImageSource(resX, resY, new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, resX));
 
 
-         //JLabel graphics = new JLabel(new ImageIcon(image));
-         graphics.setIcon(new ImageIcon(image));
-         frame.add(graphics);
+        //JLabel graphics = new JLabel(new ImageIcon(image));
+        graphics.setIcon(new ImageIcon(image));
+        frame.add(graphics);
 
         frame.setResizable(false);
         frame.pack();
@@ -155,20 +156,20 @@ Do the animation stuff
                 SceneObject intersectObj;
 
                 for (SceneObject s : sceneSimple.getSceneObjects()) {
-                    if (s instanceof PlaneObject){
+                    if (s instanceof PlaneObject) {
                         intersect = s.intersect(myRay);
-                    }else{
+                    } else {
                         intersect = s.intersect(myRay);
                     }
 
 
                 }
-                int indexer = usePerspective ? (resY-y-1)* resY + x:(y * resY + x) ;
+                int indexer = usePerspective ? (resY - y - 1) * resY + x : (y * resY + x);
                 if (myRay.getNearest() != null) {
                     temp = myRay.getNearest();
                     intersectObj = temp;
                     //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
-                    int pixelColor = (intersectObj.isShade()) ?   intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
+                    int pixelColor = (intersectObj.isShade()) ? intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
 
                     pixels[indexer] = pixelColor;
 
@@ -177,59 +178,63 @@ Do the animation stuff
                 }
 
 
-
-
             }
         }
     }
 
     static void initScene() {
-        cam = new Camera(new Vector3(0, 0.5f, 1), new Vector3(0, 0.5f, -1), 90, resX, resY);
+        cam = new Camera(new Vector3(0, 0, 1), new Vector3(0, 0, -1), 90, resX, resY);
 
         KeyHandler keyHandler = new KeyHandler();
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0f, 1.5f, -0.25f), 10, Color.white);
+        sceneLight = new Light(new Vector3(0f, 1, -0.25f), 10, Color.white);
 
-          PlaneObject groundPlane = new PlaneObject(new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-          Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.3f,0.4f);
-          groundPlane.setMaterial(groundMat);
-          sceneSimple.getSceneObjects().add(groundPlane);
-          groundPlane.setScene(sceneSimple);
-          sceneObjects = createSpheres(5, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
+        PlaneObject groundPlane = new PlaneObject(new Vector3(0, -0.5f, 0), new Vector3(0, 1, 0));
+        Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.3f, 0.4f);
+        groundPlane.setMaterial(groundMat);
+        sceneSimple.getSceneObjects().add(groundPlane);
+        groundPlane.setScene(sceneSimple);
+        SceneObject testSphere = new SphereObject(new Vector3(0,0,-0.25f), 0.1f);
+        testSphere.setSpeed(0.1f);
+       /* sceneObjects = new SceneObject[]{
+                testSphere
+        }; *///createSpheres(numSpheres, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
+        sceneObjects = createSpheres(numSpheres, 0.15f, 0.01f);
+      /*  SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05f);
+        lightObject.setShade(false);
+        lightObject.setGizmo(true);
+        sceneSimple.getSceneObjects().add(lightObject);
+        lightObject.setScene(sceneSimple);
+        lightObject.setMaterial(groundMat);*/
 
-         SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05f);
-         lightObject.setShade(false);
-         lightObject.setGizmo(true);
-         sceneSimple.getSceneObjects().add(lightObject);
-         lightObject.setScene(sceneSimple);
-         lightObject.setMaterial(groundMat);
         TransformationMatrix4x4 trans = new TransformationMatrix4x4();
-        trans.createTranslationMatrix( new Vector3D(0,1,-2));
-        SceneObject ellipse = new Ellipsoid(0.4,0.7,0.4,trans);
+        trans.createTranslationMatrix(new Vector3D(0, 1, -2));
+        SceneObject ellipse = new Ellipsoid(0.4, 0.7, 0.4, trans);
+
       /* sceneSimple.getSceneObjects().add(ellipse);
         ellipse.setShade(false);
         ellipse.setGizmo(true);
         ellipse.setScene(sceneSimple);
         ellipse.setMaterial(groundMat);*/
 
-        SceneObject ellipse2 = new Ellipsoid(0.7,0.4,0.4,trans);
+        SceneObject ellipse2 = new Ellipsoid(0.7, 0.4, 0.4, trans);
        /* sceneSimple.getSceneObjects().add(ellipse2);
         //ellipse2.setShade(false);
         ellipse2.setGizmo(true);
         ellipse2.setScene(sceneSimple);
         ellipse2.setMaterial(groundMat);*/
 
-        ComplexObject xobj = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2, ComplexObject.Operation.DIFFERENZ);
-        ComplexObject xobj2 = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2,ComplexObject.Operation.DIFFERENZ);
-        ComplexObject xobj3 = new ComplexObject((Quadrik)ellipse,(Quadrik)ellipse2,ComplexObject.Operation.DIFFERENZ);
+        ComplexObject xobj = new ComplexObject((Quadrik) ellipse, (Quadrik) ellipse2, ComplexObject.Operation.DIFFERENZ);
+        ComplexObject xobj2 = new ComplexObject((Quadrik) ellipse, (Quadrik) ellipse2, ComplexObject.Operation.DIFFERENZ);
+        ComplexObject xobj3 = new ComplexObject((Quadrik) ellipse, (Quadrik) ellipse2, ComplexObject.Operation.DIFFERENZ);
         //xobj.setShade(false);
 
-    //    sceneSimple.getSceneObjects().add(xobj);
-       // sceneSimple.getSceneObjects().add(xobj2);
-       // sceneSimple.getSceneObjects().add(xobj3);
-        Material CSGmat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.25f,0.3f);
+        //    sceneSimple.getSceneObjects().add(xobj);
+        // sceneSimple.getSceneObjects().add(xobj2);
+        // sceneSimple.getSceneObjects().add(xobj3);
+        Material CSGmat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.25f, 0.3f);
         xobj.setScene(sceneSimple);
         xobj.setMaterial(CSGmat);
         xobj2.setScene(sceneSimple);
@@ -238,29 +243,28 @@ Do the animation stuff
         xobj3.setMaterial(CSGmat);
 
 
-
-
         for (SceneObject s : sceneObjects) {
 
-            Material defaultMat = new Material(new Vector3((float )(random()*0.5f +0.5f), (float )(0.5f * random()), (float) (0.2 * random())), 0.99f,0.01f);
+            Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())),  0.5f, 0.999f);
             s.setMaterial(defaultMat);
             sceneSimple.getSceneObjects().add(s);
             s.setScene(sceneSimple);
         }
     }
+
     static SceneObject[] createSceneObjects(int numObjects, float maxRad, float minRad) {
         SceneObject[] objects = new SceneObject[numObjects];
         Vector3 objectPos;
-        float radiusX,radiusY,radiusZ;
+        float radiusX, radiusY, radiusZ;
         for (int i = 0; i < numObjects; i++) {
-            objectPos = randomVecInRange(-0.5f, 1, -0.75f, 1, -0.25, 0);
-            radiusX = (float)(random() * maxRad + minRad);
-            radiusY = (float)(random() * maxRad + minRad);
-            radiusZ = (float)(random() * maxRad + minRad);
+            objectPos = randomVecInRange(-0.5f, 1, -0.75f, 1, -0.5, 0);
+            radiusX = (float) (random() * maxRad + minRad);
+            radiusY = (float) (random() * maxRad + minRad);
+            radiusZ = (float) (random() * maxRad + minRad);
             TransformationMatrix4x4 trans = new TransformationMatrix4x4();
-            trans.createTranslationMatrix( new Vector3D(objectPos.x,objectPos.y,objectPos.z));
-            SceneObject ellipse = new Ellipsoid(0.9,0.6,0.2,trans);
-            objects[i] = new Ellipsoid( radiusX,radiusY,radiusZ,trans);
+            trans.createTranslationMatrix(new Vector3D(objectPos.x, objectPos.y, objectPos.z));
+            SceneObject ellipse = new Ellipsoid(0.9, 0.6, 0.2, trans);
+            objects[i] = new Ellipsoid(radiusX, radiusY, radiusZ, trans);
         }
         return objects;
     }
@@ -270,8 +274,8 @@ Do the animation stuff
         Vector3 spherePos;
         float sphereRadius;
         for (int i = 0; i < numSpheres; i++) {
-            spherePos = randomVecInRange(-0.5f, 1, -0.75f, 1, -0.5, 0);
-            sphereRadius = (float)(random() * maxRad + minRad);
+            spherePos = randomVecInRange(-0.5f, 1, -0.75f, 1, -0.75, -0.25);
+            sphereRadius = (float) (random() * maxRad + minRad);
             spheres[i] = new SphereObject(spherePos, sphereRadius);
         }
         return spheres;
@@ -279,7 +283,7 @@ Do the animation stuff
 
     static Vector3 randomVecInRange(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax) {
 
-        Vector3 randomVec = new Vector3((float)(random() * xmax + xmin), (float)(random() * ymax + ymin), (float)(random() * zmax + zmin));
+        Vector3 randomVec = new Vector3((float) (random() * xmax + xmin), (float) (random() * ymax + ymin), (float) (random() * zmax + zmin));
         return randomVec;
     }
 
@@ -300,19 +304,19 @@ Do the animation stuff
     static float[] solveQuadratic(double a, double b, double c) {
         float x0, x1;
         float[] results = new float[3];
-        float discr =(float)( b * b - 4 * a * c); // Diskriminanter Term in der PQ formel, Term unter der Wurzel)
+        float discr = (float) (b * b - 4 * a * c); // Diskriminanter Term in der PQ formel, Term unter der Wurzel)
         if (discr < 0) {
             // wenn dieser kleiner Null ist, dann gibt es keine Schnittpunkte
             results[0] = -1;
             return results;
         } else if (discr == 0) {
             // wenn dieser gleich Null ist, dann gibt es einen Schnittpunkt (Tangente)
-            x0 = x1 = (float)(-0.5 * b / a);
+            x0 = x1 = (float) (-0.5 * b / a);
         } else {
             // Ergebnis für 2 Schnittpunkte
-            float q = (float)((b > 0) ? -0.5 * (b + sqrt(discr)) : -0.5 * (b - sqrt(discr)));
-            x0 = (float)(q / a);
-            x1 = (float)(c / q);
+            float q = (float) ((b > 0) ? -0.5 * (b + sqrt(discr)) : -0.5 * (b - sqrt(discr)));
+            x0 = (float) (q / a);
+            x1 = (float) (c / q);
 
         }
         if (x0 > x1) {

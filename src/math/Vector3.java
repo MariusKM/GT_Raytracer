@@ -1,5 +1,7 @@
+package math;
+
 public class Vector3{
-    float x,y,z;
+    public float x,y,z;
 
 
     public Vector3(){
@@ -64,9 +66,9 @@ public class Vector3{
 
 
     public void sub(Vector3 v, Vector3 z) {
-        v.x = v.x - z.x;
-        v.y = v.y - z.y;
-        v.z = v.z - z.z;
+        this.x = v.x - z.x;
+        this.y = v.y - z.y;
+        this.z = v.z - z.z;
     }
 
     public Vector3 sub(Vector3 v) {

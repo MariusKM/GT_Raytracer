@@ -1,3 +1,5 @@
+import math.Vector3;
+
 import java.awt.Color;
 
 public class Light {

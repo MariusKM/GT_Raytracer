@@ -1,3 +1,5 @@
+import math.Vector3;
+
 import static java.lang.Math.*;
 import static java.lang.Math.toRadians;
 
@@ -37,7 +39,7 @@ public class Camera {
     void init(){
         viewDir = focusPoint.sub(position);
         viewDir.normalize();
-        rotatedUpVector = new Vector3(0, 1,0);//new Vector3((float)sin(FOV), (float)cos(FOV),0);
+        rotatedUpVector = new Vector3(0, 1,0);//new math.Vector3((float)sin(FOV), (float)cos(FOV),0);
         uVec = new Vector3(viewDir);
         uVec.crossProduct(rotatedUpVector);
         uVec.normalize();

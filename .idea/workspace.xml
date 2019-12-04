@@ -2,9 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/math/MathUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/math/RenderUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ComplexObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ComplexObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Light.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Light.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Material.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlaneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlaneObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Quadrik.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Quadrik.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RayTracerSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerSimple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SceneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SceneObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SphereObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SphereObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/math/Vector3.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,13 +29,15 @@
     <option name="hideWarnings" value="true" />
     <option name="HIDE_WARNINGS" value="true" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="width" value="1400" />
-    <option name="height" value="977" />
   </component>
   <component name="ProjectId" id="1UWzYh05FTshz8DQ33z0e80pC26" />
   <component name="ProjectViewState">
@@ -79,34 +92,54 @@
     </todo-panel>
   </component>
   <component name="WindowStateProjectService">
+    <state x="765" y="249" key="#com.intellij.ide.util.MemberChooser" timestamp="1575493681617">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="765" y="249" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575493681617" />
     <state x="808" y="428" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1575487202747">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="808" y="428" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575487202747" />
-    <state width="1860" height="263" key="GridCell.Tab.0.bottom" timestamp="1575487673627">
+    <state width="1860" height="175" key="GridCell.Tab.0.bottom" timestamp="1575503424095">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1860" height="263" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575487673627" />
-    <state width="1860" height="263" key="GridCell.Tab.0.center" timestamp="1575487673627">
+    <state width="1860" height="175" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503424095" />
+    <state width="1860" height="175" key="GridCell.Tab.0.center" timestamp="1575503424095">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1860" height="263" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575487673627" />
-    <state width="1860" height="263" key="GridCell.Tab.0.left" timestamp="1575487673627">
+    <state width="1860" height="175" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503424095" />
+    <state width="1860" height="175" key="GridCell.Tab.0.left" timestamp="1575503424095">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1860" height="263" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575487673627" />
-    <state width="1860" height="263" key="GridCell.Tab.0.right" timestamp="1575487673627">
+    <state width="1860" height="175" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503424095" />
+    <state width="1860" height="175" key="GridCell.Tab.0.right" timestamp="1575503424095">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1860" height="263" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575487673627" />
+    <state width="1860" height="175" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503424095" />
+    <state width="1860" height="206" key="GridCell.Tab.1.bottom" timestamp="1575503175964">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1860" height="206" key="GridCell.Tab.1.bottom/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503175964" />
+    <state width="1860" height="206" key="GridCell.Tab.1.center" timestamp="1575503175964">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1860" height="206" key="GridCell.Tab.1.center/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503175964" />
+    <state width="1860" height="206" key="GridCell.Tab.1.left" timestamp="1575503175964">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1860" height="206" key="GridCell.Tab.1.left/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503175964" />
+    <state width="1860" height="206" key="GridCell.Tab.1.right" timestamp="1575503175964">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1860" height="206" key="GridCell.Tab.1.right/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503175964" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/SphereObject.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="1" />
+          <line>39</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
