@@ -1,3 +1,4 @@
+import math.Material;
 import math.Vector3;
 
 abstract class SceneObject {

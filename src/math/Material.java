@@ -1,3 +1,5 @@
+package math;
+
 import math.Vector3;
 
 public class Material {

@@ -82,7 +82,7 @@ class SphereObject extends SceneObject {
         lightDir = new Vector3(light.getPosition());
         lightDir.sub(lightDir, intersection);
         lightDir.normalize();
-        // lightDir.mult(-1);
+
         float lightDist = center.distance(light.getPosition());
 
         // H = (V+L)/2

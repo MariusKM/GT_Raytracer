@@ -2,20 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/math/MathUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/math/RenderUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ComplexObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ComplexObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Light.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Light.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Material.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/math/Material.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PlaneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlaneObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Quadrik.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Quadrik.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RayTracerSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerSimple.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SceneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SceneObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SphereObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SphereObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/math/Vector3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/math/RenderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/math/RenderUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +41,18 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="RayTracerSimple" />
@@ -56,18 +61,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -90,6 +83,17 @@
       <are-packages-shown value="true" />
       <is-autoscroll-to-source value="true" />
     </todo-panel>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="249" key="#com.intellij.ide.util.MemberChooser" timestamp="1575493681617">
@@ -137,9 +141,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/SphereObject.java</url>
-          <line>39</line>
-          <option name="timeStamp" value="16" />
+          <url>file://$PROJECT_DIR$/src/PlaneObject.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
