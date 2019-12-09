@@ -1,3 +1,5 @@
+package Objects;
+
 import math.*;
 
 import java.awt.*;
@@ -58,14 +60,14 @@ public class Quadrik extends SceneObject {
 
 
     /*
-     * Berechne den Wert der Quadrik an dem Punkt P
+     * Berechne den Wert der Objects.Quadrik an dem Punkt P
      */
     public double q(Point3D p) {
         return a * p.x * p.x + b * p.y * p.y + c * p.z * p.z + 2.0 * (d * p.x * p.y + e * p.x * p.z + f * p.y * p.z + g * p.x + h * p.y + j * p.z) + k;
     }
 
     /*
-     * Schaue ob ein Punkt in der Quadrik liegt
+     * Schaue ob ein Punkt in der Objects.Quadrik liegt
      */
     public boolean isInside(Vector3 p) {
         double sum = a * p.x * p.x + b * p.y * p.y + c * p.z * p.z + 2.0 * (d * p.x * p.y + e * p.x * p.z + f * p.y * p.z + g * p.x + h * p.y + j * p.z) + k;
@@ -73,7 +75,7 @@ public class Quadrik extends SceneObject {
     }
 
     /*
-     * berechne die Flächen Normale der Quadrik bei dem Punkt P
+     * berechne die Flächen Normale der Objects.Quadrik bei dem Punkt P
      */
     public Vector3 normal(Vector3 p) {
         Vector3 v = new Vector3((float) (g + a * p.x + d * p.y + e * p.z),
@@ -389,7 +391,7 @@ public class Quadrik extends SceneObject {
 
         //System.out.println(finalCol.toString());
         // Color finalColorRGB = new Color(finalCol.x, finalCol.y, finalCol.z );
-        Color finalColorRGB = new Color(RayTracerSimple.clampF(finalCol.x,0,1), RayTracerSimple.clampF(finalCol.y,0,1), RayTracerSimple.clampF(finalCol.z,0,1) );
+        Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x,0,1), MathUtil.clampF(finalCol.y,0,1), MathUtil.clampF(finalCol.z,0,1) );
         int pixelCol = finalColorRGB.getRGB();
 
         return (pixelCol);

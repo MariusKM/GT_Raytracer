@@ -1,6 +1,7 @@
-package math;
+package Util;
 
-
+import Objects.*;
+import math.Vector3;
 
 
 public class RenderUtil {
@@ -10,13 +11,7 @@ public class RenderUtil {
     static float k = 0.2f;
 
 
-    public static Vector3 CookTorranceSimple(Vector3 materialDiffuseColor,
-                                             Vector3 materialSpecularColor,
-                                             Vector3 normal,
-                                             Vector3 lightDir,
-                                             Vector3 viewDir,
-                                             Vector3 lightColor,
-                                             float materialRoughness) {
+    public static Vector3 CookTorranceSimple(Vector3 materialDiffuseColor, Vector3 materialSpecularColor, Vector3 normal, Vector3 lightDir, Vector3 viewDir, Vector3 lightColor, float materialRoughness) {
         float NdotL = Math.max(0, normal.dotProduct(lightDir));
         float Rs = 0.0f;
 
@@ -154,9 +149,29 @@ public class RenderUtil {
         finalCol.add(glanzLicht);
 
         finalCol.mult(NdotL);
-        return  finalCol;
+        return finalCol;
 
     }
 
 
+    public static boolean shadowCheck(SceneSimple myScene, Ray myRay, SceneObject castingObject) {
+        for (SceneObject s : myScene.getSceneObjects()) {
+            Vector3 offset = new Vector3(myRay.getDirection());
+            offset.mult(-1);
+            offset.mult(0.00001f);
+            offset.add(myRay.getOrigin());
+            myRay.setOrigin(offset);
+
+            if (!s.equals(castingObject) && !s.isGizmo()) {
+                boolean intersect = s.intersect(myRay);
+
+                if (intersect) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
+
+

@@ -1,4 +1,4 @@
-// ellipsoid
+package Objects;// ellipsoid
 import math.*;
 public class Ellipsoid extends Quadrik {
 

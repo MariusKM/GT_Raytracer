@@ -1,6 +1,9 @@
+package Objects;
+
+import Objects.Camera;
+import Objects.SceneObject;
+
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 public class SceneSimple{
 

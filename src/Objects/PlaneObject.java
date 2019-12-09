@@ -1,4 +1,7 @@
-import math.RenderUtil;
+package Objects;
+
+import Util.RenderUtil;
+import math.MathUtil;
 import math.Vector3;
 
 import java.awt.*;
@@ -88,30 +91,6 @@ public class PlaneObject extends SceneObject {
         return (pixelCol);
     }
 
-      /* public int shadeCookTorrance(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t){
-        // berechne intersection Point
-        Vector3 intersection, normal, lightDir;
-        intersection = new Vector3(rayDir);
-        intersection.mult(t);
-        intersection.add(sceneOrigin);
-
-        // find surface normal
-        normal = new Vector3(planeNormal);
-
-        // get light direction
-        lightDir = new Vector3(light.getPosition());
-        lightDir.sub(lightDir, intersection);
-        lightDir.normalize();
-        float lightDist = pointOnPlane.distance(light.getPosition());
-        Vector3 rayDirN = new Vector3(rayDir);
-        rayDirN.mult(-1);
-        Vector3 lightCol = new Vector3( light.getColor().getRed()/255,light.getColor().getGreen()/255,light.getColor().getBlue()/255);
-        Vector3 objectCol = RenderUtil.CookTorranceSimple(getMaterial().getAlbedoColor(),new Vector3(1,1,1),normal,lightDir,rayDirN,lightCol,getMaterial().getRoughness());
-        Color finalColorRGB = new Color(RayTracerSimple.clampF(objectCol.x,0,1), RayTracerSimple.clampF(objectCol.y,0,1), RayTracerSimple.clampF(objectCol.z,0,1) );
-        int pixelCol = finalColorRGB.getRGB();
-
-        return  pixelCol;
-    }*/
 
     @Override
     public int shadeCookTorrance(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
@@ -152,7 +131,7 @@ public class PlaneObject extends SceneObject {
         finalCol.mult(intensity);
 
         //System.out.println(finalCol.toString());
-        Color finalColorRGB = new Color(RayTracerSimple.clampF(finalCol.x, 0, 1), RayTracerSimple.clampF(finalCol.y, 0, 1), RayTracerSimple.clampF(finalCol.z, 0, 1));
+        Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
         //Color finalColorRGB = new Color(finalCol.x, finalCol.y, finalCol.z );
         int pixelCol = finalColorRGB.getRGB();
 
@@ -160,17 +139,8 @@ public class PlaneObject extends SceneObject {
     }
 
     public boolean shadowCheck(SceneSimple scene, Ray myRay) {
-        for (SceneObject s : scene.getSceneObjects()) {
-            if (!s.equals(this) && !s.isGizmo()) {
-                boolean intersect = s.intersect(myRay);
-
-                if (intersect) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        boolean shadow = RenderUtil.shadowCheck(scene, myRay, this);
+        return shadow;
     }
 
 

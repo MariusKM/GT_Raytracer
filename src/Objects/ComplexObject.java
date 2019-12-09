@@ -1,3 +1,6 @@
+package Objects;
+
+import math.MathUtil;
 import math.Matrix4x4;
 import math.MatrixOps;
 import math.Vector3;
@@ -13,7 +16,7 @@ public class ComplexObject extends SceneObject {
     public Vector3 normal;
     private float Tintersectzion;
 
-    ComplexObject(Quadrik a, Quadrik b, Operation op){
+    public ComplexObject(Quadrik a, Quadrik b, Operation op){
         this.quadA = a;
         this.quadB = b;
         this.operation = op;
@@ -21,7 +24,7 @@ public class ComplexObject extends SceneObject {
 
 
     /*
-     * Berechne die Flächen Normale der Quadrik bei dem Punkt P
+     * Berechne die Flächen Normale der Objects.Quadrik bei dem Punkt P
      */
     public Vector3 normal(Vector3 p) {
        Vector3 res = null;
@@ -299,7 +302,7 @@ public class ComplexObject extends SceneObject {
 
         //System.out.println(finalCol.toString());
         // Color finalColorRGB = new Color(finalCol.x, finalCol.y, finalCol.z );
-        Color finalColorRGB = new Color(RayTracerSimple.clampF(finalCol.x,0,1), RayTracerSimple.clampF(finalCol.y,0,1), RayTracerSimple.clampF(finalCol.z,0,1) );
+        Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x,0,1), MathUtil.clampF(finalCol.y,0,1), MathUtil.clampF(finalCol.z,0,1) );
         int pixelCol = finalColorRGB.getRGB();
 
         return (pixelCol);

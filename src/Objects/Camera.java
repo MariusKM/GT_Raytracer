@@ -1,3 +1,5 @@
+package Objects;
+
 import math.Vector3;
 
 import static java.lang.Math.*;

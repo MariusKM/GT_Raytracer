@@ -1,7 +1,9 @@
-import math.Material;
+package Objects;
+
+import Util.Material;
 import math.Vector3;
 
-abstract class SceneObject {
+public abstract class SceneObject {
 
     private boolean shade = true;
     private Material material;
@@ -14,7 +16,7 @@ abstract class SceneObject {
     public abstract int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t);
     public abstract int shadeCookTorrance(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t);
 
-    public abstract boolean shadowCheck( SceneSimple scene, Ray myRay);
+    public abstract boolean shadowCheck(SceneSimple scene, Ray myRay);
 
     public boolean isShade() {
         return shade;

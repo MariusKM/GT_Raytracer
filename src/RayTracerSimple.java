@@ -1,6 +1,7 @@
 
 
-import math.Material;
+import Objects.*;
+import Util.Material;
 import math.TransformationMatrix4x4;
 import math.Vector3;
 import math.Vector3D;
@@ -57,7 +58,7 @@ public class RayTracerSimple extends java.applet.Applet {
         }
         while (!exit);
 
-        String path = "C:/Users/mariu/Workspaces/uni/GT Ray Tracing";
+        String path = "C:/Users/mariu/Workspaces/uni/GT Objects.Ray Tracing";
         //savePic(image, "jpeg", path + random() + ".jpeg");
     }
 
@@ -169,7 +170,7 @@ public class RayTracerSimple extends java.applet.Applet {
                 if (myRay.getNearest() != null) {
                     temp = myRay.getNearest();
                     intersectObj = temp;
-                    //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
+                    //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof Objects.PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
                     int pixelColor = (intersectObj.isShade()) ? intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
 
                     pixels[indexer] = pixelColor;
@@ -197,13 +198,13 @@ public class RayTracerSimple extends java.applet.Applet {
         groundPlane.setMaterial(groundMat);
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
-        SceneObject testSphere = new SphereObject(new Vector3(0,0,-0.25f), 0.1f);
+        SceneObject testSphere = new SphereObject(new Vector3(0,0,-0.25f), 0.15f);
         testSphere.setSpeed(0.1f);
-       /* sceneObjects = new SceneObject[]{
+       /* sceneObjects = new Objects.SceneObject[]{
                 testSphere
         }; *///createSpheres(numSpheres, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
-        sceneObjects = createSpheres(numSpheres, 0.15f, 0.01f);
-      /*  SceneObject lightObject = new SphereObject(sceneLight.getPosition(), 0.05f);
+        sceneObjects = createSpheres(numSpheres, 0.15f, 0.02f);
+      /*  Objects.SceneObject lightObject = new Objects.SphereObject(sceneLight.getPosition(), 0.05f);
         lightObject.setShade(false);
         lightObject.setGizmo(true);
         sceneSimple.getSceneObjects().add(lightObject);
@@ -275,7 +276,7 @@ public class RayTracerSimple extends java.applet.Applet {
         Vector3 spherePos;
         float sphereRadius;
         for (int i = 0; i < numSpheres; i++) {
-            spherePos = randomVecInRange(-0.5f, 1, -0.75f, 1, -0.75, -0.25);
+            spherePos = randomVecInRange(-0.5f, 1, -0.75f, 1, -0.25, -0.05);
             sphereRadius = (float) (random() * maxRad + minRad);
             spheres[i] = new SphereObject(spherePos, sphereRadius);
         }
@@ -302,62 +303,7 @@ public class RayTracerSimple extends java.applet.Applet {
         }
     }
 
-    static float[] solveQuadratic(double a, double b, double c) {
-        float x0, x1;
-        float[] results = new float[3];
-        float discr = (float) (b * b - 4 * a * c); // Diskriminanter Term in der PQ formel, Term unter der Wurzel)
-        if (discr < 0) {
-            // wenn dieser kleiner Null ist, dann gibt es keine Schnittpunkte
-            results[0] = -1;
-            return results;
-        } else if (discr == 0) {
-            // wenn dieser gleich Null ist, dann gibt es einen Schnittpunkt (Tangente)
-            x0 = x1 = (float) (-0.5 * b / a);
-        } else {
-            // Ergebnis für 2 Schnittpunkte
-            float q = (float) ((b > 0) ? -0.5 * (b + sqrt(discr)) : -0.5 * (b - sqrt(discr)));
-            x0 = (float) (q / a);
-            x1 = (float) (c / q);
 
-        }
-        if (x0 > x1) {
-            // siehe zu, dass x0 kleiner als x1
-            float tempx0 = x0;
-            float tempx1 = x1;
-            x0 = tempx1;
-            x1 = tempx0;
-
-        }
-        ;
-        results[0] = 1; // identfikator
-        results[1] = x0;
-        results[2] = x1;
-
-
-        return results;
-    }
-
-
-    public static int clamp(int val, int min, int max) {
-        return Math.max(min, Math.min(max, val));
-    }
-
-    public static float clampF(float val, float min, float max) {
-        return Math.max(min, Math.min(max, val));
-    }
-
-    static Color blend(Color a, Color b) {
-
-        double r = (a.getRed() * b.getRed()) / 255;
-        double gr = (a.getGreen() * b.getGreen()) / 255;
-        double bl = (a.getBlue() * b.getBlue()) / 255;
-        double al = (a.getAlpha() * b.getAlpha()) / 255;
-
-        Color blendedCol = new Color((int) r, (int) gr, (int) bl, (int) al);
-        return blendedCol;
-
-
-    }
 
 }
 
