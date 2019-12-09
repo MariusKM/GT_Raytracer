@@ -5,7 +5,7 @@ import math.Vector3;
 public class Material {
 
     private Vector3 albedoColor;
-    private float roughness, metalness;
+    private float roughness, metalness, reflectivity;
 
     public Vector3 getAlbedoColor() {
         return albedoColor;
@@ -31,11 +31,26 @@ public class Material {
         this.roughness = roughness;
     }
 
-    public Material(Vector3 albedo, float roughness,float metalness){
+    public float getReflectivity() {
+        return reflectivity;
+    }
+
+    public void setReflectivity(float reflectivity) {
+        this.reflectivity = reflectivity;
+    }
+    public Material(Vector3 albedo, float roughness, float metalness, float reflectivity){
 
         this.albedoColor = albedo;
         this.roughness = roughness;
         this.metalness = metalness;
+        this.reflectivity = reflectivity;
+    }
+    public Material(Vector3 albedo, float roughness, float metalness){
+
+        this.albedoColor = albedo;
+        this.roughness = roughness;
+        this.metalness = metalness;
+        this.reflectivity = 0;
     }
 
 
@@ -44,5 +59,6 @@ public class Material {
         this.albedoColor = albedo;
         this.roughness = roughness;
         this.metalness = 0;
+        this.reflectivity = 0;
     }
 }

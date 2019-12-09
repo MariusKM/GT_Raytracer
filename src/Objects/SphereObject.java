@@ -1,7 +1,7 @@
 package Objects;
 
 import Util.RenderUtil;
-import math.MathUtil;
+import Util.MathUtil;
 import math.Vector3;
 
 import java.awt.*;
@@ -30,15 +30,15 @@ public class SphereObject extends SceneObject {
         radius = radiusSq = 1;
     }
 
-
+@Override
 // TODO DAS GLANZLICHT IST SEHR KLEIN BEI METALNESS!!FAST NULL UND WIRD DANN ZU NULL
-   public int shadeCookTorrance(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
+   public Vector3 shadeCookTorrance(Vector3 rayDir,Vector3 rayDirN, SceneSimple currentScene, float t) {
 
         Vector3 intersection, normal, lightDir;
         float intensity;
+        Light light = currentScene.getSceneLight();
+        Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
 
-        Vector3 rayDirN = new Vector3(rayDir);
-        rayDirN.mult(-1);
 
         float metalness = getMaterial().getMetalness();
         float roughness = getMaterial().getRoughness();
@@ -62,14 +62,14 @@ public class SphereObject extends SceneObject {
 
         float lightDist = center.distance(light.getPosition());
 
-        Vector3 finalCol = RenderUtil.CookTorrance(lightDir,normal, rayDirN, getMaterial());
+        Vector3 finalCol = RenderUtil.CookTorrance(lightDir,normal, rayDir, rayDirN,intersection,this, currentScene);
 
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay);
+        boolean shadow = false; //shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
-            return Color.black.getRGB();
+            return new Vector3(0,0,0);
         } else {
             intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
             intensity  = light.getIntensity();
@@ -77,13 +77,8 @@ public class SphereObject extends SceneObject {
 
 
         finalCol.mult(intensity);
+        return finalCol;
 
-        //System.out.println(finalCol.toString());
-        Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
-        //Color finalColorRGB = new Color(finalCol.x, finalCol.y, finalCol.z );
-        int pixelCol = finalColorRGB.getRGB();
-
-        return (pixelCol);
     }
 
     public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {

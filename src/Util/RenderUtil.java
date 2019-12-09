@@ -1,7 +1,10 @@
 package Util;
 
 import Objects.*;
+import math.Vector;
 import math.Vector3;
+
+import java.awt.*;
 
 
 public class RenderUtil {
@@ -59,18 +62,18 @@ public class RenderUtil {
         return finalCol;
     }
 
+    // TODO CLEAN UP PARAMETERS!!
+    public static Vector3 CookTorrance(Vector3 lightDir, Vector3 normal, Vector3 rayDir,Vector3 rayDirN, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene) {
 
-    public static Vector3 CookTorrance(Vector3 lightDir, Vector3 normal, Vector3 rayDir, Material mat) {
+        Material Material = objectToShade.getMaterial();
 
-        Material Material = mat;
-
-        float metalness = mat.getMetalness();
-        float roughness = mat.getRoughness();
+        float metalness = Material.getMetalness();
+        float roughness = Material.getRoughness();
         float roughnessSq = (float) Math.pow(roughness, 2);
-        Vector3 albedo = mat.getAlbedoColor();
+        Vector3 albedo = Material.getAlbedoColor();
 
         // H = (V+L)/2
-        Vector3 H = new Vector3(rayDir);
+        Vector3 H = new Vector3(rayDirN);
         H.mult(-1);
         H.add(lightDir);
         H.mult(0.5f);
@@ -78,8 +81,8 @@ public class RenderUtil {
 
         float NdotL = Math.max(0, normal.dotProduct(lightDir));
         float NdotH = Math.max(0, normal.dotProduct(H));
-        float NdotV = Math.max(0, normal.dotProduct(rayDir));
-        float VdotH = Math.max(0, rayDir.dotProduct(H));//max(0, dot(lightDir, H));
+        float NdotV = Math.max(0, normal.dotProduct(rayDirN));
+        float VdotH = Math.max(0, rayDirN.dotProduct(H));//max(0, dot(lightDir, H));
         if (NdotL > 0) {
             //   System.out.println("!");
         }
@@ -138,8 +141,22 @@ public class RenderUtil {
         // Farbe = (N·L)(kd* albedo + D * F * G)
         Vector3 normalCol = new Vector3(normal);
 
+        // Veränderter albedo Wert via refl  (1 - reflectivity) * o.albedo + reflectivity * FertigeFarbe(q)
 
-        Vector3 diffusLicht = new Vector3(kd.x * albedo.x, kd.y * albedo.y, kd.z * albedo.z);
+        Vector3 albedoRefl = new Vector3(albedo);
+        if (Material.getReflectivity()> 0){
+            Vector3 reflColor = Reflexion(lightDir, normal, rayDir, rayDirN,intersection, objectToShade, currentScene);
+            // reflectivity * FertigeFarbe(q)
+            reflColor.mult(Material.getReflectivity());
+
+            //(1 - reflectivity) * o.albedo
+            albedoRefl.mult((1 - Material.getReflectivity()));
+            albedoRefl.add(reflColor);
+        }
+
+
+
+        Vector3 diffusLicht = new Vector3(kd.x * albedoRefl.x, albedoRefl.y * albedoRefl.y, kd.z * albedoRefl.z);
 
         Vector3 glanzLicht = new Vector3(F);
         glanzLicht.mult(D);
@@ -151,6 +168,43 @@ public class RenderUtil {
         finalCol.mult(NdotL);
         return finalCol;
 
+    }
+
+    public static Vector3 Reflexion(Vector3 lightDir, Vector3 normal, Vector3 rayDir,Vector3 rayDirN, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene) {
+
+        //Reflexionsrichtung berechnet sich als r = v – 2(n·v)n
+        float NdotV = normal.dotProduct(rayDir);
+        Vector3 n = new Vector3(normal);
+        n.mult(2 * (NdotV));
+        Vector3 reflDir = new Vector3(rayDir);
+        reflDir.sub(reflDir, n);
+
+        //Reflexionsstrahl von p starten mit Richtung r
+        Ray reflRay = new Ray(intersection, reflDir);
+        Vector3 offset = new Vector3(reflRay.getDirection());
+        offset.mult(-1);
+        offset.mult(0.00001f);
+        offset.add(reflRay.getOrigin());
+        reflRay.setOrigin(offset);
+
+        for (SceneObject s : currentScene.getSceneObjects()) {
+
+            if (!s.equals(objectToShade) && !s.isGizmo()) {
+                boolean intersect = s.intersect(reflRay);
+            }
+        }
+        Vector3 reflColor = new Vector3(0, 0, 0);
+        if (reflRay.getNearest() != null) {
+            SceneObject temp = reflRay.getNearest();
+            SceneObject intersectObj = temp;
+            Vector3 reflDirN = new Vector3(reflDir);
+            reflDir.mult(-1);
+            // TODO FOR SOME REASON THIS IS ALWAYS BLACK
+            reflColor = intersectObj.shadeCookTorrance(reflDir,reflDirN, currentScene, reflRay.getT0());
+        }
+        if (reflColor.x != 0 ||reflColor.y != 0 ||reflColor.z != 0) System.out.println("yaay");
+
+        return reflColor;
     }
 
 
