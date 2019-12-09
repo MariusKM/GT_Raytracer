@@ -63,7 +63,7 @@ public class RenderUtil {
     }
 
     // TODO CLEAN UP PARAMETERS!!
-    public static Vector3 CookTorrance(Vector3 lightDir, Vector3 normal, Vector3 rayDir,Vector3 rayDirN, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene) {
+    public static Vector3 CookTorrance(Vector3 lightDir, Vector3 normal, Vector3 rayDir,Vector3 rayDirN, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene ,boolean refl) {
 
         Material Material = objectToShade.getMaterial();
 
@@ -78,13 +78,18 @@ public class RenderUtil {
         H.add(lightDir);
         H.mult(0.5f);
         H.normalize();
-
-        float NdotL = Math.max(0, normal.dotProduct(lightDir));
+        float NdotL;
+        if (!refl){
+             NdotL = Math.max(0, normal.dotProduct(lightDir));
+        }else{
+             NdotL = 0.5f;
+        }
+      //  float NdotL = Math.max(0, normal.dotProduct(lightDir));
         float NdotH = Math.max(0, normal.dotProduct(H));
         float NdotV = Math.max(0, normal.dotProduct(rayDirN));
         float VdotH = Math.max(0, rayDirN.dotProduct(H));//max(0, dot(lightDir, H));
-        if (NdotL > 0) {
-            //   System.out.println("!");
+        if (NdotL > 0 && refl) {
+               System.out.println("!");
         }
         // D
 
@@ -200,7 +205,7 @@ public class RenderUtil {
             Vector3 reflDirN = new Vector3(reflDir);
             reflDir.mult(-1);
             // TODO FOR SOME REASON THIS IS ALWAYS BLACK
-            reflColor = intersectObj.shadeCookTorrance(reflDir,reflDirN, currentScene, reflRay.getT0());
+            reflColor = intersectObj.shadeCookTorrance(reflDir,reflDirN, currentScene, reflRay.getT0(), true);
         }
         if (reflColor.x != 0 ||reflColor.y != 0 ||reflColor.z != 0) System.out.println("yaay");
 

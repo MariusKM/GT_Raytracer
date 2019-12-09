@@ -277,7 +277,7 @@ public class Quadrik extends SceneObject {
     }
 
     @Override
-    public Vector3 shadeCookTorrance(Vector3 rayDir,Vector3 rayDirN, SceneSimple currentScene, float t) {
+    public Vector3 shadeCookTorrance(Vector3 rayDir,Vector3 rayDirN, SceneSimple currentScene, float t,boolean refl) {
         Vector3 intersection, normal, lightDir;
         float intensity;
         Light light = currentScene.getSceneLight();
@@ -305,7 +305,7 @@ public class Quadrik extends SceneObject {
 
 
 
-        Vector3 finalCol = RenderUtil.CookTorrance(lightDir,normal, rayDir,rayDirN,intersection,this, currentScene);
+        Vector3 finalCol = RenderUtil.CookTorrance(lightDir,normal, rayDir,rayDirN,intersection,this, currentScene,refl);
 
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);
