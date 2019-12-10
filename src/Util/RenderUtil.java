@@ -176,6 +176,12 @@ public class RenderUtil {
 
     }
 
+    public static Vector3 Refraction(Vector3 lightDir, Vector3 normal, Vector3 rayDir,Vector3 rayDirN, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene, float depth) {
+
+
+        return  new Vector3 (0,0,0);
+    }
+
     public static Vector3 Reflexion(Vector3 lightDir, Vector3 normal, Vector3 rayDir,Vector3 rayDirN, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene, float depth) {
 
         //Reflexionsrichtung berechnet sich als r = v – 2(n·v)n

@@ -5,7 +5,8 @@ import math.Vector3;
 public class Material {
 
     private Vector3 albedoColor;
-    private float roughness, metalness, reflectivity;
+    private float roughness, metalness, reflectivity,refractiveIndex;
+    private boolean transparent;
 
     public Vector3 getAlbedoColor() {
         return albedoColor;
@@ -34,10 +35,26 @@ public class Material {
     public float getReflectivity() {
         return reflectivity;
     }
-
     public void setReflectivity(float reflectivity) {
         this.reflectivity = reflectivity;
     }
+
+    public float getRefractiveIndex() {
+        return refractiveIndex;
+    }
+
+    public void setRefractiveIndex(float refractiveIndex) {
+        this.refractiveIndex = refractiveIndex;
+    }
+
+    public boolean isTransparent() {
+        return transparent;
+    }
+
+    public void setTransparent(boolean transparent) {
+        this.transparent = transparent;
+    }
+
     public Material(Vector3 albedo, float roughness, float metalness, float reflectivity){
 
         this.albedoColor = albedo;
