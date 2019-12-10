@@ -175,7 +175,7 @@ public class RayTracerSimple extends java.applet.Applet {
                     //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof Objects.PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
                     Vector3 rayDirN = new Vector3(rayDir);
                     rayDirN.mult(-1);
-                    Vector3 finalCol = intersectObj.shadeCookTorrance(rayDir, rayDirN, sceneSimple, myRay.getT0(), false,4);
+                    Vector3 finalCol = intersectObj.shadeCookTorrance(rayDir, rayDirN, sceneSimple, myRay.getT0(), false,5);
                     //System.out.println(finalCol.toString());
                     Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
                     //Color finalColorRGB = new Color(finalCol.x, finalCol.y, finalCol.z );
@@ -209,14 +209,19 @@ public class RayTracerSimple extends java.applet.Applet {
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
         SceneObject testSphere = new SphereObject(new Vector3(0.1f, -0.25f, -0.25f), 0.15f);
-        SceneObject testSphere1 = new SphereObject(new Vector3(0.3f, 0.5f, -0.25f), 0.15f);
+        SceneObject testSphere1 = new SphereObject(new Vector3(0.1f, -0.25f,-0.45f), 0.15f);
         SceneObject testSphere2 = new SphereObject(new Vector3(00.6f, 0.5f, -0.25f), 0.15f);
         SceneObject testSphere3 = new SphereObject(new Vector3(-0.3f, 0.5f, -0.25f), 0.15f);
         testSphere.setSpeed(0.1f);
+        testSphere.setSpeed(0.1f);
+        Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1,0.5f,1.3f,true);
+        testSphere.setMaterial(defaultMat);
+        defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1,0.5f,1.3f,false);
+        testSphere1.setMaterial(defaultMat);
         sceneObjects = new Objects.SceneObject[]{
-                testSphere/*,
+                testSphere,
                 testSphere1,
-                testSphere2,
+               /* testSphere2,
                 testSphere3*/
 
         }; ///createSpheres(numSpheres, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
@@ -262,9 +267,9 @@ public class RayTracerSimple extends java.applet.Applet {
         xobj3.setMaterial(CSGmat);
 
         for (SceneObject s : sceneObjects) {
-            Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1,0.5f);
+          /*  Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1,0.5f);
 
-            s.setMaterial(defaultMat);
+            s.setMaterial(defaultMat);*/
             sceneSimple.getSceneObjects().add(s);
             s.setScene(sceneSimple);
         }

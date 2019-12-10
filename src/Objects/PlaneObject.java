@@ -113,9 +113,7 @@ public class PlaneObject extends SceneObject {
         lightDir.normalize();
         float lightDist = pointOnPlane.distance(light.getPosition());
 
-
-
-        Vector3 finalCol = RenderUtil.CookTorrance(lightDir,normal, rayDir,rayDirN,intersection,this, currentScene,refl,depth);
+        Vector3 finalCol = RenderUtil.CookTorranceNeu(lightDir,normal, rayDir,rayDirN,intersection,this, currentScene,refl,depth);
 
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);

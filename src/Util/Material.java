@@ -54,6 +54,24 @@ public class Material {
     public void setTransparent(boolean transparent) {
         this.transparent = transparent;
     }
+    public Material(Vector3 albedo, float roughness, float metalness, float reflectivity, float refractiveIndex,boolean isTransparent){
+
+        this.albedoColor = albedo;
+        this.roughness = roughness;
+        this.metalness = metalness;
+        this.reflectivity = reflectivity;
+        this.refractiveIndex = refractiveIndex;
+        this.transparent = isTransparent;
+    }
+    public Material(Vector3 albedo, float roughness, float metalness, float reflectivity,float refractiveIndex){
+
+        this.albedoColor = albedo;
+        this.roughness = roughness;
+        this.metalness = metalness;
+        this.reflectivity = reflectivity;
+        this.refractiveIndex = refractiveIndex;
+        this.transparent = false;
+    }
 
     public Material(Vector3 albedo, float roughness, float metalness, float reflectivity){
 
@@ -61,6 +79,8 @@ public class Material {
         this.roughness = roughness;
         this.metalness = metalness;
         this.reflectivity = reflectivity;
+        this.refractiveIndex = 1.0f;
+        this.transparent = false;
     }
     public Material(Vector3 albedo, float roughness, float metalness){
 
