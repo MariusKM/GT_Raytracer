@@ -3,6 +3,7 @@ package Objects;
 import Objects.Camera;
 import Objects.SceneObject;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class SceneSimple{
@@ -10,7 +11,7 @@ public class SceneSimple{
     private ArrayList<SceneObject> sceneObjects;
     private Light sceneLight;
     private Camera sceneCam;
-
+    private Color bgCol;
     public SceneSimple(){
         sceneObjects = new ArrayList<SceneObject>();
     }
@@ -39,7 +40,13 @@ public class SceneSimple{
         this.sceneCam = sceneCam;
     }
 
+    public Color getBgCol() {
+        return bgCol;
+    }
 
+    public void setBgCol(Color bgCol) {
+        this.bgCol = bgCol;
+    }
 
 
 }

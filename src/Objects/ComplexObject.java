@@ -187,7 +187,7 @@ public class ComplexObject extends SceneObject {
 
 
     @Override
-    public Vector3 shadeCookTorrance(Vector3 rayDir, Vector3 rayDirN,SceneSimple currentScene, float t,boolean refl) {
+    public Vector3 shadeCookTorrance(Vector3 rayDir, Vector3 rayDirN,SceneSimple currentScene, float t,boolean refl, float depth) {
         Vector3 intersection, normal, lightDir;
         float intensity;
         Light light = currentScene.getSceneLight();
@@ -216,7 +216,7 @@ public class ComplexObject extends SceneObject {
 
 
 
-        Vector3 finalCol = RenderUtil.CookTorrance(lightDir,normal, rayDir,rayDirN,intersection,this, currentScene,refl);
+        Vector3 finalCol = RenderUtil.CookTorrance(lightDir,normal, rayDir,rayDirN,intersection,this, currentScene,refl,depth);
 
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);

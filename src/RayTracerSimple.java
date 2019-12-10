@@ -167,8 +167,6 @@ public class RayTracerSimple extends java.applet.Applet {
                     } else {
                         intersect = s.intersect(myRay);
                     }
-
-
                 }
                 int indexer = usePerspective ? (resY - y - 1) * resY + x : (y * resY + x);
                 if (myRay.getNearest() != null) {
@@ -177,7 +175,7 @@ public class RayTracerSimple extends java.applet.Applet {
                     //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof Objects.PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
                     Vector3 rayDirN = new Vector3(rayDir);
                     rayDirN.mult(-1);
-                    Vector3 finalCol = intersectObj.shadeCookTorrance(rayDir, rayDirN, sceneSimple, myRay.getT0(), false);
+                    Vector3 finalCol = intersectObj.shadeCookTorrance(rayDir, rayDirN, sceneSimple, myRay.getT0(), false,4);
                     //System.out.println(finalCol.toString());
                     Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
                     //Color finalColorRGB = new Color(finalCol.x, finalCol.y, finalCol.z );
@@ -186,7 +184,7 @@ public class RayTracerSimple extends java.applet.Applet {
                     pixels[indexer] = pixelColor;
 
                 } else {
-                    pixels[indexer] = BG_Color.getRGB();
+                    pixels[indexer] = sceneSimple.getBgCol().getRGB();
                 }
             }
         }
@@ -203,6 +201,7 @@ public class RayTracerSimple extends java.applet.Applet {
         sceneLight = new Light(new Vector3(0f, -0.25f, -0), 10, Color.white);
         sceneSimple.setSceneCam(cam);
         sceneSimple.setSceneLight(sceneLight);
+        sceneSimple.setBgCol(new Color(0.1f,0.1f,0.1f));
 
         PlaneObject groundPlane = new PlaneObject(new Vector3(0, -0.5f, 0), new Vector3(0, 1, 0));
         Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.3f, 0.4f, 0.99f);
@@ -263,7 +262,7 @@ public class RayTracerSimple extends java.applet.Applet {
         xobj3.setMaterial(CSGmat);
 
         for (SceneObject s : sceneObjects) {
-            Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1);
+            Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1,0.5f);
 
             s.setMaterial(defaultMat);
             sceneSimple.getSceneObjects().add(s);
