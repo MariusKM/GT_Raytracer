@@ -79,7 +79,6 @@ public class RayTracerSimple extends java.applet.Applet {
 
             if (s instanceof Ellipsoid && !s.isGizmo()) {
 
-
                 TransformationMatrix4x4 trans = new TransformationMatrix4x4();
                 trans.createTranslationMatrix(new Vector3D(0, s.getSpeed() * delta_time, 0));
 
@@ -198,7 +197,7 @@ public class RayTracerSimple extends java.applet.Applet {
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0f, -0.25f, -0), 50, Color.white);
+        sceneLight = new Light(new Vector3(0f, 0.5f, -0), 50, Color.white);
         sceneSimple.setSceneCam(cam);
         sceneSimple.setSceneLight(sceneLight);
         sceneSimple.setBgCol(new Color(0.1f,0.1f,0.1f));

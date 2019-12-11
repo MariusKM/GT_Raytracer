@@ -117,7 +117,7 @@ public class PlaneObject extends SceneObject {
 
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay);
+        boolean shadow = shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return new Vector3(0,0,0);

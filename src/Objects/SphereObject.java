@@ -60,13 +60,14 @@ public class SphereObject extends SceneObject {
         lightDir.sub(lightDir, intersection);
         lightDir.normalize();
 
+
         float lightDist = center.distance(light.getPosition());
 
         Vector3 finalCol = RenderUtil.CookTorranceNeu(lightDir,normal, rayDir, rayDirN,intersection,this, currentScene,refl,depth);
         // TODO Multiple Lights
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = false; //shadowCheck(this.getScene(), shadowRay);
+        boolean shadow = shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
             return new Vector3(0,0,0);
