@@ -83,7 +83,6 @@ public class RenderUtil {
 
         if (depth !=0){
             // Veränderter albedo Wert via refl  (1 - reflectivity) * o.albedo + reflectivity * FertigeFarbe(q)
-
             if (Material.getReflectivity()> 0 ){
                 Vector3 reflDir  = getReflexionVector(rayDir,normal,objectToShade);
                 Vector3 reflDirN  = new Vector3(reflDir);
@@ -94,14 +93,11 @@ public class RenderUtil {
                 //(1 - reflectivity) * o.albedo
                 albedoRefl.mult((1 - Material.getReflectivity()));
                 albedoRefl.add(reflColor);
-
             }
-
-
         }
 
         // H = (V+L)/2
-        Vector3 H = new Vector3( (refl) ? rayDir : rayDirN);
+        Vector3 H = new Vector3(rayDirN);
         H.mult(-1);
         H.add(lightDir);
         H.mult(0.5f);
@@ -109,23 +105,19 @@ public class RenderUtil {
         float NdotL;
 
 
-        // DEBUG STUFF! TODO hier wird NdotL in der reflexion immer 0.0 was zu einer schwarzen farbe führt, whrscheinlich ein fehler mit der Lichtrichtung
+
         if (!refl){
             NdotL = Math.max(0, normal.dotProduct(lightDir));
         }else{
             // hier einfach zum testen
-           /* Vector3 nLightDir = new Vector3(lightDir);
-            nLightDir.mult(-1.0f);
 
-            Vector3 normalL = new Vector3(normal);
-            normalL.mult(-1);*/
-             NdotL = normal.dotProduct(lightDir);
-            //NdotL =  Math.max(0, normal.dotProduct(lightDir));
+             NdotL =  Math.max(0, normal.dotProduct(lightDir));
+
         }
         //  float NdotL = Math.max(0, normal.dotProduct(lightDir));
         float NdotH = Math.max(0, normal.dotProduct(H));
-        float NdotV = Math.max(0, normal.dotProduct((refl)? rayDir : rayDirN));
-        float VdotH = Math.max(0, (refl)? rayDir.dotProduct(H):rayDirN.dotProduct(H));//max(0, dot(lightDir, H));
+        float NdotV = Math.max(0, normal.dotProduct( rayDirN));
+        float VdotH = Math.max(0, rayDirN.dotProduct(H));//max(0, dot(lightDir, H));
 
         // D
 
@@ -409,13 +401,12 @@ public class RenderUtil {
             }
         }
         // Background Color if nothing is hit
-        Vector3 Color = new Vector3(currentScene.getBgCol().getRed()/255,currentScene.getBgCol().getGreen()/255,currentScene.getBgCol().getBlue()/255);
+        Vector3 Color = new Vector3(((float)currentScene.getBgCol().getRed())/255,((float)currentScene.getBgCol().getGreen())/255,((float)currentScene.getBgCol().getBlue())/255);
         if (ray.getNearest() != null) {
             SceneObject temp = ray.getNearest();
             SceneObject intersectObj = temp;
             Color = intersectObj.shadeCookTorrance(rayDir,rayDirN, currentScene, ray.getT0(), true,depth);
         }
-
         return Color;
     }
 
