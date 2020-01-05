@@ -45,7 +45,7 @@ public class SphereObject extends SceneObject {
         float roughnessSq = (float) Math.pow(roughness, 2);
         Vector3 albedo = getMaterial().getAlbedoColor();
         // berechne intersection Point
-        intersection = new Vector3(rayDir);
+        intersection = new Vector3((refl) ? rayDirN:rayDir);
         intersection.mult(t);
         intersection.add(sceneOrigin);
 

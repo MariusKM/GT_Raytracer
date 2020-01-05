@@ -101,7 +101,7 @@ public class RenderUtil {
         }
 
         // H = (V+L)/2
-        Vector3 H = new Vector3(rayDirN);
+        Vector3 H = new Vector3( (refl) ? rayDir : rayDirN);
         H.mult(-1);
         H.add(lightDir);
         H.mult(0.5f);
@@ -114,12 +114,18 @@ public class RenderUtil {
             NdotL = Math.max(0, normal.dotProduct(lightDir));
         }else{
             // hier einfach zum testen
-            NdotL = 0.5f;
+           /* Vector3 nLightDir = new Vector3(lightDir);
+            nLightDir.mult(-1.0f);
+
+            Vector3 normalL = new Vector3(normal);
+            normalL.mult(-1);*/
+             NdotL = normal.dotProduct(lightDir);
+            //NdotL =  Math.max(0, normal.dotProduct(lightDir));
         }
         //  float NdotL = Math.max(0, normal.dotProduct(lightDir));
         float NdotH = Math.max(0, normal.dotProduct(H));
-        float NdotV = Math.max(0, normal.dotProduct(rayDirN));
-        float VdotH = Math.max(0, rayDirN.dotProduct(H));//max(0, dot(lightDir, H));
+        float NdotV = Math.max(0, normal.dotProduct((refl)? rayDir : rayDirN));
+        float VdotH = Math.max(0, (refl)? rayDir.dotProduct(H):rayDirN.dotProduct(H));//max(0, dot(lightDir, H));
 
         // D
 
@@ -200,18 +206,15 @@ public class RenderUtil {
         //G
         float halfRoughness = roughness / 2;
         // termG1 = N·V / (N·V(1 – r/2) + r/2);
-        Vector3 normalG = new Vector3(normal);
+
         float termG1 = NdotV / (NdotV * (1 - halfRoughness) + halfRoughness);
         //termG2 =  N·L / (N·L(1 – r/2) + r/2)
         float termG2 = NdotL / (NdotL * (1 - halfRoughness) + halfRoughness);
 
         //G = N·V / (N·V(1 – r/2) + r/2) * N·L / (N·L(1 – r/2) + r/2)
-
         float G = termG1 * termG2;
 
         // Farbe = (N·L)(kd* albedo + D * F * G)
-        Vector3 normalCol = new Vector3(normal);
-
 
         Vector3 glanzLicht = new Vector3(F);
         glanzLicht.mult(D);

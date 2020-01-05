@@ -197,7 +197,7 @@ public class RayTracerSimple extends java.applet.Applet {
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0f, 0.5f, -0), 50, Color.white);
+        sceneLight = new Light(new Vector3(0f, 0.5f, -0.25f), 50, Color.white);
         sceneSimple.setSceneCam(cam);
         sceneSimple.setSceneLight(sceneLight);
         sceneSimple.setBgCol(new Color(0.1f,0.1f,0.1f));
@@ -207,18 +207,19 @@ public class RayTracerSimple extends java.applet.Applet {
         groundPlane.setMaterial(groundMat);
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
-        SceneObject testSphere = new SphereObject(new Vector3(0.1f, -0.25f, -0.25f), 0.15f);
+        SceneObject testSphere = new SphereObject(new Vector3(0.01f, -0.25f, -0.25f), 0.15f);
         SceneObject testSphere1 = new SphereObject(new Vector3(0.1f, -0.25f,-0.45f), 0.15f);
         SceneObject testSphere2 = new SphereObject(new Vector3(00.6f, 0.5f, -0.25f), 0.15f);
+
         SceneObject testSphere3 = new SphereObject(new Vector3(-0.3f, 0.5f, -0.25f), 0.15f);
         testSphere.setSpeed(0.1f);
-        testSphere.setSpeed(0.1f);
-        Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1,0.5f,1.3f,true);
+        testSphere1.setSpeed(0.0f);
+        Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1,0.6f,1.3f,true);
         testSphere.setMaterial(defaultMat);
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1,0.5f,1.3f,false);
         testSphere1.setMaterial(defaultMat);
         sceneObjects = new Objects.SceneObject[]{
-                testSphere,
+              //  testSphere,
                 testSphere1,
                /* testSphere2,
                 testSphere3*/
