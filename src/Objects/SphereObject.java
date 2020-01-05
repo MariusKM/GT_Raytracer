@@ -11,8 +11,6 @@ public class SphereObject extends SceneObject {
     private float radius, radiusSq; // precompute radiusSq since we use it a lot
 
 // TODO : Clean up shading
-
-
     public SphereObject(float x, float y, float z, float r) {
         center = new Vector3(x, y, z);
         radius = r;
@@ -31,8 +29,7 @@ public class SphereObject extends SceneObject {
     }
 
 @Override
-
-   public Vector3 shadeCookTorrance(Vector3 rayDir,Vector3 rayDirN, SceneSimple currentScene, float t,boolean refl, float depth) {
+   public Vector3 shadeCookTorrance(Vector3 rayDir,Vector3 rayDirN, SceneSimple currentScene, float t, boolean refl, float depth) {
 
         Vector3 intersection, normal, lightDir;
         float intensity;
@@ -179,12 +176,10 @@ public class SphereObject extends SceneObject {
         return true;
     }
 
-
     public boolean shadowCheck(SceneSimple scene, Ray myRay) {
         boolean shadow = RenderUtil.shadowCheck(scene, myRay, this);
         return shadow;
     }
-
 
     public Vector3 getCenter() {
         return center;
@@ -209,7 +204,6 @@ public class SphereObject extends SceneObject {
     public void setRadiusSq(float radiusSq) {
         this.radiusSq = radiusSq;
     }
-
 
 }
 

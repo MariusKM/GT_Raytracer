@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/Objects/SphereObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/SphereObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RayTracerSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerSimple.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/RenderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/RenderUtil.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,25 +33,33 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Objects/SphereObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="42" column="55" lean-forward="true" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
+            <state relative-caret-position="136">
+              <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+              <folding>
+                <element signature="method#SphereObject#0;class#SphereObject#0" />
+                <element signature="method#SphereObject#1;class#SphereObject#0" />
+                <element signature="method#SphereObject#2;class#SphereObject#0" />
+                <element signature="method#shadeCookTorrance#0;class#SphereObject#0" />
+                <element signature="method#shadeDiffuse#0;class#SphereObject#0" />
+                <element signature="method#intersect#0;class#SphereObject#0" />
+                <element signature="method#shadowCheck#0;class#SphereObject#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Util/RenderUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
-              <caret line="119" column="13" selection-start-line="119" selection-start-column="13" selection-end-line="119" selection-end-column="13" />
+            <state relative-caret-position="276">
+              <caret line="196" lean-forward="true" selection-start-line="196" selection-end-line="196" />
               <folding>
                 <element signature="method#CookTorranceSimple#0;class#RenderUtil#0" />
                 <element signature="method#CookTorrance#0;class#RenderUtil#0" />
-                <element signature="method#getRefractionVector#0;class#RenderUtil#0" />
-                <element signature="method#shadowCheck#0;class#RenderUtil#0" />
+                <element signature="method#getReflexionVector#0;class#RenderUtil#0" />
               </folding>
             </state>
           </provider>
@@ -68,8 +77,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="57" selection-start-line="57" selection-end-line="57" />
+            <state relative-caret-position="307">
+              <caret line="316" column="38" lean-forward="true" selection-start-line="316" selection-start-column="38" selection-end-line="316" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -92,6 +101,10 @@
       <find>rayDirN</find>
       <find>refl</find>
       <find>refl)</find>
+      <find>lightDir2</find>
+      <find>albedoRefl</find>
+      <find>albedo</find>
+      <find>diffusLicht</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -107,8 +120,8 @@
         <option value="$PROJECT_DIR$/src/Util/Material.java" />
         <option value="$PROJECT_DIR$/src/Objects/PlaneObject.java" />
         <option value="$PROJECT_DIR$/src/RayTracerSimple.java" />
-        <option value="$PROJECT_DIR$/src/Objects/SphereObject.java" />
         <option value="$PROJECT_DIR$/src/Util/RenderUtil.java" />
+        <option value="$PROJECT_DIR$/src/Objects/SphereObject.java" />
       </list>
     </option>
   </component>
@@ -222,11 +235,11 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.18093175" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.27410617" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.26435536" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.24918744" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.15492958" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.19609967" />
@@ -411,13 +424,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/SceneObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="20" column="138" selection-start-line="20" selection-start-column="138" selection-end-line="20" selection-end-column="138" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-11.0.5/lib/src.zip!/java.desktop/java/awt/Color.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="215">
@@ -439,10 +445,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/SphereObject.java">
+    <entry file="file://$PROJECT_DIR$/src/Objects/SceneObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="42" column="55" lean-forward="true" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
+        <state relative-caret-position="289">
+          <caret line="20" column="138" selection-start-line="20" selection-start-column="138" selection-end-line="20" selection-end-column="138" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="316" column="38" lean-forward="true" selection-start-line="316" selection-start-column="38" selection-end-line="316" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -453,22 +466,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="57" selection-start-line="57" selection-end-line="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Util/RenderUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="119" column="13" selection-start-line="119" selection-start-column="13" selection-end-line="119" selection-end-column="13" />
+        <state relative-caret-position="276">
+          <caret line="196" lean-forward="true" selection-start-line="196" selection-end-line="196" />
           <folding>
             <element signature="method#CookTorranceSimple#0;class#RenderUtil#0" />
             <element signature="method#CookTorrance#0;class#RenderUtil#0" />
-            <element signature="method#getRefractionVector#0;class#RenderUtil#0" />
-            <element signature="method#shadowCheck#0;class#RenderUtil#0" />
+            <element signature="method#getReflexionVector#0;class#RenderUtil#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Objects/SphereObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+          <folding>
+            <element signature="method#SphereObject#0;class#SphereObject#0" />
+            <element signature="method#SphereObject#1;class#SphereObject#0" />
+            <element signature="method#SphereObject#2;class#SphereObject#0" />
+            <element signature="method#shadeCookTorrance#0;class#SphereObject#0" />
+            <element signature="method#shadeDiffuse#0;class#SphereObject#0" />
+            <element signature="method#intersect#0;class#SphereObject#0" />
+            <element signature="method#shadowCheck#0;class#SphereObject#0" />
           </folding>
         </state>
       </provider>

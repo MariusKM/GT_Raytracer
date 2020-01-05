@@ -186,10 +186,16 @@ public class RenderUtil {
 
             float Ft = 1- Fr;
             F = new Vector3(Ft,Ft,Ft);
+            Vector3 refracDir = new Vector3(lightDir2);
+            Vector3 refracDirN = new Vector3(lightDir2);
+            refracDirN.mult(-1);
 
+            Vector3 refracColor = getColRecursive(refracDir, refracDirN,intersection, objectToShade, currentScene, depth);
 
+            //kd = (1 – F)(1 – metallness)
+            Vector3 kd = new Vector3(1, 1, 1).sub(F);
 
-
+            diffusLicht = new Vector3(kd.x * albedoRefl.x, albedoRefl.y * albedoRefl.y, kd.z * albedoRefl.z);
 
         }
 
@@ -344,7 +350,6 @@ public class RenderUtil {
         float i2 = mat.getRefractiveIndex();
 
         // i = i1/i2;
-
         float i = i1/i2;
 
         // a = v1 * N
@@ -400,6 +405,7 @@ public class RenderUtil {
                 boolean intersect = s.intersect(ray);
             }
         }
+
         // Background Color if nothing is hit
         Vector3 Color = new Vector3(((float)currentScene.getBgCol().getRed())/255,((float)currentScene.getBgCol().getGreen())/255,((float)currentScene.getBgCol().getBlue())/255);
         if (ray.getNearest() != null) {
