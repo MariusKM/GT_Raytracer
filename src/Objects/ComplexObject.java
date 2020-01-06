@@ -187,7 +187,7 @@ public class ComplexObject extends SceneObject {
 
 
     @Override
-    public Vector3 shadeCookTorrance(Vector3 rayDir, Vector3 rayDirN,SceneSimple currentScene, float t,boolean refl, float depth) {
+    public Vector3 shadeCookTorrance(Ray ray, Vector3 rayDirN,SceneSimple currentScene,boolean refl, float depth) {
         Vector3 intersection, normal, lightDir;
         float intensity;
         Light light = currentScene.getSceneLight();
@@ -196,16 +196,20 @@ public class ComplexObject extends SceneObject {
         float roughness = getMaterial().getRoughness();
         float roughnessSq = (float)Math.pow(roughness,2);
         Vector3 albedo = getMaterial().getAlbedoColor();
-
         // berechne intersection Point
-        intersection = new Vector3(rayDir);
-        intersection.mult(Tintersectzion);
-        intersection.add(sceneOrigin);
+        if (getMaterial().isTransparent()) {
+            intersection = new Vector3(ray.getDirection());
+            //TODO not sure about this
+            intersection.mult(ray.getT2Nearest());
+            intersection.add(sceneOrigin);
+        }else{
+            intersection = new Vector3(ray.getDirection());
+            intersection.mult(Tintersectzion);
+            intersection.add(sceneOrigin);
+        }
 
         // find surface normal
-        normal = intersectObj.normal(intersection); //normal(intersection);//new math.Vector3(this.normal);
-
-
+        normal = intersectObj.normal(intersection);
 
         // get light direction
         lightDir = new Vector3(light.getPosition());
@@ -214,16 +218,14 @@ public class ComplexObject extends SceneObject {
         float lightDist = intersection.distance(light.getPosition());
 
 
-
-
-        Vector3 finalCol = RenderUtil.CookTorrance(lightDir,normal, rayDir,rayDirN,intersection,this, currentScene,refl,depth);
+        Vector3 finalCol = RenderUtil.CookTorranceNeu(lightDir,normal, ray.getDirection(),rayDirN,intersection,this, currentScene,refl,depth);
 
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);
         boolean shadow = shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
-            return new Vector3(0,0,0);
+
         } else {
             intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
             intensity  *= light.getIntensity();

@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.Vector;
 
 
+@SuppressWarnings("ALL")
 public class RenderUtil {
 
     static float F0 = 0.8f;
@@ -72,7 +73,7 @@ public class RenderUtil {
         depth--;
         Material Material = objectToShade.getMaterial();
 
-        float metalness = Material.getMetalness();
+  //      float metalness = Material.getMetalness();
         float roughness = Material.getRoughness();
         float roughnessSq = (float) Math.pow(roughness, 2);
         Vector3 albedo = Material.getAlbedoColor();
@@ -87,7 +88,7 @@ public class RenderUtil {
                 Vector3 reflDir  = getReflexionVector(rayDir,normal,objectToShade);
                 Vector3 reflDirN  = new Vector3(reflDir);
                 reflDirN.mult(-1);
-                Vector3 reflColor = getColRecursive(reflDir, reflDirN,intersection, objectToShade, currentScene, depth);
+                Vector3 reflColor = getColRecursive(reflDir, reflDirN,intersection, objectToShade, currentScene, depth,false);
                 // reflectivity * FertigeFarbe(q)
                 reflColor.mult(Material.getReflectivity());
                 //(1 - reflectivity) * o.albedo
@@ -103,8 +104,6 @@ public class RenderUtil {
         H.mult(0.5f);
         H.normalize();
         float NdotL;
-
-
 
         if (!refl){
             NdotL = Math.max(0, normal.dotProduct(lightDir));
@@ -123,7 +122,6 @@ public class RenderUtil {
 
         // D = 𝑟^2/ 𝜋 ((𝑁∙𝐻)^2 (r^2-1)+1)^2
 
-
         Vector3 normalD = new Vector3(normal);
 
         float nennerD = (float) (Math.PI * Math.pow((Math.pow(NdotH, 2) * (roughnessSq - 1) + 1), 2));
@@ -132,35 +130,35 @@ public class RenderUtil {
 
         Vector3 diffusLicht = new Vector3();
         Vector3 F = new Vector3();
+
         if (!Material.isTransparent()){
-            // F
 
-            //(1 – metalness) * 0.04f
-            float termF0 = (1 - metalness) * 0.04f;
-            //metalness * albedo
-            Vector3 F0 = new Vector3(albedo);
-            F0.mult(metalness);
-            // F0 = (1 – metalness) * 0.04f + metalness * albedo
-            Vector3 termF0v = new Vector3(termF0, termF0, termF0);
-            F0.add(termF0v);
-
-
-            Vector3 normalF = new Vector3(normal);
-            //termF =(1 – N·V)^5
-
-            float termF = (float) Math.pow(1 - (NdotV), 5);
-
-            //F = F0+ (1 – F0)(1 – N·V)^5
-            Vector3 F02 = new Vector3(1, 1, 1).sub(F0);
-            F02.mult(termF);
-            F = new Vector3(F0);
-            F.add(F02);
+            // w1 = NdotL  w2 = -NdotL2
+            Vector3 lightDir2 = getRefractionVector(lightDir, normal, objectToShade);
+            float w1 = normal.dotProduct(lightDir);
+            Vector3 negN = new Vector3(normal);
+            negN.mult(-1);
+            float w2 = negN.dotProduct(lightDir2);
+            // Fs = (i1*cos(w1)-i2*cos(w2)/i1*cos(w1)+i2*cos(w2))^2
+            float FsTerm1 =(float) (i1 * Math.cos(w1)-i2 * Math.cos(w2));
+            float FsTerm2 =(float) (i1 * Math.cos(w1)+i2 * Math.cos(w2));
+            float Fs = (float)Math.pow(FsTerm1/FsTerm2,2);
 
 
-            //kd = (1 – F)(1 – metallness)
+            // Fp = (i2*cos(w1)-i1*cos(w2)/i2*cos(w1)+i1*cos(w2))^2
+            float FpTerm1 =(float) (i2 * Math.cos(w1)-i1 * Math.cos(w2));
+            float FpTerm2 =(float) (i2 * Math.cos(w1)+i1 * Math.cos(w2));
+            float Fp = (float)Math.pow(FpTerm1/FpTerm2,2);
+
+            float Fr =(Fs +Fp)/2;
+
+            float Ft = 1- Fr;
+            F = new Vector3(Ft,Ft,Ft);
+
+            // kd = 1-F
             Vector3 kd = new Vector3(1, 1, 1).sub(F);
-            kd.mult(1 - metalness);
-            diffusLicht = new Vector3(kd.x * albedoRefl.x, albedoRefl.y * albedoRefl.y, kd.z * albedoRefl.z);
+
+            diffusLicht = new Vector3(kd.x * albedo.x, kd.y * albedo.y, kd.z * albedo.z);
 
         }else{
 
@@ -189,17 +187,15 @@ public class RenderUtil {
             Vector3 refracDir = new Vector3(lightDir2);
             Vector3 refracDirN = new Vector3(lightDir2);
             refracDirN.mult(-1);
+            //TODO intersection has to be the second intersection!!
+            Vector3 refracColor = getColRecursive(refracDir, refracDirN,intersection, objectToShade, currentScene, depth, true);
 
-            Vector3 refracColor = getColRecursive(refracDir, refracDirN,intersection, objectToShade, currentScene, depth);
-
-            //kd = (1 – F)(1 – metallness)
+            // kd = 1-F
             Vector3 kd = new Vector3(1, 1, 1).sub(F);
 
-            diffusLicht = new Vector3(kd.x * albedoRefl.x, albedoRefl.y * albedoRefl.y, kd.z * albedoRefl.z);
+            diffusLicht = new Vector3(kd.x * refracColor.x, kd.y * refracColor.y, kd.z * refracColor.z);
 
         }
-
-
 
         //G
         float halfRoughness = roughness / 2;
@@ -212,134 +208,24 @@ public class RenderUtil {
         //G = N·V / (N·V(1 – r/2) + r/2) * N·L / (N·L(1 – r/2) + r/2)
         float G = termG1 * termG2;
 
-        // Farbe = (N·L)(kd* albedo + D * F * G)
+        //Ergebnis += FarbeQ * IntensitätQ * N·L * (D*F*G + F * ColS + kd * Col)
 
         Vector3 glanzLicht = new Vector3(F);
         glanzLicht.mult(D);
         glanzLicht.mult(G);
 
-        Vector3 finalCol = new Vector3(diffusLicht);
-        finalCol.add(glanzLicht);
-
-        finalCol.mult(NdotL);
-        return finalCol;
-
-    }
-
-    // TODO CLEAN UP PARAMETERS!!
-    public static Vector3 CookTorrance(Vector3 lightDir, Vector3 normal, Vector3 rayDir,Vector3 rayDirN, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene ,boolean refl, float depth) {
-        depth--;
-        Material Material = objectToShade.getMaterial();
-
-        float metalness = Material.getMetalness();
-        float roughness = Material.getRoughness();
-        float roughnessSq = (float) Math.pow(roughness, 2);
-        Vector3 albedo = Material.getAlbedoColor();
-
-        // H = (V+L)/2
-        Vector3 H = new Vector3(rayDirN);
-        H.mult(-1);
-        H.add(lightDir);
-        H.mult(0.5f);
-        H.normalize();
-        float NdotL;
-        // DEBUG STUFF! TODO hier wird NdotL in der reflexion immer 0.0 was zu einer schwarzen farbe führt, whrscheinlich ein fehler mit der Lichtrichtung
-        if (!refl){
-             NdotL = Math.max(0, normal.dotProduct(lightDir));
-        }else{
-            // hier einfach zum testen
-             NdotL = 0.5f;
-        }
-      //  float NdotL = Math.max(0, normal.dotProduct(lightDir));
-        float NdotH = Math.max(0, normal.dotProduct(H));
-        float NdotV = Math.max(0, normal.dotProduct(rayDirN));
-        float VdotH = Math.max(0, rayDirN.dotProduct(H));//max(0, dot(lightDir, H));
-
-        // D
-
-        // D = 𝑟^2/ 𝜋 ((𝑁∙𝐻)^2 (r^2-1)+1)^2
-
-
-        Vector3 normalD = new Vector3(normal);
-
-        float nennerD = (float) (Math.PI * Math.pow((Math.pow(NdotH, 2) * (roughnessSq - 1) + 1), 2));
-
-        float D = roughnessSq / nennerD;
-
-        // F
-
-        //(1 – metalness) * 0.04f
-        float termF0 = (1 - metalness) * 0.04f;
-        //metalness * albedo
-        Vector3 F0 = new Vector3(albedo);
-        F0.mult(metalness);
-        // F0 = (1 – metalness) * 0.04f + metalness * albedo
-        Vector3 termF0v = new Vector3(termF0, termF0, termF0);
-        F0.add(termF0v);
-
-
-        Vector3 normalF = new Vector3(normal);
-        //termF =(1 – N·V)^5
-
-        float termF = (float) Math.pow(1 - (NdotV), 5);
-
-        //F = F0+ (1 – F0)(1 – N·V)^5
-        Vector3 F02 = new Vector3(1, 1, 1).sub(F0);
-        F02.mult(termF);
-        Vector3 F = new Vector3(F0);
-        F.add(F02);
-
-
-        //kd = (1 – F)(1 – metallness)
-        Vector3 kd = new Vector3(1, 1, 1).sub(F);
-        kd.mult(1 - metalness);
-
-
-        //G
-        float halfRoughness = roughness / 2;
-        // termG1 = N·V / (N·V(1 – r/2) + r/2);
-        Vector3 normalG = new Vector3(normal);
-        float termG1 = NdotV / (NdotV * (1 - halfRoughness) + halfRoughness);
-        //termG2 =  N·L / (N·L(1 – r/2) + r/2)
-        float termG2 = NdotL / (NdotL * (1 - halfRoughness) + halfRoughness);
-
-        //G = N·V / (N·V(1 – r/2) + r/2) * N·L / (N·L(1 – r/2) + r/2)
-
-        float G = termG1 * termG2;
-
-        // Farbe = (N·L)(kd* albedo + D * F * G)
-        Vector3 normalCol = new Vector3(normal);
-
-        // Veränderter albedo Wert via refl  (1 - reflectivity) * o.albedo + reflectivity * FertigeFarbe(q)
-
-        Vector3 albedoRefl = new Vector3(albedo);
-        if (Material.getReflectivity()> 0 || depth !=0){
-            Vector3 reflDir  = getReflexionVector(rayDir,normal,objectToShade);
-            Vector3 reflDirN  = new Vector3(reflDir);
-            reflDirN.mult(-1);
-            Vector3 reflColor = getColRecursive(reflDir, reflDirN,intersection, objectToShade, currentScene, depth);
-            // reflectivity * FertigeFarbe(q)
-            reflColor.mult(Material.getReflectivity());
-            //(1 - reflectivity) * o.albedo
-            albedoRefl.mult((1 - Material.getReflectivity()));
-            albedoRefl.add(reflColor);
-        }
-
-
-
-        Vector3 diffusLicht = new Vector3(kd.x * albedoRefl.x, albedoRefl.y * albedoRefl.y, kd.z * albedoRefl.z);
-
-        Vector3 glanzLicht = new Vector3(F);
-        glanzLicht.mult(D);
-        glanzLicht.mult(G);
+        Vector3 ColS = new Vector3(F.x * albedoRefl.x,F.y * albedoRefl.y,F.z * albedoRefl.z);
+        glanzLicht.add(ColS);
 
         Vector3 finalCol = new Vector3(diffusLicht);
         finalCol.add(glanzLicht);
 
         finalCol.mult(NdotL);
+
         return finalCol;
 
     }
+
 
 
 
@@ -389,20 +275,22 @@ public class RenderUtil {
 
 
 
-    public static Vector3 getColRecursive(Vector3 rayDir,Vector3 rayDirN, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene, float depth) {
+    public static Vector3 getColRecursive(Vector3 rayDir,Vector3 rayDirN, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene, float depth, boolean refraction) {
 
         //strahl von p starten mit Richtung r
         Ray ray = new Ray(intersection, rayDir);
-        Vector3 offset = new Vector3(ray.getDirection());
-        offset.mult(-1);
+
+        Vector3 offset = new Vector3(objectToShade.getNormal());
+        if (refraction)     offset.mult(-1);
+
         offset.mult(0.00001f);
         offset.add(ray.getOrigin());
         ray.setOrigin(offset);
-
+        boolean intersect = false;
         for (SceneObject s : currentScene.getSceneObjects()) {
 
             if (!s.equals(objectToShade) && !s.isGizmo()) {
-                boolean intersect = s.intersect(ray);
+                intersect = s.intersect(ray);
             }
         }
 
@@ -411,7 +299,7 @@ public class RenderUtil {
         if (ray.getNearest() != null) {
             SceneObject temp = ray.getNearest();
             SceneObject intersectObj = temp;
-            Color = intersectObj.shadeCookTorrance(rayDir,rayDirN, currentScene, ray.getT0(), true,depth);
+            Color = intersectObj.shadeCookTorrance(ray,rayDirN, currentScene, true,depth);
         }
         return Color;
     }

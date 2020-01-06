@@ -6,7 +6,7 @@ public class Ray {
 //TODO  SWITCH TO USEING T FOR HITPOIINT INSTEAD OF SAVING VECTOR3
     private Vector3 Origin;
     private Vector3 Direction;
-    private float t0,t1;
+    private float t0,t1,t2Nearest;
     private SceneObject nearest;
 
     public Vector3 getOrigin() {
@@ -42,6 +42,13 @@ public class Ray {
         this.t0 = t0;
     }
 
+    public float getT2Nearest() {
+        return t2Nearest;
+    }
+
+    public void setT2Nearest(float t2Nearest) {
+        this.t2Nearest = t2Nearest;
+    }
 
     public SceneObject getNearest() {
         return nearest;

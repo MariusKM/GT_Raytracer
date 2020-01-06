@@ -92,7 +92,7 @@ public class PlaneObject extends SceneObject {
 
 
     @Override
-    public Vector3 shadeCookTorrance(Vector3 rayDir,Vector3 rayDirN, SceneSimple currentScene, float t,boolean refl,float depth) {
+    public Vector3 shadeCookTorrance(Ray ray,Vector3 rayDirN, SceneSimple currentScene,boolean refl,float depth) {
         Vector3 intersection, normal, lightDir;
         float intensity;
 
@@ -100,36 +100,44 @@ public class PlaneObject extends SceneObject {
         Light light = currentScene.getSceneLight();
         Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
         // berechne intersection Point
-        intersection = new Vector3(rayDir);
-        intersection.mult(t);
-        intersection.add(sceneOrigin);
+        // berechne intersection Point
+        if (getMaterial().isTransparent()) {
+            intersection = new Vector3(ray.getDirection());
+            intersection.mult(ray.getT2Nearest());
+            intersection.add(sceneOrigin);
+        }else{
+            intersection = new Vector3(ray.getDirection());
+            intersection.mult(ray.getT0());
+            intersection.add(sceneOrigin);
+        }
+
 
         // find surface normal
         normal = new Vector3(planeNormal);
-
+        setNormal(normal);
         // get light direction
         lightDir = new Vector3(light.getPosition());
         lightDir.sub(lightDir, intersection);
         lightDir.normalize();
         float lightDist = pointOnPlane.distance(light.getPosition());
 
-        Vector3 finalCol = RenderUtil.CookTorranceNeu(lightDir,normal, rayDir,rayDirN,intersection,this, currentScene,refl,depth);
+        Vector3 finalCol = RenderUtil.CookTorranceNeu(lightDir,normal, ray.getDirection(),rayDirN,intersection,this, currentScene,refl,depth);
 
+        // TODO Multiple Lights
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);
         boolean shadow = shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
-            return new Vector3(0,0,0);
+
         } else {
             intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
-            intensity  = light.getIntensity();
+            intensity *= light.getIntensity();
         }
 
-
         finalCol.mult(intensity);
-
         return finalCol;
+
     }
 
     public boolean shadowCheck(SceneSimple scene, Ray myRay) {

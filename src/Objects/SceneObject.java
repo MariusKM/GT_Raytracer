@@ -12,13 +12,21 @@ public abstract class SceneObject {
     private SceneSimple scene;
     private boolean isGizmo = false;
     private float speed = 0.05f;
+    private Vector3 normal;
 
+    public Vector3 getNormal() {
+        return normal;
+    }
+
+    public void setNormal(Vector3 normal) {
+        this.normal = normal;
+    }
 
     public abstract boolean intersect(Ray ray);
 
     public abstract int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t);
 
-    public abstract Vector3 shadeCookTorrance(Vector3 rayDir, Vector3 rayDirN,SceneSimple currentScene, float t, boolean refl, float depth);
+    public abstract Vector3 shadeCookTorrance(Ray ray, Vector3 rayDirN,SceneSimple currentScene, boolean refl, float depth);
 
     public abstract boolean shadowCheck(SceneSimple scene, Ray myRay);
 

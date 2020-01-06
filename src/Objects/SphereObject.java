@@ -10,7 +10,7 @@ public class SphereObject extends SceneObject {
     private Vector3 center;
     private float radius, radiusSq; // precompute radiusSq since we use it a lot
 
-// TODO : Clean up shading
+    // TODO : Clean up shading
     public SphereObject(float x, float y, float z, float r) {
         center = new Vector3(x, y, z);
         radius = r;
@@ -28,8 +28,8 @@ public class SphereObject extends SceneObject {
         radius = radiusSq = 1;
     }
 
-@Override
-   public Vector3 shadeCookTorrance(Vector3 rayDir,Vector3 rayDirN, SceneSimple currentScene, float t, boolean refl, float depth) {
+    @Override
+    public Vector3 shadeCookTorrance(Ray ray, Vector3 rayDirN, SceneSimple currentScene, boolean refl, float depth) {
 
         Vector3 intersection, normal, lightDir;
         float intensity;
@@ -42,14 +42,23 @@ public class SphereObject extends SceneObject {
         float roughnessSq = (float) Math.pow(roughness, 2);
         Vector3 albedo = getMaterial().getAlbedoColor();
         // berechne intersection Point
-        intersection = new Vector3(rayDir);
-        intersection.mult(t);
-        intersection.add(sceneOrigin);
+        if (getMaterial().isTransparent()) {
+            intersection = new Vector3(ray.getDirection());
+            intersection.mult(ray.getT0());
+            intersection.add(sceneOrigin);
+        }else{
+            intersection = new Vector3(ray.getDirection());
+            intersection.mult(ray.getT0());
+            intersection.add(sceneOrigin);
+        }
+
 
         // find surface normal
         normal = new Vector3(intersection);
         normal.sub(normal, center);
         normal.normalize();
+
+        setNormal(normal);
 
 
         // get light direction
@@ -60,17 +69,18 @@ public class SphereObject extends SceneObject {
 
         float lightDist = center.distance(light.getPosition());
 
-        Vector3 finalCol = RenderUtil.CookTorranceNeu(lightDir,normal, rayDir, rayDirN,intersection,this, currentScene,refl,depth);
+
+        Vector3 finalCol = RenderUtil.CookTorranceNeu(lightDir, normal, ray.getDirection(), rayDirN, intersection, this, currentScene, refl, depth);
         // TODO Multiple Lights
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);
         boolean shadow = shadowCheck(this.getScene(), shadowRay);
         if (shadow) {
             intensity = 0;
-            return new Vector3(0,0,0);
+
         } else {
             intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
-            intensity  *= light.getIntensity();
+            intensity *= light.getIntensity();
         }
 
         finalCol.mult(intensity);
@@ -169,6 +179,7 @@ public class SphereObject extends SceneObject {
         }
         if (t0 < Ray.getT0()) {
             Ray.setT0(t0);
+            Ray.setT2Nearest(t1);
             Ray.setNearest(sphere);
         }
 

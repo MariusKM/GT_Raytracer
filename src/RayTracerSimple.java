@@ -33,7 +33,7 @@ public class RayTracerSimple extends java.applet.Applet {
     static int delta_timeMS;
     static float delta_time;
     static long last_time;
-    static Color BG_Color = new Color(0.1f, 0.1f, 0.1f);
+    static Color BG_Color = new Color(0.125f, 0.115f, 0.125f);
 
     public static boolean isExit() {
         return exit;
@@ -161,11 +161,9 @@ public class RayTracerSimple extends java.applet.Applet {
                 SceneObject intersectObj;
 
                 for (SceneObject s : sceneSimple.getSceneObjects()) {
-                    if (s instanceof PlaneObject) {
+
                         intersect = s.intersect(myRay);
-                    } else {
-                        intersect = s.intersect(myRay);
-                    }
+
                 }
                 int indexer = usePerspective ? (resY - y - 1) * resY + x : (y * resY + x);
                 if (myRay.getNearest() != null) {
@@ -174,7 +172,7 @@ public class RayTracerSimple extends java.applet.Applet {
                     //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof Objects.PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
                     Vector3 rayDirN = new Vector3(rayDir);
                     rayDirN.mult(-1);
-                    Vector3 finalCol = intersectObj.shadeCookTorrance(rayDir, rayDirN, sceneSimple, myRay.getT0(), false,5);
+                    Vector3 finalCol = intersectObj.shadeCookTorrance(myRay, rayDirN, sceneSimple, false,5);
                     //System.out.println(finalCol.toString());
                     Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
                     //Color finalColorRGB = new Color(finalCol.x, finalCol.y, finalCol.z );
@@ -197,32 +195,37 @@ public class RayTracerSimple extends java.applet.Applet {
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0f, 0.5f, -0.25f), 50, Color.white);
+        sceneLight = new Light(new Vector3(0f, 0.5f, -0.25f), 25, Color.white);
         sceneSimple.setSceneCam(cam);
         sceneSimple.setSceneLight(sceneLight);
-        sceneSimple.setBgCol(new Color(0.1f,0.1f,0.1f));
+        sceneSimple.setBgCol(BG_Color);
 
-        PlaneObject groundPlane = new PlaneObject(new Vector3(0, -0.5f, 0), new Vector3(0, 1, 0));
-        Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.3f, 0.4f, 0.99f);
+        PlaneObject groundPlane = new PlaneObject(new Vector3(0, -0.65f, 0), new Vector3(0, 1, 0));
+        Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.1f, 1f,0.8f,1.3f,false);
         groundPlane.setMaterial(groundMat);
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
-        SceneObject testSphere = new SphereObject(new Vector3(0.5f, -0.25f, -0.25f), 0.15f);
-        SceneObject testSphere1 = new SphereObject(new Vector3(0.1f, -0.25f,-0.45f), 0.15f);
-        SceneObject testSphere2 = new SphereObject(new Vector3(00.6f, 0.5f, -0.25f), 0.15f);
+        SceneObject testSphere = new SphereObject(new Vector3(0.5f, -0.25f, 0.3f), 0.15f);
+        SceneObject testSphere1 = new SphereObject(new Vector3(0f, -0.25f,-0.25f), 0.15f);
+        SceneObject testSphere2 = new SphereObject(new Vector3(0.5f, -0.25f, -0.35f), 0.25f);
 
-        SceneObject testSphere3 = new SphereObject(new Vector3(-0.3f, 0.5f, -0.25f), 0.15f);
+        SceneObject testSphere3 = new SphereObject(new Vector3(-0.7f, -0.25f, -0.05f), 0.2f);
         testSphere.setSpeed(0.0f);
         testSphere1.setSpeed(0.0f);
-        Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1,0.6f,1.3f,true);
+        testSphere2.setSpeed(0.0f);
+        testSphere3.setSpeed(0.0f);
+        Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.1f, 1,1f,2f,true);
         testSphere.setMaterial(defaultMat);
-        defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1,0.5f,1.3f,false);
+
+        defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.3f, 1f,0.8f,1.3f,false);
         testSphere1.setMaterial(defaultMat);
+        testSphere2.setMaterial(defaultMat);
+        testSphere3.setMaterial(defaultMat);
         sceneObjects = new Objects.SceneObject[]{
-                testSphere,
+               testSphere,
                 testSphere1,
-               /* testSphere2,
-                testSphere3*/
+                testSphere2,
+                testSphere3
 
         }; ///createSpheres(numSpheres, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
         // sceneObjects = createSpheres(numSpheres, 0.15f, 0.02f);
