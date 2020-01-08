@@ -71,9 +71,9 @@ public class RenderUtil {
     public static Vector3 CookTorranceNeu(Ray ray, Vector3 lightDir, Vector3 normal, SceneObject objectToShade, SceneSimple currentScene, boolean refl, float depth) {
         depth--;
 
-       if (depth == 1) {
+      /* if (depth == 1) {
             System.out.println("stop");
-        }
+        }*/
         Material Material = objectToShade.getMaterial();
 
         Vector3 rayDir = new Vector3(ray.getDirection());
@@ -195,7 +195,7 @@ public class RenderUtil {
             F = new Vector3(Ft, Ft, Ft);
             Vector3 refracDir = new Vector3(rayDir);
             //TODO intersection has to be the second intersection!!
-            Vector3 refracColor = getColRecursive(refracDir, intersection, objectToShade, currentScene, depth, true);
+            Vector3 refracColor = getColRecursive(refracDir, intersection, objectToShade, currentScene, depth, false);
 
             // kd = 1-F
             Vector3 kd = new Vector3(1, 1, 1).sub(F);

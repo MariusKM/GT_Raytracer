@@ -8,7 +8,15 @@ public class Light {
     private Vector3 position;
     private float intensity;
     private Color color;
+    private SphereObject volume;
 
+    public SphereObject getVolume() {
+        return volume;
+    }
+
+    public void setVolume(SphereObject volume) {
+        this.volume = volume;
+    }
 
     public Vector3 getPosition() {
         return position;

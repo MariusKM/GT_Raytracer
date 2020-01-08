@@ -205,7 +205,7 @@ public class RayTracerSimple extends java.applet.Applet {
         groundPlane.setMaterial(groundMat);
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
-        SceneObject testSphere = new SphereObject(new Vector3(1.5f, 0.25f, 0.3f), 0.15f);
+        SceneObject testSphere = new SphereObject(new Vector3(1.5f, 0.25f, 0.3f), 0.3f);
         SceneObject testSphere1 = new SphereObject(new Vector3(1f, 0.25f,0.45f), 0.175f);
         SceneObject testSphere2 = new SphereObject(new Vector3(0.45f, 0.25f, 0.35f), 0.25f);
 
