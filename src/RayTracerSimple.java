@@ -3,6 +3,7 @@
 import Objects.*;
 import Util.Material;
 import Util.MathUtil;
+import Util.RenderUtil;
 import math.TransformationMatrix4x4;
 import math.Vector3;
 import math.Vector3D;
@@ -178,6 +179,7 @@ public class RayTracerSimple extends java.applet.Applet {
                     }
                     Vector3 finalCol = intersectObj.shadeCookTorrance(myRay, sceneSimple, false,5);
                     //System.out.println(finalCol.toString());
+
                     Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
                     //Color finalColorRGB = new Color(finalCol.x, finalCol.y, finalCol.z );
                     int pixelColor = (intersectObj.isShade()) ? finalColorRGB.getRGB() : Color.WHITE.getRGB();
@@ -200,7 +202,7 @@ public class RayTracerSimple extends java.applet.Applet {
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25, Color.white);
+        sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25, Color.white,0.3f);
         sceneSimple.setSceneCam(cam);
         sceneSimple.setSceneLight(sceneLight);
         sceneSimple.setBgCol(BG_Color);
@@ -219,7 +221,7 @@ public class RayTracerSimple extends java.applet.Applet {
          testSphere1.setSpeed(0.0f);
          testSphere2.setSpeed(0.1f);
          testSphere3.setSpeed(0.0f);
-        Material defaultMat = new Material(new Vector3((float) (0.5f), (float) (0.5f ), (float) (0.5)), 0.01f, 1,0f,1.3f,true);
+        Material defaultMat = new Material(new Vector3((float) (0.5f), (float) (0.5f ), (float) (0.5)), 0.01f, 1,1f,1.3f,true);
         testSphere.setMaterial(defaultMat);
 
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.1f, 1f,0.8f,1.3f,false);

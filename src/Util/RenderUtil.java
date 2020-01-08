@@ -5,6 +5,7 @@ import math.Vector;
 import math.Vector3;
 
 import java.awt.*;
+import java.util.Random;
 
 
 @SuppressWarnings("ALL")
@@ -115,11 +116,8 @@ public class RenderUtil {
         } else {
             // hier einfach zum testen
             NdotL = Math.max(0, normal.dotProduct(lightDir));
-             /*if (NdotL >0){
-                 System.out.println(NdotL);
-             }*/
         }
-        //  float NdotL = Math.max(0, normal.dotProduct(lightDir));
+
         float NdotH = Math.max(0, normal.dotProduct(H));
         float NdotV = Math.max(0, normal.dotProduct(rayDir));
         float VdotH = Math.max(0, rayDir.dotProduct(H));//max(0, dot(lightDir, H));
@@ -176,7 +174,7 @@ public class RenderUtil {
             float w1 = normal.dotProduct(lightDir);
             Vector3 negN = new Vector3(normal);
 
-            float w2 = (negN.dotProduct(rayDirRefr))*-1;
+            float w2 = (negN.dotProduct(rayDirRefr)) * -1;
 
             // Fs = (i1*cos(w1)-i2*cos(w2)/i1*cos(w1)+i2*cos(w2))^2
             float FsTerm1 = (float) (i1 * Math.cos(w1) - i2 * Math.cos(w2));
@@ -280,7 +278,7 @@ public class RenderUtil {
         //Reflexionsrichtung berechnet sich als r = v – 2(n·v)n
         Vector3 n1 = new Vector3(normal);
         float NdotV = n1.dotProduct(rayDir);
-        NdotV *=2;
+        NdotV *= 2;
         Vector3 n2 = new Vector3(normal);
 
         n2.mult((NdotV));
@@ -321,6 +319,41 @@ public class RenderUtil {
             Color = intersectObj.shadeCookTorrance(ray, currentScene, true, depth);
         }
         return Color;
+    }
+
+    public static Vector3 getPointinSphere(SphereObject sphereObject) {
+        var u = sphereObject.getRadius();
+        // create random object
+        java.util.Random R = new Random();
+
+        var x1 = R.nextGaussian();
+        var x2 = R.nextGaussian();
+        var x3 = R.nextGaussian();
+
+        var mag = Math.sqrt(x1 * x1 + x2 * x2 + x3 * x3);
+        x1 /= mag;
+        x2 /= mag;
+        x3 /= mag;
+
+        // Math.cbrt is cube root
+        var c = Math.cbrt(u);
+        Vector3 point = new Vector3((float) (x1 * c), (float) (x2 * c), (float) (x3 * c));
+        point.add(sphereObject.getCenter());
+        return point;
+    }
+
+    public static Vector3 randomSpherePoint(SphereObject sphereObject ){
+        float radius = sphereObject.getRadius();
+        var u = Math.random();
+        var v = Math.random();
+        var theta = 2 * Math.PI * u;
+        var phi = Math.acos(2 * v - 1);
+
+        var x = sphereObject.getCenter().x + (radius * Math.sin(phi) * Math.cos(theta));
+        var y = sphereObject.getCenter().y + (radius * Math.sin(phi) * Math.sin(theta));
+        var z = sphereObject.getCenter().z + (radius * Math.cos(phi));
+
+        return new Vector3((float) x,(float)y,(float)z);
     }
 
 

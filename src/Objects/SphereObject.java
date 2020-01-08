@@ -2,6 +2,7 @@ package Objects;
 
 import Util.RenderUtil;
 import Util.MathUtil;
+import math.Vector;
 import math.Vector3;
 
 import java.awt.*;
@@ -63,17 +64,8 @@ public class SphereObject extends SceneObject {
 
         Vector3 finalCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
         // TODO Multiple Lights
-        // SHADOWS && INTENSITY
-        Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay);
-        if (shadow) {
-            intensity = 0;
 
-        } else {
-            intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
-            intensity *= light.getIntensity();
-        }
-
+        intensity = getIntensity(intersection,light,5);
         finalCol.mult(intensity);
         return finalCol;
 
@@ -129,6 +121,46 @@ public class SphereObject extends SceneObject {
         int pixelCol = objectColor.getRGB();
 
         return (pixelCol);
+    }
+
+    public float getIntensity(Vector3 intersection, Light light, int numPoints){
+        // SHADOWS && INTENSITY
+
+
+        // generate points on sphere
+        Vector3 [] points = new Vector3[numPoints];
+        for (int i = 0; i <numPoints ; i++){
+            points[i]=  RenderUtil.randomSpherePoint(light.getVolume());
+        }
+
+        float totalIntensity = 0;
+
+        for (int i = 0; i <numPoints ; i++){
+            float intensity  = 0 ;
+            Vector3 lightDir;
+            // get random light direction
+            lightDir = new Vector3(points[i]);
+            lightDir.sub(lightDir, intersection);
+            lightDir.normalize();
+
+            float lightDist = center.distance(points[i]);
+
+            Ray shadowRay = new Ray(intersection, lightDir);
+
+            boolean shadow = shadowCheck(this.getScene(), shadowRay);
+            if (shadow) {
+                intensity = 0;
+
+            } else {
+                intensity = (float) (getNormal().dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
+                intensity *= light.getIntensity();
+            }
+            totalIntensity+= intensity;
+
+        }
+
+
+        return  totalIntensity/(float)numPoints;
     }
 
     public boolean intersect(Ray Ray) {

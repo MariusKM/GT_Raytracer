@@ -42,11 +42,15 @@ public class Light {
         this.color = color;
     }
 
-    public Light (Vector3 position, float intensity, Color color){
+    public Light (Vector3 position, float intensity, Color color, float range){
 
         this.position  = position;
         this.intensity = intensity;
         this.color = color;
+        volume = new SphereObject(position,range);
+        volume.setShade(false);
+        volume.setGizmo(true);
+
     }
 
 }
