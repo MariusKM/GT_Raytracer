@@ -163,6 +163,9 @@ public class RayTracerSimple extends java.applet.Applet {
                 for (SceneObject s : sceneSimple.getSceneObjects()) {
 
                         intersect = s.intersect(myRay);
+                    if(myRay.getT1() != 0){
+                        System.out.println("yaay");
+                    }
 
                 }
                 int indexer = usePerspective ? (resY - y - 1) * resY + x : (y * resY + x);
@@ -170,7 +173,9 @@ public class RayTracerSimple extends java.applet.Applet {
                     temp = myRay.getNearest();
                     intersectObj = temp;
                     //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof Objects.PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
-
+                    if(myRay.getT1() != 0){
+                        System.out.println("yaay");
+                    }
                     Vector3 finalCol = intersectObj.shadeCookTorrance(myRay, sceneSimple, false,5);
                     //System.out.println(finalCol.toString());
                     Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
@@ -214,7 +219,7 @@ public class RayTracerSimple extends java.applet.Applet {
          testSphere1.setSpeed(0.0f);
          testSphere2.setSpeed(0.1f);
          testSphere3.setSpeed(0.0f);
-        Material defaultMat = new Material(new Vector3((float) (0.5f), (float) (0.5f ), (float) (0.5)), 0.1f, 1,0.8f,1.3f,true);
+        Material defaultMat = new Material(new Vector3((float) (0.5f), (float) (0.5f ), (float) (0.5)), 0.01f, 1,0f,1.3f,true);
         testSphere.setMaterial(defaultMat);
 
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.1f, 1f,0.8f,1.3f,false);

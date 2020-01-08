@@ -43,6 +43,7 @@ public class SphereObject extends SceneObject {
         intersection.add(sceneOrigin);
         ray.intersection1 = intersection;
         intersection2 = new Vector3(ray.getDirection());
+
         intersection2.mult(ray.getT1());
         intersection2.add(sceneOrigin);
         ray.intersection2 = intersection2;
@@ -147,6 +148,7 @@ public class SphereObject extends SceneObject {
 
         float t0 = quadraticResults[1];
         float t1 = quadraticResults[2];
+
         if (quadraticResults[0] < 0) {
             return false;
         }
@@ -167,6 +169,8 @@ public class SphereObject extends SceneObject {
                 return false; // both t0 and t1 are negative, keine schnittpunkte
             }
         }
+
+
         if (t0 < Ray.getT0()) {
             Ray.setT0(t0);
             Ray.setT1(t1);

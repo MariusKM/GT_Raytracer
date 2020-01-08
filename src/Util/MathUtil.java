@@ -24,6 +24,7 @@ public class MathUtil {
             x1 = (float) (c / q);
 
         }
+
         if (x0 > x1) {
             // siehe zu, dass x0 kleiner als x1
             float tempx0 = x0;

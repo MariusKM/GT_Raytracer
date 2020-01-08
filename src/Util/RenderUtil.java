@@ -194,7 +194,7 @@ public class RenderUtil {
             float Ft = 1 - Fr;
             F = new Vector3(Ft, Ft, Ft);
             Vector3 refracDir = new Vector3(rayDir);
-            //TODO intersection has to be the second intersection!!
+
             Vector3 refracColor = getColRecursive(refracDir, intersection, objectToShade, currentScene, depth, false);
 
             // kd = 1-F
