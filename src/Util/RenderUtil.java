@@ -20,6 +20,8 @@ public class RenderUtil {
     static float indexWasser = 1.3f;
     static boolean totalReflexion = false;
 
+    static float  refrA, refrB;
+
 
     public static Vector3 CookTorranceSimple(Vector3 materialDiffuseColor, Vector3 materialSpecularColor, Vector3 normal, Vector3 lightDir, Vector3 viewDir, Vector3 lightColor, float materialRoughness) {
         float NdotL = Math.max(0, normal.dotProduct(lightDir));
@@ -138,17 +140,15 @@ public class RenderUtil {
         if (!Material.isTransparent()) {
 
             // w1 = NdotL  w2 = -NdotL2
-            Vector3 lightDir2 = getRefractionVector(lightDir, normal, objectToShade);
-            float w1 = normal.dotProduct(lightDir);
+            Vector3 lightDir2 = getRefractionVector(rayDir, normal, objectToShade);
+            float w1 = refrA;//normal.dotProduct(lightDir);
             Vector3 negN = new Vector3(normal);
             negN.mult(-1);
-            float w2 = negN.dotProduct(lightDir2);
+            float w2 = (float)Math.cos(refrB); //negN.dotProduct(lightDir2);
             // Fs = (i1*cos(w1)-i2*cos(w2)/i1*cos(w1)+i2*cos(w2))^2
             float FsTerm1 = (float) (i1 * Math.cos(w1) - i2 * Math.cos(w2));
             float FsTerm2 = (float) (i1 * Math.cos(w1) + i2 * Math.cos(w2));
             float Fs = (float) Math.pow(FsTerm1 / FsTerm2, 2);
-
-
             // Fp = (i2*cos(w1)-i1*cos(w2)/i2*cos(w1)+i1*cos(w2))^2
             float FpTerm1 = (float) (i2 * Math.cos(w1) - i1 * Math.cos(w2));
             float FpTerm2 = (float) (i2 * Math.cos(w1) + i1 * Math.cos(w2));
@@ -157,8 +157,8 @@ public class RenderUtil {
             float Fr = (Fs + Fp) / 2;
 
             float Ft = 1 - Fr;
-            F = new Vector3(Ft, Ft, Ft);
 
+            F = new Vector3(Ft, Ft, Ft);
             // kd = 1-F
             Vector3 kd = new Vector3(1, 1, 1).sub(F);
 
@@ -166,15 +166,14 @@ public class RenderUtil {
 
         } else {
 
-
             Vector3 intersection = ray.intersection2;
             totalReflexion = false;
             // w1 = NdotL  w2 = -NdotL2
-            Vector3 rayDirRefr = getRefractionVector(lightDir, normal, objectToShade);
-            float w1 = normal.dotProduct(lightDir);
+            Vector3 rayDirRefr = getRefractionVector(rayDir, normal, objectToShade);
+            float w1 = refrA;//normal.dotProduct(lightDir); // ist eigentlich A
             Vector3 negN = new Vector3(normal);
 
-            float w2 = (negN.dotProduct(rayDirRefr)) * -1;
+            float w2 = (float)Math.cos(refrB);//(negN.dotProduct(rayDirRefr)) * -1; // cos(B)
 
             // Fs = (i1*cos(w1)-i2*cos(w2)/i1*cos(w1)+i2*cos(w2))^2
             float FsTerm1 = (float) (i1 * Math.cos(w1) - i2 * Math.cos(w2));
@@ -241,30 +240,28 @@ public class RenderUtil {
         // i = i1/i2;
         float i = i1 / i2;
         // kommt das hier vor dem check oder danach?
-        // a = -v1 * N
+        // a = v1 * N
         Vector3 v1 = new Vector3(rayDir);
-        v1.mult(-1);
-        float a = normal.dotProduct(v1);
+        refrA = normal.dotProduct(v1);
         // Erkennung über a = v · n möglich: a < 0? Dann a = -a | sonst a > 0? Dann n = -n
         // Frage hier: ist hier auch a = -v1 * n gemeint ode v1 *n
-        if (a < 0) a = -a;
+        if (refrA < 0) refrA = -refrA;
         else normal.mult(-1);
         objectToShade.setNormal(normal);
 
         // b = sqrrt(1-i^2(1-a^2))
         float b1 = (float) (1 - Math.pow(i, 2));
-        float b2 = (float) (1 - Math.pow(a, 2));
+        float b2 = (float) (1 - Math.pow(refrA, 2));
         float b3 = b1 * b2;
         if (b3 < 0) {
             totalReflexion = true;
         }
-        float b = (float) Math.sqrt(b3);
 
+        refrB = (float) Math.sqrt(b3);
         // v2 = i*v1 + (i*a-b)*n
-
         Vector3 V2 = new Vector3(rayDir);
         V2.mult(i);
-        float termV2 = i * a - b;
+        float termV2 = i * refrA - refrB;
         Vector3 normalV2 = new Vector3(normal);
         normalV2.mult(termV2);
 
@@ -279,11 +276,10 @@ public class RenderUtil {
         Vector3 n1 = new Vector3(normal);
         float NdotV = n1.dotProduct(rayDir);
         NdotV *= 2;
-        Vector3 n2 = new Vector3(normal);
 
-        n2.mult((NdotV));
+        n1.mult((NdotV));
         Vector3 reflDir = new Vector3(rayDir);
-        reflDir.sub(reflDir, n2);
+        reflDir.sub(reflDir, n1);
 
 
         return reflDir;

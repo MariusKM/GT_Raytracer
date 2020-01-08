@@ -98,7 +98,6 @@ public class RayTracerSimple extends java.applet.Applet {
                     ((SphereObject) s).setSpeed(((SphereObject) s).getSpeed() * -1);
                 }
 
-
                 newPos.add(new Vector3(0, ((SphereObject) s).getSpeed() * delta_time, 0));
                 ((SphereObject) s).setCenter(newPos);
             }
@@ -152,28 +151,24 @@ public class RayTracerSimple extends java.applet.Applet {
                     float pixelPosY = (1 - 2 * (y + 0.5f) / (float) resY) * cam.getScale();
                     rayDir = new Vector3(pixelPosX, pixelPosY, 0).sub(cam.getPosition());
                 }
-
-
                 rayDir.normalize();
-
                 Ray myRay = new Ray(cam.getPosition(), rayDir);
                 boolean intersect = false;
                 SceneObject temp;
                 SceneObject intersectObj;
 
                 for (SceneObject s : sceneSimple.getSceneObjects()) {
-
-                        intersect = s.intersect(myRay);
+                    intersect = s.intersect(myRay);
                     if(myRay.getT1() != 0){
                         System.out.println("yaay");
                     }
-
                 }
                 int indexer = usePerspective ? (resY - y - 1) * resY + x : (y * resY + x);
                 if (myRay.getNearest() != null) {
                     temp = myRay.getNearest();
                     intersectObj = temp;
                     //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof Objects.PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
+
                     if(myRay.getT1() != 0){
                         System.out.println("yaay");
                     }
@@ -212,14 +207,14 @@ public class RayTracerSimple extends java.applet.Applet {
         groundPlane.setMaterial(groundMat);
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
-        SceneObject testSphere = new SphereObject(new Vector3(1.5f, 0.25f, 0.3f), 0.3f);
+        SceneObject testSphere = new SphereObject(new Vector3(1f, 0.25f, 0.35f), 0.3f);
         SceneObject testSphere1 = new SphereObject(new Vector3(1f, 0.25f,0.45f), 0.175f);
         SceneObject testSphere2 = new SphereObject(new Vector3(0.45f, 0.25f, 0.35f), 0.25f);
 
         SceneObject testSphere3 = new SphereObject(new Vector3(0.0f, 0.25f, 1.05f), 0.2f);
          testSphere.setSpeed(0.0f);
          testSphere1.setSpeed(0.0f);
-         testSphere2.setSpeed(0.1f);
+         testSphere2.setSpeed(0.0f);
          testSphere3.setSpeed(0.0f);
         Material defaultMat = new Material(new Vector3((float) (0.5f), (float) (0.5f ), (float) (0.5)), 0.01f, 1,1f,1.3f,true);
         testSphere.setMaterial(defaultMat);

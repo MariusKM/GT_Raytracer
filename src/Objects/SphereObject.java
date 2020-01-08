@@ -126,7 +126,6 @@ public class SphereObject extends SceneObject {
     public float getIntensity(Vector3 intersection, Light light, int numPoints){
         // SHADOWS && INTENSITY
 
-
         // generate points on sphere
         Vector3 [] points = new Vector3[numPoints];
         for (int i = 0; i <numPoints ; i++){

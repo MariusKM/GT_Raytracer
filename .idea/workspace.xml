@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/Light.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Light.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/PlaneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/PlaneObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Objects/SphereObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/SphereObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RayTracerSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerSimple.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/RenderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/RenderUtil.java" afterDir="false" />
@@ -30,28 +26,28 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Objects/SphereObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="604">
-              <caret line="67" column="55" lean-forward="true" selection-start-line="67" selection-start-column="7" selection-end-line="67" selection-end-column="55" />
+            <state relative-caret-position="442">
+              <caret line="135" lean-forward="true" selection-start-line="135" selection-end-line="135" />
               <folding>
                 <element signature="method#shadeDiffuse#0;class#SphereObject#0" />
                 <element signature="method#intersect#0;class#SphereObject#0" />
                 <element signature="method#shadowCheck#0;class#SphereObject#0" />
-                <element signature="e#6666#6667#0" expanded="true" />
-                <element signature="e#6747#6748#0" expanded="true" />
-                <element signature="e#6808#6809#0" expanded="true" />
-                <element signature="e#6887#6888#0" expanded="true" />
-                <element signature="e#6952#6953#0" expanded="true" />
-                <element signature="e#7039#7040#0" expanded="true" />
+                <element signature="e#6673#6674#0" expanded="true" />
+                <element signature="e#6754#6755#0" expanded="true" />
+                <element signature="e#6815#6816#0" expanded="true" />
+                <element signature="e#6894#6895#0" expanded="true" />
+                <element signature="e#6959#6960#0" expanded="true" />
+                <element signature="e#7046#7047#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Objects/PlaneObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="108" column="40" lean-forward="true" selection-start-line="108" selection-start-column="40" selection-end-line="108" selection-end-column="40" />
+            <state relative-caret-position="325">
+              <caret line="118" column="29" lean-forward="true" selection-start-line="118" selection-start-column="29" selection-end-line="118" selection-end-column="29" />
               <folding>
                 <element signature="method#shadeDiffuse#0;class#PlaneObject#0" />
               </folding>
@@ -62,8 +58,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Util/RenderUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1226">
-              <caret line="247" column="30" selection-start-line="247" selection-start-column="30" selection-end-line="247" selection-end-column="30" />
+            <state relative-caret-position="-51">
+              <caret line="226" column="29" lean-forward="true" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#CookTorranceSimple#0;class#RenderUtil#0" />
@@ -74,11 +70,17 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="223" column="114" selection-start-line="223" selection-start-column="114" selection-end-line="223" selection-end-column="114" />
+            <state relative-caret-position="-561">
+              <caret line="167" column="46" lean-forward="true" selection-start-line="167" selection-start-column="46" selection-end-line="167" selection-end-column="46" />
+              <folding>
+                <element signature="method#createSceneObjects#0;class#RayTracerSimple#0" />
+                <element signature="method#createSpheres#0;class#RayTracerSimple#0" />
+                <element signature="method#randomVecInRange#0;class#RayTracerSimple#0" />
+                <element signature="method#savePic#0;class#RayTracerSimple#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -127,12 +129,18 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/Objects/Light.java" />
-        <option value="$PROJECT_DIR$/src/Objects/SphereObject.java" />
-        <option value="$PROJECT_DIR$/src/Util/RenderUtil.java" />
-        <option value="$PROJECT_DIR$/src/RayTracerSimple.java" />
         <option value="$PROJECT_DIR$/src/Objects/PlaneObject.java" />
+        <option value="$PROJECT_DIR$/src/Util/RenderUtil.java" />
+        <option value="$PROJECT_DIR$/src/Objects/SphereObject.java" />
+        <option value="$PROJECT_DIR$/src/RayTracerSimple.java" />
       </list>
     </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="713" />
+    <option name="y" value="145" />
+    <option name="width" value="741" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectId" id="1UWzYh05FTshz8DQ33z0e80pC26" />
   <component name="ProjectView">
@@ -264,15 +272,15 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14232409" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" weight="0.32936078" />
+      <window_info anchor="bottom" id="Terminal" weight="0.24160346" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Messages" weight="0.32936078" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.08342362" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.14301191" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.41386783" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -388,16 +396,6 @@
     <state x="616" y="240" key="run.anything.popup/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578476736213" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/RenderUtil.java</url>
-          <line>169</line>
-          <properties />
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="albedo.z" />
@@ -427,17 +425,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="223" column="114" selection-start-line="223" selection-start-column="114" selection-end-line="223" selection-end-column="114" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Util/RenderUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1226">
-          <caret line="247" column="30" selection-start-line="247" selection-start-column="30" selection-end-line="247" selection-end-column="30" />
+        <state relative-caret-position="-51">
+          <caret line="226" column="29" lean-forward="true" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#CookTorranceSimple#0;class#RenderUtil#0" />
@@ -447,30 +438,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/SphereObject.java">
+    <entry file="file://$PROJECT_DIR$/src/Objects/PlaneObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="604">
-          <caret line="67" column="55" lean-forward="true" selection-start-line="67" selection-start-column="7" selection-end-line="67" selection-end-column="55" />
+        <state relative-caret-position="325">
+          <caret line="118" column="29" lean-forward="true" selection-start-line="118" selection-start-column="29" selection-end-line="118" selection-end-column="29" />
           <folding>
-            <element signature="method#shadeDiffuse#0;class#SphereObject#0" />
-            <element signature="method#intersect#0;class#SphereObject#0" />
-            <element signature="method#shadowCheck#0;class#SphereObject#0" />
-            <element signature="e#6666#6667#0" expanded="true" />
-            <element signature="e#6747#6748#0" expanded="true" />
-            <element signature="e#6808#6809#0" expanded="true" />
-            <element signature="e#6887#6888#0" expanded="true" />
-            <element signature="e#6952#6953#0" expanded="true" />
-            <element signature="e#7039#7040#0" expanded="true" />
+            <element signature="method#shadeDiffuse#0;class#PlaneObject#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/PlaneObject.java">
+    <entry file="file://$PROJECT_DIR$/src/Objects/SphereObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="108" column="40" lean-forward="true" selection-start-line="108" selection-start-column="40" selection-end-line="108" selection-end-column="40" />
+        <state relative-caret-position="442">
+          <caret line="135" lean-forward="true" selection-start-line="135" selection-end-line="135" />
           <folding>
-            <element signature="method#shadeDiffuse#0;class#PlaneObject#0" />
+            <element signature="method#shadeDiffuse#0;class#SphereObject#0" />
+            <element signature="method#intersect#0;class#SphereObject#0" />
+            <element signature="method#shadowCheck#0;class#SphereObject#0" />
+            <element signature="e#6673#6674#0" expanded="true" />
+            <element signature="e#6754#6755#0" expanded="true" />
+            <element signature="e#6815#6816#0" expanded="true" />
+            <element signature="e#6894#6895#0" expanded="true" />
+            <element signature="e#6959#6960#0" expanded="true" />
+            <element signature="e#7046#7047#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-561">
+          <caret line="167" column="46" lean-forward="true" selection-start-line="167" selection-start-column="46" selection-end-line="167" selection-end-column="46" />
+          <folding>
+            <element signature="method#createSceneObjects#0;class#RayTracerSimple#0" />
+            <element signature="method#createSpheres#0;class#RayTracerSimple#0" />
+            <element signature="method#randomVecInRange#0;class#RayTracerSimple#0" />
+            <element signature="method#savePic#0;class#RayTracerSimple#0" />
           </folding>
         </state>
       </provider>
