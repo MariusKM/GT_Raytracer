@@ -189,7 +189,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static void initScene() {
         // TODO test why spheres only get light when under the light
-        cam = new Camera(new Vector3(0.75f, 0.65f, 2), new Vector3(0, 0, -2), 90, resX, resY);
+        cam = new Camera(new Vector3(0.75f, 0.65f, 2), new Vector3(0, 0, -1), 90, resX, resY);
 
         KeyHandler keyHandler = new KeyHandler();
         frame.addKeyListener(keyHandler);
@@ -200,7 +200,7 @@ public class RayTracerSimple extends java.applet.Applet {
         sceneSimple.setSceneLight(sceneLight);
         sceneSimple.setBgCol(BG_Color);
 
-        PlaneObject groundPlane = new PlaneObject(new Vector3(0.5f, 0, 0), new Vector3(0, 1, 0));
+        PlaneObject groundPlane = new PlaneObject(new Vector3(0.0f, 0, 0), new Vector3(0, 1, 0));
         Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.1f, 0f,1f,1.3f,false);
         groundPlane.setMaterial(groundMat);
         sceneSimple.getSceneObjects().add(groundPlane);
@@ -224,7 +224,7 @@ public class RayTracerSimple extends java.applet.Applet {
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.01f, 1f,0.8f,1.3f,false);
         testSphere3.setMaterial(defaultMat);
         sceneObjects = new Objects.SceneObject[]{
-                testSphere,
+                 testSphere,
                 testSphere1,
                 testSphere2,
                 testSphere3

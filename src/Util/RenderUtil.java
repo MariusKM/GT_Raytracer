@@ -70,15 +70,13 @@ public class RenderUtil {
 
     public static Vector3 CookTorranceNeu(Ray ray, Vector3 lightDir, Vector3 normal, SceneObject objectToShade, SceneSimple currentScene, boolean refl, float depth) {
         depth--;
-        // depth geht nie weiter als einen schritt
-       if (depth == 0) {
+
+       if (depth == 1) {
             System.out.println("stop");
         }
         Material Material = objectToShade.getMaterial();
 
         Vector3 rayDir = new Vector3(ray.getDirection());
-        Vector3 rayDirN = new Vector3(ray.getDirection());
-        rayDirN.mult(-1);
 
         float roughness = Material.getRoughness();
         float roughnessSq = (float) Math.pow(roughness, 2);
@@ -116,12 +114,10 @@ public class RenderUtil {
             NdotL = Math.max(0, normal.dotProduct(lightDir));
         } else {
             // hier einfach zum testen
-
             NdotL = Math.max(0, normal.dotProduct(lightDir));
              /*if (NdotL >0){
                  System.out.println(NdotL);
              }*/
-
         }
         //  float NdotL = Math.max(0, normal.dotProduct(lightDir));
         float NdotH = Math.max(0, normal.dotProduct(H));
@@ -179,8 +175,8 @@ public class RenderUtil {
             Vector3 rayDirRefr = getRefractionVector(lightDir, normal, objectToShade);
             float w1 = normal.dotProduct(lightDir);
             Vector3 negN = new Vector3(normal);
-            negN.mult(-1);
-            float w2 = negN.dotProduct(rayDirRefr);
+
+            float w2 = (negN.dotProduct(rayDirRefr))*-1;
 
             // Fs = (i1*cos(w1)-i2*cos(w2)/i1*cos(w1)+i2*cos(w2))^2
             float FsTerm1 = (float) (i1 * Math.cos(w1) - i2 * Math.cos(w2));
@@ -282,11 +278,14 @@ public class RenderUtil {
     public static Vector3 getReflexionVector(Vector3 rayDir, Vector3 normal, SceneObject objectToShade) {
 
         //Reflexionsrichtung berechnet sich als r = v – 2(n·v)n
-        float NdotV = normal.dotProduct(rayDir);
-        Vector3 n = new Vector3(normal);
-        n.mult(2 * (NdotV));
+        Vector3 n1 = new Vector3(normal);
+        float NdotV = n1.dotProduct(rayDir);
+        NdotV *=2;
+        Vector3 n2 = new Vector3(normal);
+
+        n2.mult((NdotV));
         Vector3 reflDir = new Vector3(rayDir);
-        reflDir.sub(reflDir, n);
+        reflDir.sub(reflDir, n2);
 
 
         return reflDir;
