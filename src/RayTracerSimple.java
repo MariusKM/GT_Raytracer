@@ -5,6 +5,7 @@ import Util.Material;
 import Util.MathUtil;
 import Util.RenderUtil;
 import math.TransformationMatrix4x4;
+import math.Vec3;
 import math.Vector3;
 import math.Vector3D;
 
@@ -29,6 +30,7 @@ public class RayTracerSimple extends java.applet.Applet {
     static SceneObject[] sceneObjects;
     static int[] pixels;
     static Camera cam;
+    static  CameraAlt cameraAlt;
     static Light sceneLight;
     private static boolean exit;
     static int delta_timeMS;
@@ -139,20 +141,19 @@ public class RayTracerSimple extends java.applet.Applet {
         int insideCounter = 0, outsideCounter = 0;
         for (int y = 0; y < resY; ++y) {
             for (int x = 0; x < resX; ++x) {
-                Vector3 rayDir;
+                Ray myRay;
                 if (usePerspective) {
                     Vector3 pixelPos = cam.pixelCenterCoordinate(x, y);
-
+                    Vector3 rayDir;
                     rayDir = pixelPos.sub(cam.getPosition());
-
-
+                    rayDir.normalize();
+                     myRay = new Ray(cam.getPosition(), rayDir);
                 } else {
-                    float pixelPosX = (2 * (x + 0.5f) / (float) resX - 1) * cam.getAspectRatio() * cam.getScale();
-                    float pixelPosY = (1 - 2 * (y + 0.5f) / (float) resY) * cam.getScale();
-                    rayDir = new Vector3(pixelPosX, pixelPosY, 0).sub(cam.getPosition());
+                      myRay = cameraAlt.get_ray(x,y);
+
                 }
-                rayDir.normalize();
-                Ray myRay = new Ray(cam.getPosition(), rayDir);
+
+
                 boolean intersect = false;
                 SceneObject temp;
                 SceneObject intersectObj;
@@ -164,12 +165,11 @@ public class RayTracerSimple extends java.applet.Applet {
                 if (myRay.getNearest() != null) {
                     temp = myRay.getNearest();
                     intersectObj = temp;
-                    //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof Objects.PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
-                  //  Vector3 finalCol = (intersectObj instanceof Ellipsoid)?  ((Ellipsoid) intersectObj).shadeDiffuseV(rayDir, cam.getPosition(), sceneLight, myRay.getT0()): intersectObj.shadeCookTorrance(myRay, sceneSimple, false,5);
+
                     Vector3 finalCol =  intersectObj.shadeCookTorrance(myRay, sceneSimple, false,5);
-                    //System.out.println(finalCol.toString());
+
                     Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
-                    //Color finalColorRGB = new Color(finalCol.x, finalCol.y, finalCol.z );
+
                     int pixelColor = (intersectObj.isShade()) ? finalColorRGB.getRGB() : Color.WHITE.getRGB();
                     pixels[indexer] = pixelColor;
 
@@ -184,7 +184,7 @@ public class RayTracerSimple extends java.applet.Applet {
     static void initScene() {
         // TODO test why spheres only get light when under the light
         cam = new Camera(new Vector3(0.75f, 0.65f, 2), new Vector3(0, 0, -1), 90, resX, resY);
-
+        cameraAlt = new CameraAlt(new Vec3(0.75f, 0.65f, 2), new Vec3(0, 0, -1),new Vec3(0, 1, 0),90,resX/resY);
         KeyHandler keyHandler = new KeyHandler();
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
