@@ -41,23 +41,16 @@ public class SphereObject extends SceneObject {
         float roughness = getMaterial().getRoughness();
         float roughnessSq = (float) Math.pow(roughness, 2);
         Vector3 albedo = getMaterial().getAlbedoColor();
+
+
         // berechne intersection Point
-        if (getMaterial().isTransparent()) {
-            intersection = new Vector3(ray.getDirection());
-            intersection.mult(ray.getT0());
-            intersection.add(sceneOrigin);
-        }else{
-            intersection = new Vector3(ray.getDirection());
-            intersection.mult(ray.getT0());
-            intersection.add(sceneOrigin);
-        }
-
-
+        intersection = new Vector3(ray.getDirection());
+        intersection.mult(ray.getT0());
+        intersection.add(sceneOrigin);
         // find surface normal
         normal = new Vector3(intersection);
         normal.sub(normal, center);
         normal.normalize();
-
         setNormal(normal);
 
 
@@ -179,7 +172,7 @@ public class SphereObject extends SceneObject {
         }
         if (t0 < Ray.getT0()) {
             Ray.setT0(t0);
-            Ray.setT2Nearest(t1);
+            Ray.setT1(t1);
             Ray.setNearest(sphere);
         }
 

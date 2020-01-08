@@ -1,10 +1,10 @@
 package Util;
 
 import Objects.*;
+import math.Vector;
 import math.Vector3;
 
 import java.awt.*;
-import java.util.Vector;
 
 
 @SuppressWarnings("ALL")
@@ -17,7 +17,7 @@ public class RenderUtil {
     static float indexLuft = 1.0f;
     static float indexGlas = 1.5f;
     static float indexWasser = 1.3f;
-
+    static  boolean totalReflexion = false;
 
 
 
@@ -112,7 +112,7 @@ public class RenderUtil {
 
              NdotL =  Math.max(0, normal.dotProduct(lightDir));
              if (NdotL >0){
-                 System.out.println("yaay");
+                 System.out.println(NdotL);
              }
 
         }
@@ -135,7 +135,6 @@ public class RenderUtil {
         Vector3 F = new Vector3();
 
         if (!Material.isTransparent()){
-
             // w1 = NdotL  w2 = -NdotL2
             Vector3 lightDir2 = getRefractionVector(lightDir, normal, objectToShade);
             float w1 = normal.dotProduct(lightDir);
@@ -166,12 +165,15 @@ public class RenderUtil {
         }else{
 
             // TODO total reflexion!!
+
+            totalReflexion = false;
             // w1 = NdotL  w2 = -NdotL2
-            Vector3 lightDir2 = getRefractionVector(lightDir, normal, objectToShade);
+            Vector3 rayDirRefr = getRefractionVector(rayDir, normal, objectToShade);
             float w1 = normal.dotProduct(lightDir);
             Vector3 negN = new Vector3(normal);
             negN.mult(-1);
-            float w2 = negN.dotProduct(lightDir2);
+            float w2 = negN.dotProduct(rayDirRefr);
+
           // Fs = (i1*cos(w1)-i2*cos(w2)/i1*cos(w1)+i2*cos(w2))^2
             float FsTerm1 =(float) (i1 * Math.cos(w1)-i2 * Math.cos(w2));
             float FsTerm2 =(float) (i1 * Math.cos(w1)+i2 * Math.cos(w2));
@@ -183,12 +185,12 @@ public class RenderUtil {
             float FpTerm2 =(float) (i2 * Math.cos(w1)+i1 * Math.cos(w2));
             float Fp = (float)Math.pow(FpTerm1/FpTerm2,2);
 
-            float Fr =(Fs +Fp)/2;
+            float Fr =(totalReflexion)?1:(Fs +Fp)/2;
 
             float Ft = 1- Fr;
             F = new Vector3(Ft,Ft,Ft);
-            Vector3 refracDir = new Vector3(lightDir2);
-            Vector3 refracDirN = new Vector3(lightDir2);
+            Vector3 refracDir = new Vector3(rayDirRefr);
+            Vector3 refracDirN = new Vector3(rayDirRefr);
             refracDirN.mult(-1);
             //TODO intersection has to be the second intersection!!
             Vector3 refracColor = getColRecursive(refracDir, refracDirN,intersection, objectToShade, currentScene, depth, true);
@@ -232,7 +234,7 @@ public class RenderUtil {
 
 
 
-    public static Vector3 getRefractionVector(Vector3 lightDir, Vector3 normal, SceneObject objectToShade) {
+    public static Vector3 getRefractionVector(Vector3 rayDir, Vector3 normal, SceneObject objectToShade) {
 
         Material mat = objectToShade.getMaterial();
         float i1 = indexLuft;
@@ -240,18 +242,28 @@ public class RenderUtil {
 
         // i = i1/i2;
         float i = i1/i2;
-
-        // a = v1 * N
-        float a = normal.dotProduct(lightDir);
+        // kommt das hier vor dem check oder danach?
+        // a = -v1 * N
+        Vector3 v1 = new Vector3(rayDir);
+        v1.mult(-1);
+        float a = normal.dotProduct(v1);
+        // Erkennung über a = v · n möglich: a < 0? Dann a = -a | sonst a > 0? Dann n = -n
+        // Frage hier: ist hier auch a = -v1 * n gemeint ode v1 *n
+        if (a < 0) a = -a;
+        else normal.mult(-1);
 
         // b = sqrrt(1-i^2(1-a^2))
         float b1 =(float) (1-Math.pow(i,2));
         float b2 =(float) (1-Math.pow(a,2));
-        float b = (float)Math.sqrt(b1*b2);
+        float b3 = b1*b2;
+        if (b3 <0){
+            totalReflexion = true;
+        }
+        float b = (float)Math.sqrt(b3);
 
         // v2 = i*v1 + (i*a-b)*n
 
-        Vector3 V2 = new Vector3(lightDir);
+        Vector3 V2 = new Vector3(rayDir);
         V2.mult(i);
         float termV2 = i*a -b;
         Vector3 normalV2 = new Vector3(normal);

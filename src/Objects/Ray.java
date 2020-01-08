@@ -3,7 +3,7 @@ package Objects;
 import math.Vector3;
 
 public class Ray {
-//TODO  SWITCH TO USEING T FOR HITPOIINT INSTEAD OF SAVING VECTOR3
+
     private Vector3 Origin;
     private Vector3 Direction;
     private float t0,t1,t2Nearest;
