@@ -26,10 +26,10 @@ public class RenderUtil {
 
     public static Vector3 CookTorranceNeu(Ray ray, Vector3 lightDir, Vector3 normal, SceneObject objectToShade, SceneSimple currentScene, boolean refl, float depth) {
         depth--;
-     /*   System.out.println(depth);
-       if (depth == 0) {
+       //  System.out.println(depth);
+       if (depth<  3) {
               System.out.println(depth);
-        }*/
+        }
         Material Material = objectToShade.getMaterial();
 
         Vector3 rayDir = new Vector3(ray.getDirection());
