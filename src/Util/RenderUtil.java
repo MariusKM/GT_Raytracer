@@ -84,15 +84,16 @@ public class RenderUtil {
         float roughness = Material.getRoughness();
         float roughnessSq = (float) Math.pow(roughness, 2);
         Vector3 albedo = Material.getAlbedoColor();
-        Vector3 albedoRefl = new Vector3(albedo);
+
 
         float i1 = indexLuft;
         float i2 = Material.getRefractiveIndex();
-
+        Vector3 albedoRefl = new Vector3(0,0,0);
         if (depth != 0) {
 
             // Veränderter albedo Wert via refl  (1 - reflectivity) * o.albedo + reflectivity * FertigeFarbe(q)
             if (Material.getReflectivity() > 0) {
+                albedoRefl = new Vector3(albedo);
                 Vector3 intersection = ray.intersection1;
                 Vector3 reflDir = getReflexionVector(rayDir, normal, objectToShade);
 
@@ -140,11 +141,11 @@ public class RenderUtil {
         if (!Material.isTransparent()) {
 
             // w1 = NdotL  w2 = -NdotL2
-            Vector3 lightDir2 = getRefractionVector(rayDir, normal, objectToShade);
-            float w1 = refrA;//normal.dotProduct(lightDir);
+
+            float w1 = refrA;
             Vector3 negN = new Vector3(normal);
             negN.mult(-1);
-            float w2 = (float)Math.cos(refrB); //negN.dotProduct(lightDir2);
+            float w2 = (float)Math.cos(refrB);
             // Fs = (i1*cos(w1)-i2*cos(w2)/i1*cos(w1)+i2*cos(w2))^2
             float FsTerm1 = (float) (i1 * Math.cos(w1) - i2 * Math.cos(w2));
             float FsTerm2 = (float) (i1 * Math.cos(w1) + i2 * Math.cos(w2));
@@ -159,6 +160,7 @@ public class RenderUtil {
             float Ft = 1 - Fr;
 
             F = new Vector3(Ft, Ft, Ft);
+
             // kd = 1-F
             Vector3 kd = new Vector3(1, 1, 1).sub(F);
 
@@ -166,14 +168,18 @@ public class RenderUtil {
 
         } else {
 
-            Vector3 intersection = ray.intersection2;
+            Vector3 intersection = ray.intersection1;
             totalReflexion = false;
+
+            if (intersection.z < 0.9f){
+                System.out.println("!");
+            }
             // w1 = NdotL  w2 = -NdotL2
             Vector3 rayDirRefr = getRefractionVector(rayDir, normal, objectToShade);
-            float w1 = refrA;//normal.dotProduct(lightDir); // ist eigentlich A
+            float w1 = refrA;
             Vector3 negN = new Vector3(normal);
 
-            float w2 = (float)Math.cos(refrB);//(negN.dotProduct(rayDirRefr)) * -1; // cos(B)
+            float w2 = (float)Math.cos(refrB);
 
             // Fs = (i1*cos(w1)-i2*cos(w2)/i1*cos(w1)+i2*cos(w2))^2
             float FsTerm1 = (float) (i1 * Math.cos(w1) - i2 * Math.cos(w2));
@@ -192,7 +198,7 @@ public class RenderUtil {
             F = new Vector3(Ft, Ft, Ft);
             Vector3 refracDir = new Vector3(rayDir);
 
-            Vector3 refracColor = getColRecursive(refracDir, intersection, objectToShade, currentScene, depth, false);
+            Vector3 refracColor = (depth != 0)? getColRecursive(refracDir, intersection, objectToShade, currentScene, depth, true): new Vector3(0,0,0);
 
             // kd = 1-F
             Vector3 kd = new Vector3(1, 1, 1).sub(F);
@@ -218,7 +224,10 @@ public class RenderUtil {
         glanzLicht.mult(D);
         glanzLicht.mult(G);
 
+
+
         Vector3 ColS = new Vector3(F.x * albedoRefl.x, F.y * albedoRefl.y, F.z * albedoRefl.z);
+       // if (Material.isTransparent()) ColS = new Vector3(0,0,0);
         glanzLicht.add(ColS);
 
         Vector3 finalCol = new Vector3(diffusLicht);
@@ -246,7 +255,10 @@ public class RenderUtil {
         // Erkennung über a = v · n möglich: a < 0? Dann a = -a | sonst a > 0? Dann n = -n
         // Frage hier: ist hier auch a = -v1 * n gemeint ode v1 *n
         if (refrA < 0) refrA = -refrA;
-        else normal.mult(-1);
+        else {
+            normal.mult(-1);
+        }
+
         objectToShade.setNormal(normal);
 
         // b = sqrrt(1-i^2(1-a^2))
@@ -295,14 +307,13 @@ public class RenderUtil {
         // bei refraktion rein rücken
         if (refraction) offset.mult(-1);
 
-        offset.mult(0.00001f);
+        offset.mult(0.01f);
         offset.add(ray.getOrigin());
         ray.setOrigin(offset);
 
         boolean intersect = false;
         for (SceneObject s : currentScene.getSceneObjects()) {
-
-            if (!s.equals(objectToShade) && !s.isGizmo()) {
+            if ( !s.isGizmo()) {
                 intersect = s.intersect(ray);
             }
         }

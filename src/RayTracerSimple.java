@@ -207,8 +207,9 @@ public class RayTracerSimple extends java.applet.Applet {
         groundPlane.setMaterial(groundMat);
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
-        SceneObject testSphere = new SphereObject(new Vector3(1f, 0.25f, 0.35f), 0.3f);
-        SceneObject testSphere1 = new SphereObject(new Vector3(1f, 0.25f,0.45f), 0.175f);
+
+        SceneObject testSphere = new SphereObject(new Vector3(1f, 0.5f, 0.80f), 0.3f);
+        SceneObject testSphere1 = new SphereObject(new Vector3(1f, 0.5f,0.1f), 0.175f);
         SceneObject testSphere2 = new SphereObject(new Vector3(0.45f, 0.25f, 0.35f), 0.25f);
 
         SceneObject testSphere3 = new SphereObject(new Vector3(0.0f, 0.25f, 1.05f), 0.2f);
@@ -216,7 +217,7 @@ public class RayTracerSimple extends java.applet.Applet {
          testSphere1.setSpeed(0.0f);
          testSphere2.setSpeed(0.0f);
          testSphere3.setSpeed(0.0f);
-        Material defaultMat = new Material(new Vector3((float) (0.5f), (float) (0.5f ), (float) (0.5)), 0.01f, 1,1f,1.3f,true);
+        Material defaultMat = new Material(new Vector3((float) (0.5f), (float) (0.5f ), (float) (0.5)), 0.01f, 1,0.0f,1f,true);
         testSphere.setMaterial(defaultMat);
 
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.1f, 1f,0.8f,1.3f,false);
@@ -226,10 +227,10 @@ public class RayTracerSimple extends java.applet.Applet {
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.01f, 1f,0.8f,1.3f,false);
         testSphere3.setMaterial(defaultMat);
         sceneObjects = new Objects.SceneObject[]{
-                 testSphere,
-                testSphere1,
-                testSphere2,
-                testSphere3
+                // testSphere,
+                  testSphere1,
+                  testSphere2,
+                  testSphere3
 
         }; ///createSpheres(numSpheres, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
         // sceneObjects = createSpheres(numSpheres, 0.15f, 0.02f);

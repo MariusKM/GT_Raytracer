@@ -65,7 +65,7 @@ public class SphereObject extends SceneObject {
         Vector3 finalCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
         // TODO Multiple Lights
 
-        intensity = getIntensity(intersection,light,5);
+        intensity = getIntensity(intersection,light,1);
         finalCol.mult(intensity);
         return finalCol;
 
@@ -184,22 +184,13 @@ public class SphereObject extends SceneObject {
             return false;
         }
 
-        if (t0 > t1) {
-
-            // siehe zu, dass t0 kleiner als t1
-            float tempt0 = t0;
-            float tempt1 = t1;
-            t0 = tempt1;
-            t1 = tempt0;
-        }
-
-
         if (t0 < 0) {
             t0 = t1; // if negative, Intersection is behind us
             if (t0 < 0) {
                 return false; // both t0 and t1 are negative, keine schnittpunkte
             }
         }
+
 
 
         if (t0 < Ray.getT0()) {
