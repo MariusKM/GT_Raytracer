@@ -26,7 +26,7 @@ public abstract class SceneObject {
 
     public abstract int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t);
 
-    public abstract Vector3 shadeCookTorrance(Ray ray, Vector3 rayDirN,SceneSimple currentScene, boolean refl, float depth);
+    public abstract Vector3 shadeCookTorrance(Ray ray,SceneSimple currentScene, boolean refl, float depth);
 
     public abstract boolean shadowCheck(SceneSimple scene, Ray myRay);
 

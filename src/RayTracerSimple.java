@@ -170,9 +170,8 @@ public class RayTracerSimple extends java.applet.Applet {
                     temp = myRay.getNearest();
                     intersectObj = temp;
                     //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof Objects.PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
-                    Vector3 rayDirN = new Vector3(rayDir);
-                    rayDirN.mult(-1);
-                    Vector3 finalCol = intersectObj.shadeCookTorrance(myRay, rayDirN, sceneSimple, false,5);
+
+                    Vector3 finalCol = intersectObj.shadeCookTorrance(myRay, sceneSimple, false,5);
                     //System.out.println(finalCol.toString());
                     Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
                     //Color finalColorRGB = new Color(finalCol.x, finalCol.y, finalCol.z );
@@ -190,31 +189,31 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static void initScene() {
         // TODO test why spheres only get light when under the light
-        cam = new Camera(new Vector3(0, 0, 1), new Vector3(0, 0, -1), 90, resX, resY);
+        cam = new Camera(new Vector3(0, 0.65f, 0), new Vector3(0, 0, -2), 90, resX, resY);
 
         KeyHandler keyHandler = new KeyHandler();
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0f, 0.5f, -0.25f), 25, Color.white);
+        sceneLight = new Light(new Vector3(0f, 1.5f, -0.25f), 25, Color.white);
         sceneSimple.setSceneCam(cam);
         sceneSimple.setSceneLight(sceneLight);
         sceneSimple.setBgCol(BG_Color);
 
-        PlaneObject groundPlane = new PlaneObject(new Vector3(0, -0.65f, 0), new Vector3(0, 1, 0));
+        PlaneObject groundPlane = new PlaneObject(new Vector3(0, 0, 0), new Vector3(0, 1, 0));
         Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.1f, 0f,1f,1.3f,false);
         groundPlane.setMaterial(groundMat);
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
-        SceneObject testSphere = new SphereObject(new Vector3(0.5f, -0.25f, 0.3f), 0.15f);
-        SceneObject testSphere1 = new SphereObject(new Vector3(0f, -0.25f,-0.25f), 0.15f);
-        SceneObject testSphere2 = new SphereObject(new Vector3(0.5f, -0.25f, -0.35f), 0.25f);
+        SceneObject testSphere = new SphereObject(new Vector3(0.5f, 0.25f, -1.3f), 0.15f);
+        SceneObject testSphere1 = new SphereObject(new Vector3(0f, 0.25f,-1.45f), 0.175f);
+        SceneObject testSphere2 = new SphereObject(new Vector3(0.5f, 0.25f, -1.35f), 0.25f);
 
-        SceneObject testSphere3 = new SphereObject(new Vector3(-0.7f, -0.25f, -0.05f), 0.2f);
-       // testSphere.setSpeed(0.0f);
-      //  testSphere1.setSpeed(0.0f);
-      //  testSphere2.setSpeed(0.0f);
-       // testSphere3.setSpeed(0.0f);
+        SceneObject testSphere3 = new SphereObject(new Vector3(-0.7f, 0.25f, -1.05f), 0.2f);
+         testSphere.setSpeed(0.0f);
+         testSphere1.setSpeed(0.0f);
+         testSphere2.setSpeed(0.1f);
+         testSphere3.setSpeed(0.0f);
         Material defaultMat = new Material(new Vector3((float) (0.5f), (float) (0.5f ), (float) (0.5)), 0.1f, 1,1f,1.3f,true);
         testSphere.setMaterial(defaultMat);
 
@@ -225,10 +224,10 @@ public class RayTracerSimple extends java.applet.Applet {
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.1f, 1f,0.8f,1.3f,false);
         testSphere3.setMaterial(defaultMat);
         sceneObjects = new Objects.SceneObject[]{
-               testSphere,
+                 testSphere,
                 testSphere1,
                 testSphere2,
-               testSphere3
+                testSphere3
 
         }; ///createSpheres(numSpheres, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
         // sceneObjects = createSpheres(numSpheres, 0.15f, 0.02f);

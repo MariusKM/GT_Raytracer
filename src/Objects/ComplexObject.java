@@ -9,14 +9,16 @@ import java.awt.*;
 
 public class ComplexObject extends SceneObject {
 
-    public enum Operation{VEREINIGUNG, DIFFERENZ, SCHNITT };
+    public enum Operation {VEREINIGUNG, DIFFERENZ, SCHNITT}
+
+    ;
     private Operation operation;
     public Quadrik quadA, quadB;
     public Quadrik intersectObj;
     public Vector3 normal;
     private float Tintersectzion;
 
-    public ComplexObject(Quadrik a, Quadrik b, Operation op){
+    public ComplexObject(Quadrik a, Quadrik b, Operation op) {
         this.quadA = a;
         this.quadB = b;
         this.operation = op;
@@ -27,15 +29,15 @@ public class ComplexObject extends SceneObject {
      * Berechne die Flächen Normale der Objects.Quadrik bei dem Punkt P
      */
     public Vector3 normal(Vector3 p) {
-       Vector3 res = null;
+        Vector3 res = null;
 
-       if (quadA.isInside(p)){
-           res = quadA.normal(p);
-       }
-       if (quadB.isInside(p)){
-           res = quadB.normal(p);
-       }
-       return res;
+        if (quadA.isInside(p)) {
+            res = quadA.normal(p);
+        }
+        if (quadB.isInside(p)) {
+            res = quadB.normal(p);
+        }
+        return res;
     }
 
 
@@ -47,19 +49,19 @@ public class ComplexObject extends SceneObject {
         rayB = new Ray(ray);
 
 
-        boolean result =false;
-        switch(operation) {
+        boolean result = false;
+        switch (operation) {
             case SCHNITT:
                 // zwingend A und B
-                result =  quadA.intersect(rayA) && quadB.intersect(rayB);
+                result = quadA.intersect(rayA) && quadB.intersect(rayB);
 
-                if(result){
+                if (result) {
                     // zweiten Eintrittspunkt wählen
                     Quadrik temp;
-                    if (rayA.getT0()<rayB.getT0()){
-                         temp = quadB;
-                         Tintersectzion = rayB.getT0();
-                    }else{
+                    if (rayA.getT0() < rayB.getT0()) {
+                        temp = quadB;
+                        Tintersectzion = rayB.getT0();
+                    } else {
                         temp = quadA;
                         Tintersectzion = rayA.getT0();
                     }
@@ -74,22 +76,22 @@ public class ComplexObject extends SceneObject {
 
                 result = quadA.intersect(rayA) & !quadB.intersect(rayB);
 
-                if(result){
+                if (result) {
                     Quadrik temp;
-                    if (rayA.getT0()<rayB.getT0()){
+                    if (rayA.getT0() < rayB.getT0()) {
                         temp = quadA;
                         Tintersectzion = rayA.getT0();
-                    }else{
+                    } else {
 
-                        if (rayA.getT0() < rayB.getT1()){
-                           if (rayB.getT0()< rayA.getT0()){
-                               temp = quadB;
-                               Tintersectzion = rayB.getT1();
-                           }else{
-                               temp = quadA;
-                               Tintersectzion = rayA.getT1();
-                           }
-                        }else{
+                        if (rayA.getT0() < rayB.getT1()) {
+                            if (rayB.getT0() < rayA.getT0()) {
+                                temp = quadB;
+                                Tintersectzion = rayB.getT1();
+                            } else {
+                                temp = quadA;
+                                Tintersectzion = rayA.getT1();
+                            }
+                        } else {
                             temp = quadA;
                             Tintersectzion = rayA.getT0();
                         }
@@ -104,10 +106,10 @@ public class ComplexObject extends SceneObject {
             case VEREINIGUNG:
                 // Sobald A oder B
                 boolean resultA = quadA.intersect(rayA);
-                boolean resultB =  quadB.intersect(rayB);
-                if(resultA||resultB){
+                boolean resultB = quadB.intersect(rayB);
+                if (resultA || resultB) {
 
-                    Quadrik temp = (resultA) ? (Quadrik)rayA.getNearest(): (Quadrik)rayB.getNearest();
+                    Quadrik temp = (resultA) ? (Quadrik) rayA.getNearest() : (Quadrik) rayB.getNearest();
                     intersectObj = temp;
                     ray.setNearest(this);
                 }
@@ -122,10 +124,10 @@ public class ComplexObject extends SceneObject {
         //Transform each object
 
         Matrix4x4 im = m.getInverseMatrix();
-        quadA.setMatrix( MatrixOps.multiply(MatrixOps.multiply(MatrixOps.transpose(im), quadA.getMatrix()), im));
+        quadA.setMatrix(MatrixOps.multiply(MatrixOps.multiply(MatrixOps.transpose(im), quadA.getMatrix()), im));
         quadA.setConstantsFromMatrix();
 
-        quadB.setMatrix( MatrixOps.multiply(MatrixOps.multiply(MatrixOps.transpose(im), quadB.getMatrix()), im));
+        quadB.setMatrix(MatrixOps.multiply(MatrixOps.multiply(MatrixOps.transpose(im), quadB.getMatrix()), im));
         quadB.setConstantsFromMatrix();
 
     }
@@ -171,7 +173,7 @@ public class ComplexObject extends SceneObject {
 
         Color lightColor = light.getColor();
         //quadrieren
-        Color entgammasiertColor = new Color((int)Math.pow(lightColor.getAlpha(),2), (int) Math.pow(lightColor.getRed(),2),(int) Math.pow(lightColor.getGreen(),2), (int)Math.pow(lightColor.getBlue(),2));
+        Color entgammasiertColor = new Color((int) Math.pow(lightColor.getAlpha(), 2), (int) Math.pow(lightColor.getRed(), 2), (int) Math.pow(lightColor.getGreen(), 2), (int) Math.pow(lightColor.getBlue(), 2));
         lightColor = entgammasiertColor;
         Color shadedLight = new Color((int) (lightColor.getRed() * ((float) intensity)), (int) (lightColor.getGreen() * ((float) intensity)), (int) (lightColor.getBlue() * ((float) intensity)));
         Vector3 albedo = this.getMaterial().getAlbedoColor();
@@ -187,26 +189,27 @@ public class ComplexObject extends SceneObject {
 
 
     @Override
-    public Vector3 shadeCookTorrance(Ray ray, Vector3 rayDirN,SceneSimple currentScene,boolean refl, float depth) {
-        Vector3 intersection, normal, lightDir;
+    public Vector3 shadeCookTorrance(Ray ray, SceneSimple currentScene, boolean refl, float depth) {
+        Vector3 intersection,intersection2, normal, lightDir;
         float intensity;
         Light light = currentScene.getSceneLight();
         Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
         float metalness = getMaterial().getMetalness();
         float roughness = getMaterial().getRoughness();
-        float roughnessSq = (float)Math.pow(roughness,2);
+        float roughnessSq = (float) Math.pow(roughness, 2);
         Vector3 albedo = getMaterial().getAlbedoColor();
         // berechne intersection Point
-        if (getMaterial().isTransparent()) {
-            intersection = new Vector3(ray.getDirection());
-            //TODO not sure about this
-            intersection.mult(ray.getT2Nearest());
-            intersection.add(sceneOrigin);
-        }else{
-            intersection = new Vector3(ray.getDirection());
-            intersection.mult(Tintersectzion);
-            intersection.add(sceneOrigin);
-        }
+
+        // not sure about this
+        intersection = new Vector3(ray.getDirection());
+        intersection.mult(Tintersectzion);
+        intersection.add(sceneOrigin);
+        ray.intersection1 = intersection;
+        intersection2 = new Vector3(ray.getDirection());
+        intersection2.mult(Tintersectzion);
+        intersection2.add(sceneOrigin);
+        ray.intersection2 = intersection2;
+
 
         // find surface normal
         normal = intersectObj.normal(intersection);
@@ -218,7 +221,7 @@ public class ComplexObject extends SceneObject {
         float lightDist = intersection.distance(light.getPosition());
 
 
-        Vector3 finalCol = RenderUtil.CookTorranceNeu(lightDir,normal, ray.getDirection(),rayDirN,intersection,this, currentScene,refl,depth);
+        Vector3 finalCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
 
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);
@@ -228,7 +231,7 @@ public class ComplexObject extends SceneObject {
 
         } else {
             intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
-            intensity  *= light.getIntensity();
+            intensity *= light.getIntensity();
         }
         finalCol.mult(intensity);
         return finalCol;
@@ -244,12 +247,12 @@ public class ComplexObject extends SceneObject {
             myRay.setOrigin(offset);
             if (!s.equals(this) && !s.isGizmo()) {
                 boolean intersect;
-                if(s instanceof Ellipsoid){
-                    intersect =((Ellipsoid) s).intersect(myRay);
-                }else if ( s instanceof ComplexObject) {
+                if (s instanceof Ellipsoid) {
+                    intersect = ((Ellipsoid) s).intersect(myRay);
+                } else if (s instanceof ComplexObject) {
 
-                    intersect =((ComplexObject) s).intersect(myRay);
-                }else{
+                    intersect = ((ComplexObject) s).intersect(myRay);
+                } else {
                     intersect = s.intersect(myRay);
                 }
 
@@ -259,6 +262,6 @@ public class ComplexObject extends SceneObject {
             }
 
         }
-        return  true;
+        return true;
     }
 }

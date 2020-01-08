@@ -29,41 +29,38 @@ public class SphereObject extends SceneObject {
     }
 
     @Override
-    public Vector3 shadeCookTorrance(Ray ray, Vector3 rayDirN, SceneSimple currentScene, boolean refl, float depth) {
+    public Vector3 shadeCookTorrance(Ray ray, SceneSimple currentScene, boolean refl, float depth) {
 
-        Vector3 intersection, normal, lightDir;
+        Vector3 intersection,intersection2, normal;
         float intensity;
         Light light = currentScene.getSceneLight();
         Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
-
-
-        float metalness = getMaterial().getMetalness();
-        float roughness = getMaterial().getRoughness();
-        float roughnessSq = (float) Math.pow(roughness, 2);
-        Vector3 albedo = getMaterial().getAlbedoColor();
-
+        float lightDist = center.distance(light.getPosition());
 
         // berechne intersection Point
         intersection = new Vector3(ray.getDirection());
         intersection.mult(ray.getT0());
         intersection.add(sceneOrigin);
+        ray.intersection1 = intersection;
+        intersection2 = new Vector3(ray.getDirection());
+        intersection2.mult(ray.getT1());
+        intersection2.add(sceneOrigin);
+        ray.intersection2 = intersection2;
+
         // find surface normal
         normal = new Vector3(intersection);
-        normal.sub(normal, center);
+        normal.sub(normal, getCenter());
         normal.normalize();
         setNormal(normal);
 
 
+        Vector3 lightDir;
         // get light direction
         lightDir = new Vector3(light.getPosition());
         lightDir.sub(lightDir, intersection);
         lightDir.normalize();
 
-
-        float lightDist = center.distance(light.getPosition());
-
-
-        Vector3 finalCol = RenderUtil.CookTorranceNeu(lightDir, normal, ray.getDirection(), rayDirN, intersection, this, currentScene, refl, depth);
+        Vector3 finalCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
         // TODO Multiple Lights
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);
@@ -165,7 +162,7 @@ public class SphereObject extends SceneObject {
 
 
         if (t0 < 0) {
-            t0 = t1; // if negative, INtersection is behind us
+            t0 = t1; // if negative, Intersection is behind us
             if (t0 < 0) {
                 return false; // both t0 and t1 are negative, keine schnittpunkte
             }

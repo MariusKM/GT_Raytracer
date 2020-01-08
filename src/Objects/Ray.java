@@ -8,6 +8,7 @@ public class Ray {
     private Vector3 Direction;
     private float t0,t1,t2Nearest;
     private SceneObject nearest;
+    public Vector3 intersection1, intersection2;
 
     public Vector3 getOrigin() {
         return Origin;

@@ -9,7 +9,6 @@ public class PlaneObject extends SceneObject {
     private Vector3 pointOnPlane;
     private Vector3 planeNormal;
 
-
     public PlaneObject(Vector3 pointOnPlane, Vector3 planeNormal) {
         this.pointOnPlane = pointOnPlane;
         this.planeNormal = planeNormal;
@@ -17,7 +16,6 @@ public class PlaneObject extends SceneObject {
 
     @Override
     public boolean intersect(Ray Ray) {
-
         //s = (k – np)/(nv)
         Vector3 normal = new Vector3(this.planeNormal);
         Vector3 rayDir = new Vector3(Ray.getDirection());
@@ -34,7 +32,6 @@ public class PlaneObject extends SceneObject {
             return true;
         }
 
-
         return false;
     }
 
@@ -48,6 +45,8 @@ public class PlaneObject extends SceneObject {
         intersection = new Vector3(rayDir);
         intersection.mult(t);
         intersection.add(sceneOrigin);
+
+
 
         // find surface normal
         normal = new Vector3(planeNormal);
@@ -92,25 +91,24 @@ public class PlaneObject extends SceneObject {
 
 
     @Override
-    public Vector3 shadeCookTorrance(Ray ray,Vector3 rayDirN, SceneSimple currentScene,boolean refl,float depth) {
-        Vector3 intersection, normal, lightDir;
+    public Vector3 shadeCookTorrance(Ray ray, SceneSimple currentScene, boolean refl, float depth) {
+        Vector3 intersection,intersection2, normal, lightDir;
         float intensity;
 
 
         Light light = currentScene.getSceneLight();
         Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
         // berechne intersection Point
-        // berechne intersection Point
-        if (getMaterial().isTransparent()) {
-            intersection = new Vector3(ray.getDirection());
-            intersection.mult(ray.getT2Nearest());
-            intersection.add(sceneOrigin);
-        }else{
-            intersection = new Vector3(ray.getDirection());
-            intersection.mult(ray.getT0());
-            intersection.add(sceneOrigin);
-        }
 
+        // berechne intersection Point
+        intersection = new Vector3(ray.getDirection());
+        intersection.mult(ray.getT0());
+        intersection.add(sceneOrigin);
+        ray.intersection1 = intersection;
+        intersection2 = new Vector3(ray.getDirection());
+        intersection2.mult(ray.getT1());
+        intersection2.add(sceneOrigin);
+        ray.intersection2 = intersection2;
 
         // find surface normal
         normal = new Vector3(planeNormal);
@@ -121,7 +119,7 @@ public class PlaneObject extends SceneObject {
         lightDir.normalize();
         float lightDist = pointOnPlane.distance(light.getPosition());
 
-        Vector3 finalCol = RenderUtil.CookTorranceNeu(lightDir,normal, ray.getDirection(),rayDirN,intersection,this, currentScene,refl,depth);
+        Vector3 finalCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
 
         // TODO Multiple Lights
         // SHADOWS && INTENSITY

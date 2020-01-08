@@ -17,8 +17,7 @@ public class RenderUtil {
     static float indexLuft = 1.0f;
     static float indexGlas = 1.5f;
     static float indexWasser = 1.3f;
-    static  boolean totalReflexion = false;
-
+    static boolean totalReflexion = false;
 
 
     public static Vector3 CookTorranceSimple(Vector3 materialDiffuseColor, Vector3 materialSpecularColor, Vector3 normal, Vector3 lightDir, Vector3 viewDir, Vector3 lightColor, float materialRoughness) {
@@ -69,11 +68,18 @@ public class RenderUtil {
         return finalCol;
     }
 
-    public static Vector3 CookTorranceNeu(Vector3 lightDir, Vector3 normal, Vector3 rayDir,Vector3 rayDirN, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene ,boolean refl, float depth) {
+    public static Vector3 CookTorranceNeu(Ray ray, Vector3 lightDir, Vector3 normal, SceneObject objectToShade, SceneSimple currentScene, boolean refl, float depth) {
         depth--;
+        // depth geht nie weiter als einen schritt
+       if (depth == 0) {
+            System.out.println("stop");
+        }
         Material Material = objectToShade.getMaterial();
 
-  //      float metalness = Material.getMetalness();
+        Vector3 rayDir = new Vector3(ray.getDirection());
+        Vector3 rayDirN = new Vector3(ray.getDirection());
+        rayDirN.mult(-1);
+
         float roughness = Material.getRoughness();
         float roughnessSq = (float) Math.pow(roughness, 2);
         Vector3 albedo = Material.getAlbedoColor();
@@ -82,13 +88,14 @@ public class RenderUtil {
         float i1 = indexLuft;
         float i2 = Material.getRefractiveIndex();
 
-        if (depth !=0){
+        if (depth != 0) {
+
             // Veränderter albedo Wert via refl  (1 - reflectivity) * o.albedo + reflectivity * FertigeFarbe(q)
-            if (Material.getReflectivity()> 0 ){
-                Vector3 reflDir  = getReflexionVector(rayDir,normal,objectToShade);
-                Vector3 reflDirN  = new Vector3(reflDir);
-                reflDirN.mult(-1);
-                Vector3 reflColor = getColRecursive(reflDir, reflDirN,intersection, objectToShade, currentScene, depth,false);
+            if (Material.getReflectivity() > 0) {
+                Vector3 intersection = ray.intersection1;
+                Vector3 reflDir = getReflexionVector(rayDir, normal, objectToShade);
+
+                Vector3 reflColor = getColRecursive(reflDir, intersection, objectToShade, currentScene, depth, false);
                 // reflectivity * FertigeFarbe(q)
                 reflColor.mult(Material.getReflectivity());
                 //(1 - reflectivity) * o.albedo
@@ -98,28 +105,28 @@ public class RenderUtil {
         }
 
         // H = (V+L)/2
-        Vector3 H = new Vector3(rayDirN);
+        Vector3 H = new Vector3(rayDir);
         H.mult(-1);
         H.add(lightDir);
         H.mult(0.5f);
         H.normalize();
         float NdotL;
 
-        if (!refl){
+        if (!refl) {
             NdotL = Math.max(0, normal.dotProduct(lightDir));
-        }else{
+        } else {
             // hier einfach zum testen
 
-             NdotL =  Math.max(0, normal.dotProduct(lightDir));
-             if (NdotL >0){
+            NdotL = Math.max(0, normal.dotProduct(lightDir));
+             /*if (NdotL >0){
                  System.out.println(NdotL);
-             }
+             }*/
 
         }
         //  float NdotL = Math.max(0, normal.dotProduct(lightDir));
         float NdotH = Math.max(0, normal.dotProduct(H));
-        float NdotV = Math.max(0, normal.dotProduct( rayDirN));
-        float VdotH = Math.max(0, rayDirN.dotProduct(H));//max(0, dot(lightDir, H));
+        float NdotV = Math.max(0, normal.dotProduct(rayDir));
+        float VdotH = Math.max(0, rayDir.dotProduct(H));//max(0, dot(lightDir, H));
 
         // D
 
@@ -134,7 +141,8 @@ public class RenderUtil {
         Vector3 diffusLicht = new Vector3();
         Vector3 F = new Vector3();
 
-        if (!Material.isTransparent()){
+        if (!Material.isTransparent()) {
+
             // w1 = NdotL  w2 = -NdotL2
             Vector3 lightDir2 = getRefractionVector(lightDir, normal, objectToShade);
             float w1 = normal.dotProduct(lightDir);
@@ -142,58 +150,56 @@ public class RenderUtil {
             negN.mult(-1);
             float w2 = negN.dotProduct(lightDir2);
             // Fs = (i1*cos(w1)-i2*cos(w2)/i1*cos(w1)+i2*cos(w2))^2
-            float FsTerm1 =(float) (i1 * Math.cos(w1)-i2 * Math.cos(w2));
-            float FsTerm2 =(float) (i1 * Math.cos(w1)+i2 * Math.cos(w2));
-            float Fs = (float)Math.pow(FsTerm1/FsTerm2,2);
+            float FsTerm1 = (float) (i1 * Math.cos(w1) - i2 * Math.cos(w2));
+            float FsTerm2 = (float) (i1 * Math.cos(w1) + i2 * Math.cos(w2));
+            float Fs = (float) Math.pow(FsTerm1 / FsTerm2, 2);
 
 
             // Fp = (i2*cos(w1)-i1*cos(w2)/i2*cos(w1)+i1*cos(w2))^2
-            float FpTerm1 =(float) (i2 * Math.cos(w1)-i1 * Math.cos(w2));
-            float FpTerm2 =(float) (i2 * Math.cos(w1)+i1 * Math.cos(w2));
-            float Fp = (float)Math.pow(FpTerm1/FpTerm2,2);
+            float FpTerm1 = (float) (i2 * Math.cos(w1) - i1 * Math.cos(w2));
+            float FpTerm2 = (float) (i2 * Math.cos(w1) + i1 * Math.cos(w2));
+            float Fp = (float) Math.pow(FpTerm1 / FpTerm2, 2);
 
-            float Fr =(Fs +Fp)/2;
+            float Fr = (Fs + Fp) / 2;
 
-            float Ft = 1- Fr;
-            F = new Vector3(Ft,Ft,Ft);
+            float Ft = 1 - Fr;
+            F = new Vector3(Ft, Ft, Ft);
 
             // kd = 1-F
             Vector3 kd = new Vector3(1, 1, 1).sub(F);
 
             diffusLicht = new Vector3(kd.x * albedo.x, kd.y * albedo.y, kd.z * albedo.z);
 
-        }else{
+        } else {
 
-            // TODO total reflexion!!
 
+            Vector3 intersection = ray.intersection2;
             totalReflexion = false;
             // w1 = NdotL  w2 = -NdotL2
-            Vector3 rayDirRefr = getRefractionVector(rayDir, normal, objectToShade);
+            Vector3 rayDirRefr = getRefractionVector(lightDir, normal, objectToShade);
             float w1 = normal.dotProduct(lightDir);
             Vector3 negN = new Vector3(normal);
             negN.mult(-1);
             float w2 = negN.dotProduct(rayDirRefr);
 
-          // Fs = (i1*cos(w1)-i2*cos(w2)/i1*cos(w1)+i2*cos(w2))^2
-            float FsTerm1 =(float) (i1 * Math.cos(w1)-i2 * Math.cos(w2));
-            float FsTerm2 =(float) (i1 * Math.cos(w1)+i2 * Math.cos(w2));
-            float Fs = (float)Math.pow(FsTerm1/FsTerm2,2);
+            // Fs = (i1*cos(w1)-i2*cos(w2)/i1*cos(w1)+i2*cos(w2))^2
+            float FsTerm1 = (float) (i1 * Math.cos(w1) - i2 * Math.cos(w2));
+            float FsTerm2 = (float) (i1 * Math.cos(w1) + i2 * Math.cos(w2));
+            float Fs = (float) Math.pow(FsTerm1 / FsTerm2, 2);
 
 
-          // Fp = (i2*cos(w1)-i1*cos(w2)/i2*cos(w1)+i1*cos(w2))^2
-            float FpTerm1 =(float) (i2 * Math.cos(w1)-i1 * Math.cos(w2));
-            float FpTerm2 =(float) (i2 * Math.cos(w1)+i1 * Math.cos(w2));
-            float Fp = (float)Math.pow(FpTerm1/FpTerm2,2);
+            // Fp = (i2*cos(w1)-i1*cos(w2)/i2*cos(w1)+i1*cos(w2))^2
+            float FpTerm1 = (float) (i2 * Math.cos(w1) - i1 * Math.cos(w2));
+            float FpTerm2 = (float) (i2 * Math.cos(w1) + i1 * Math.cos(w2));
+            float Fp = (float) Math.pow(FpTerm1 / FpTerm2, 2);
 
-            float Fr =(totalReflexion)?1:(Fs +Fp)/2;
+            float Fr = (totalReflexion) ? 1 : (Fs + Fp) / 2;
 
-            float Ft = 1- Fr;
-            F = new Vector3(Ft,Ft,Ft);
-            Vector3 refracDir = new Vector3(rayDirRefr);
-            Vector3 refracDirN = new Vector3(rayDirRefr);
-            refracDirN.mult(-1);
+            float Ft = 1 - Fr;
+            F = new Vector3(Ft, Ft, Ft);
+            Vector3 refracDir = new Vector3(rayDir);
             //TODO intersection has to be the second intersection!!
-            Vector3 refracColor = getColRecursive(refracDir, refracDirN,intersection, objectToShade, currentScene, depth, true);
+            Vector3 refracColor = getColRecursive(refracDir, intersection, objectToShade, currentScene, depth, true);
 
             // kd = 1-F
             Vector3 kd = new Vector3(1, 1, 1).sub(F);
@@ -219,7 +225,7 @@ public class RenderUtil {
         glanzLicht.mult(D);
         glanzLicht.mult(G);
 
-        Vector3 ColS = new Vector3(F.x * albedoRefl.x,F.y * albedoRefl.y,F.z * albedoRefl.z);
+        Vector3 ColS = new Vector3(F.x * albedoRefl.x, F.y * albedoRefl.y, F.z * albedoRefl.z);
         glanzLicht.add(ColS);
 
         Vector3 finalCol = new Vector3(diffusLicht);
@@ -232,8 +238,6 @@ public class RenderUtil {
     }
 
 
-
-
     public static Vector3 getRefractionVector(Vector3 rayDir, Vector3 normal, SceneObject objectToShade) {
 
         Material mat = objectToShade.getMaterial();
@@ -241,7 +245,7 @@ public class RenderUtil {
         float i2 = mat.getRefractiveIndex();
 
         // i = i1/i2;
-        float i = i1/i2;
+        float i = i1 / i2;
         // kommt das hier vor dem check oder danach?
         // a = -v1 * N
         Vector3 v1 = new Vector3(rayDir);
@@ -251,21 +255,22 @@ public class RenderUtil {
         // Frage hier: ist hier auch a = -v1 * n gemeint ode v1 *n
         if (a < 0) a = -a;
         else normal.mult(-1);
+        objectToShade.setNormal(normal);
 
         // b = sqrrt(1-i^2(1-a^2))
-        float b1 =(float) (1-Math.pow(i,2));
-        float b2 =(float) (1-Math.pow(a,2));
-        float b3 = b1*b2;
-        if (b3 <0){
+        float b1 = (float) (1 - Math.pow(i, 2));
+        float b2 = (float) (1 - Math.pow(a, 2));
+        float b3 = b1 * b2;
+        if (b3 < 0) {
             totalReflexion = true;
         }
-        float b = (float)Math.sqrt(b3);
+        float b = (float) Math.sqrt(b3);
 
         // v2 = i*v1 + (i*a-b)*n
 
         Vector3 V2 = new Vector3(rayDir);
         V2.mult(i);
-        float termV2 = i*a -b;
+        float termV2 = i * a - b;
         Vector3 normalV2 = new Vector3(normal);
         normalV2.mult(termV2);
 
@@ -288,19 +293,19 @@ public class RenderUtil {
     }
 
 
-
-
-    public static Vector3 getColRecursive(Vector3 rayDir,Vector3 rayDirN, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene, float depth, boolean refraction) {
+    public static Vector3 getColRecursive(Vector3 rayDir, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene, float depth, boolean refraction) {
 
         //strahl von p starten mit Richtung r
         Ray ray = new Ray(intersection, rayDir);
 
         Vector3 offset = new Vector3(objectToShade.getNormal());
-        if (refraction)     offset.mult(-1);
+        // bei refraktion rein rücken
+        if (refraction) offset.mult(-1);
 
         offset.mult(0.00001f);
         offset.add(ray.getOrigin());
         ray.setOrigin(offset);
+
         boolean intersect = false;
         for (SceneObject s : currentScene.getSceneObjects()) {
 
@@ -310,11 +315,11 @@ public class RenderUtil {
         }
 
         // Background Color if nothing is hit
-        Vector3 Color = new Vector3(((float)currentScene.getBgCol().getRed())/255,((float)currentScene.getBgCol().getGreen())/255,((float)currentScene.getBgCol().getBlue())/255);
+        Vector3 Color = new Vector3(((float) currentScene.getBgCol().getRed()) / 255, ((float) currentScene.getBgCol().getGreen()) / 255, ((float) currentScene.getBgCol().getBlue()) / 255);
         if (ray.getNearest() != null) {
             SceneObject temp = ray.getNearest();
             SceneObject intersectObj = temp;
-            Color = intersectObj.shadeCookTorrance(ray,rayDirN, currentScene, true,depth);
+            Color = intersectObj.shadeCookTorrance(ray, currentScene, true, depth);
         }
         return Color;
     }

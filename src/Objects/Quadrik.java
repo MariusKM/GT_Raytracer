@@ -72,7 +72,7 @@ public class Quadrik extends SceneObject {
      */
     public boolean isInside(Vector3 p) {
         double sum = a * p.x * p.x + b * p.y * p.y + c * p.z * p.z + 2.0 * (d * p.x * p.y + e * p.x * p.z + f * p.y * p.z + g * p.x + h * p.y + j * p.z) + k;
-        return sum<= 0.0;
+        return sum <= 0.0;
     }
 
     /*
@@ -216,14 +216,13 @@ public class Quadrik extends SceneObject {
             }
 
         }
-}
+    }
 
     public void transform(math.TransformationMatrix4x4 m) {
         Matrix4x4 im = m.getInverseMatrix();
-        matrix = MatrixOps.multiply(MatrixOps.multiply(MatrixOps.transpose(im), matrix),im);
+        matrix = MatrixOps.multiply(MatrixOps.multiply(MatrixOps.transpose(im), matrix), im);
         setConstantsFromMatrix();
     }
-
 
 
     @Override
@@ -264,7 +263,6 @@ public class Quadrik extends SceneObject {
             intensity = 1.0f;
 
 
-
         Color lightColor = light.getColor();
 
         Color shadedLight = new Color((int) (lightColor.getRed() * ((float) intensity)), (int) (lightColor.getGreen() * ((float) intensity)), (int) (lightColor.getBlue() * ((float) intensity)));
@@ -277,31 +275,28 @@ public class Quadrik extends SceneObject {
     }
 
     @Override
-    public Vector3 shadeCookTorrance(Ray ray,Vector3 rayDirN, SceneSimple currentScene,boolean refl, float depth) {
-        Vector3 intersection, normal, lightDir;
+    public Vector3 shadeCookTorrance(Ray ray, SceneSimple currentScene, boolean refl, float depth) {
+        Vector3 intersection,intersection2, normal, lightDir;
         float intensity;
         Light light = currentScene.getSceneLight();
         Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
         float metalness = getMaterial().getMetalness();
         float roughness = getMaterial().getRoughness();
-        float roughnessSq = (float)Math.pow(roughness,2);
+        float roughnessSq = (float) Math.pow(roughness, 2);
         Vector3 albedo = getMaterial().getAlbedoColor();
 
 
-        // berechne intersection Point
-        if (getMaterial().isTransparent()) {
-            intersection = new Vector3(ray.getDirection());
-            intersection.mult(ray.getT2Nearest());
-            intersection.add(sceneOrigin);
-        }else{
-            intersection = new Vector3(ray.getDirection());
-            intersection.mult(ray.getT0());
-            intersection.add(sceneOrigin);
-        }
+        intersection = new Vector3(ray.getDirection());
+        intersection.mult(ray.getT0());
+        intersection.add(sceneOrigin);
+        ray.intersection1 = intersection;
+        intersection2 = new Vector3(ray.getDirection());
+        intersection2.mult(ray.getT1());
+        intersection2.add(sceneOrigin);
+        ray.intersection2 = intersection2;
 
         // find surface normal
         normal = normal(intersection); //normal(intersection);//new math.Vector3(this.normal);
-
 
 
         // get light direction
@@ -311,8 +306,7 @@ public class Quadrik extends SceneObject {
         float lightDist = intersection.distance(light.getPosition());
 
 
-
-        Vector3 finalCol = RenderUtil.CookTorranceNeu(lightDir, normal, ray.getDirection(), rayDirN, intersection, this, currentScene, refl, depth);
+        Vector3 finalCol = RenderUtil.CookTorranceNeu(ray, lightDir, normal, this, currentScene, refl, depth);
         // TODO Multiple Lights
         // SHADOWS && INTENSITY
         Ray shadowRay = new Ray(intersection, lightDir);
@@ -339,10 +333,10 @@ public class Quadrik extends SceneObject {
             myRay.setOrigin(offset);
             if (!s.equals(this) && !s.isGizmo()) {
                 boolean intersect;
-                if(s instanceof Ellipsoid){
-                     intersect =((Ellipsoid) s).intersect(myRay);
-                }else{
-                     intersect = s.intersect(myRay);
+                if (s instanceof Ellipsoid) {
+                    intersect = ((Ellipsoid) s).intersect(myRay);
+                } else {
+                    intersect = s.intersect(myRay);
                 }
                 if (intersect) {
                     return true;
@@ -350,11 +344,13 @@ public class Quadrik extends SceneObject {
             }
 
         }
-        return  true;
+        return true;
     }
+
     public void setMatrix(Matrix4x4 matrix) {
         this.matrix = matrix;
     }
+
     public Matrix4x4 getMatrix() {
         return matrix;
     }
