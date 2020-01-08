@@ -189,6 +189,7 @@ public class RayTracerSimple extends java.applet.Applet {
     }
 
     static void initScene() {
+        // TODO test why spheres only get light when under the light
         cam = new Camera(new Vector3(0, 0, 1), new Vector3(0, 0, -1), 90, resX, resY);
 
         KeyHandler keyHandler = new KeyHandler();
@@ -201,7 +202,7 @@ public class RayTracerSimple extends java.applet.Applet {
         sceneSimple.setBgCol(BG_Color);
 
         PlaneObject groundPlane = new PlaneObject(new Vector3(0, -0.65f, 0), new Vector3(0, 1, 0));
-        Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.1f, 1f,0.8f,1.3f,false);
+        Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.1f, 0f,1f,1.3f,false);
         groundPlane.setMaterial(groundMat);
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
@@ -210,22 +211,24 @@ public class RayTracerSimple extends java.applet.Applet {
         SceneObject testSphere2 = new SphereObject(new Vector3(0.5f, -0.25f, -0.35f), 0.25f);
 
         SceneObject testSphere3 = new SphereObject(new Vector3(-0.7f, -0.25f, -0.05f), 0.2f);
-        testSphere.setSpeed(0.0f);
-        testSphere1.setSpeed(0.0f);
-        testSphere2.setSpeed(0.0f);
-        testSphere3.setSpeed(0.0f);
-        Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.1f, 1,1f,2f,true);
+       // testSphere.setSpeed(0.0f);
+      //  testSphere1.setSpeed(0.0f);
+      //  testSphere2.setSpeed(0.0f);
+       // testSphere3.setSpeed(0.0f);
+        Material defaultMat = new Material(new Vector3((float) (0.5f), (float) (0.5f ), (float) (0.5)), 0.1f, 1,1f,1.3f,true);
         testSphere.setMaterial(defaultMat);
 
-        defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.3f, 1f,0.8f,1.3f,false);
+        defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.1f, 1f,0.8f,1.3f,false);
         testSphere1.setMaterial(defaultMat);
+        defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.1f, 1f,0.8f,1.3f,false);
         testSphere2.setMaterial(defaultMat);
+        defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.1f, 1f,0.8f,1.3f,false);
         testSphere3.setMaterial(defaultMat);
         sceneObjects = new Objects.SceneObject[]{
                testSphere,
                 testSphere1,
                 testSphere2,
-                testSphere3
+               testSphere3
 
         }; ///createSpheres(numSpheres, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
         // sceneObjects = createSpheres(numSpheres, 0.15f, 0.02f);

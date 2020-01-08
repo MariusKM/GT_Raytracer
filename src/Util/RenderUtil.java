@@ -111,6 +111,9 @@ public class RenderUtil {
             // hier einfach zum testen
 
              NdotL =  Math.max(0, normal.dotProduct(lightDir));
+             if (NdotL >0){
+                 System.out.println("yaay");
+             }
 
         }
         //  float NdotL = Math.max(0, normal.dotProduct(lightDir));
