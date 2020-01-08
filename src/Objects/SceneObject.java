@@ -11,7 +11,7 @@ public abstract class SceneObject {
     private Material material;
     private SceneSimple scene;
     private boolean isGizmo = false;
-    private float speed = 0.05f;
+    private float speed = 0.00f;
     private Vector3 normal;
 
     public Vector3 getNormal() {

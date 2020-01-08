@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Objects/PlaneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/PlaneObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Quadrik.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Quadrik.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Ray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/SceneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/SceneObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Objects/SphereObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/SphereObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RayTracerSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerSimple.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/RenderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/RenderUtil.java" afterDir="false" />
@@ -22,72 +27,6 @@
     <option name="hideWarnings" value="true" />
     <option name="HIDE_WARNINGS" value="true" />
   </component>
-  <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Objects/SphereObject.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2363">
-              <caret line="194" selection-start-line="194" selection-end-line="194" />
-              <folding>
-                <element signature="method#shadeDiffuse#0;class#SphereObject#0" />
-                <element signature="method#shadowCheck#0;class#SphereObject#0" />
-                <element signature="e#6470#6471#0" expanded="true" />
-                <element signature="e#6551#6552#0" expanded="true" />
-                <element signature="e#6612#6613#0" expanded="true" />
-                <element signature="e#6691#6692#0" expanded="true" />
-                <element signature="e#6756#6757#0" expanded="true" />
-                <element signature="e#6843#6844#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Objects/PlaneObject.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="124" column="53" selection-start-line="124" selection-start-column="53" selection-end-line="124" selection-end-column="53" />
-              <folding>
-                <element signature="method#shadeDiffuse#0;class#PlaneObject#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Util/RenderUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="173" column="36" selection-start-line="173" selection-start-column="36" selection-end-line="173" selection-end-column="36" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#CookTorranceSimple#0;class#RenderUtil#0" />
-                <element signature="method#getPointinSphere#0;class#RenderUtil#0" />
-                <element signature="method#randomSpherePoint#0;class#RenderUtil#0" />
-                <element signature="method#shadowCheck#0;class#RenderUtil#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="232" column="17" selection-start-line="232" selection-start-column="17" selection-end-line="232" selection-end-column="17" />
-              <folding>
-                <element signature="method#createSceneObjects#0;class#RayTracerSimple#0" />
-                <element signature="method#createSpheres#0;class#RayTracerSimple#0" />
-                <element signature="method#randomVecInRange#0;class#RayTracerSimple#0" />
-                <element signature="method#savePic#0;class#RayTracerSimple#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -105,17 +44,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/Objects/Light.java" />
-        <option value="$PROJECT_DIR$/src/Objects/PlaneObject.java" />
-        <option value="$PROJECT_DIR$/src/Objects/SphereObject.java" />
-        <option value="$PROJECT_DIR$/src/Util/RenderUtil.java" />
-        <option value="$PROJECT_DIR$/src/RayTracerSimple.java" />
-      </list>
-    </option>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="713" />
     <option name="y" value="145" />
@@ -123,47 +51,6 @@
     <option name="height" value="1047" />
   </component>
   <component name="ProjectId" id="1UWzYh05FTshz8DQ33z0e80pC26" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="GT_Raytracer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GT_Raytracer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GT_Raytracer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GT_Raytracer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GT_Raytracer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GT_Raytracer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Objects" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GT_Raytracer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GT_Raytracer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GT_Raytracer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -176,18 +63,6 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Application.Raytracer">
     <configuration name="Raytracer" type="Application" factoryName="Application">
@@ -243,79 +118,12 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="UI Designer" />
-      <window_info id="Capture Tool" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.14232409" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" weight="0.24160346" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" weight="0.32936078" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.19068256" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.34236187" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Coverage" side_tool="true" weight="0.32995737" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="Image Layers" order="0" />
-      <window_info id="Designer" order="1" />
-      <window_info id="UI Designer" order="2" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.14232409" />
-      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info anchor="bottom" id="Terminal" order="1" weight="0.24160346" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="3" weight="0.32936078" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.32394367" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.41386783" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="10" />
-      <window_info anchor="right" id="Palette" order="0" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Theme Preview" order="2" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Maven" order="4" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-    </layout-to-restore>
-  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
             <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
               <option name="COLUMN_ORDER" />
             </State>
           </value>
@@ -355,50 +163,51 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="689" y="303" key="#com.intellij.ide.util.TreeClassChooserDialog/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578475600120" />
-    <state x="808" y="428" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1575487202747">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="808" y="412" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1578507976985">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="808" y="428" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575487202747" />
-    <state width="1860" height="152" key="GridCell.Tab.0.bottom" timestamp="1578485075271">
+    <state x="808" y="412" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578507976985" />
+    <state width="1877" height="179" key="GridCell.Tab.0.bottom" timestamp="1578513950343">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1860" height="175" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503424095" />
-    <state width="1860" height="152" key="GridCell.Tab.0.bottom/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578485075271" />
-    <state width="1860" height="152" key="GridCell.Tab.0.center" timestamp="1578485075270">
+    <state width="1877" height="179" key="GridCell.Tab.0.bottom/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578513950343" />
+    <state width="1877" height="179" key="GridCell.Tab.0.center" timestamp="1578513950342">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1860" height="175" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503424095" />
-    <state width="1860" height="152" key="GridCell.Tab.0.center/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578485075270" />
-    <state width="1860" height="152" key="GridCell.Tab.0.left" timestamp="1578485075270">
+    <state width="1877" height="179" key="GridCell.Tab.0.center/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578513950342" />
+    <state width="1877" height="179" key="GridCell.Tab.0.left" timestamp="1578513950342">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1860" height="175" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503424095" />
-    <state width="1860" height="152" key="GridCell.Tab.0.left/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578485075270" />
-    <state width="1860" height="152" key="GridCell.Tab.0.right" timestamp="1578485075270">
+    <state width="1877" height="179" key="GridCell.Tab.0.left/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578513950342" />
+    <state width="1877" height="179" key="GridCell.Tab.0.right" timestamp="1578513950342">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1860" height="175" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503424095" />
-    <state width="1860" height="152" key="GridCell.Tab.0.right/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578485075270" />
-    <state width="1860" height="354" key="GridCell.Tab.1.bottom" timestamp="1578484796012">
+    <state width="1877" height="179" key="GridCell.Tab.0.right/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578513950342" />
+    <state width="1877" height="202" key="GridCell.Tab.1.bottom" timestamp="1578513818208">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1860" height="206" key="GridCell.Tab.1.bottom/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503175964" />
-    <state width="1860" height="354" key="GridCell.Tab.1.bottom/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578484796012" />
-    <state width="1860" height="354" key="GridCell.Tab.1.center" timestamp="1578484796011">
+    <state width="1877" height="202" key="GridCell.Tab.1.bottom/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578513818208" />
+    <state width="1877" height="202" key="GridCell.Tab.1.center" timestamp="1578513818208">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1860" height="206" key="GridCell.Tab.1.center/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503175964" />
-    <state width="1860" height="354" key="GridCell.Tab.1.center/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578484796011" />
-    <state width="1860" height="354" key="GridCell.Tab.1.left" timestamp="1578484796011">
+    <state width="1877" height="202" key="GridCell.Tab.1.center/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578513818208" />
+    <state width="1877" height="202" key="GridCell.Tab.1.left" timestamp="1578513818208">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1860" height="206" key="GridCell.Tab.1.left/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503175964" />
-    <state width="1860" height="354" key="GridCell.Tab.1.left/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578484796011" />
-    <state width="1860" height="354" key="GridCell.Tab.1.right" timestamp="1578484796012">
+    <state width="1877" height="202" key="GridCell.Tab.1.left/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578513818208" />
+    <state width="1877" height="202" key="GridCell.Tab.1.right" timestamp="1578513818208">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1860" height="206" key="GridCell.Tab.1.right/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" timestamp="1575503175964" />
-    <state width="1860" height="354" key="GridCell.Tab.1.right/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578484796012" />
+    <state width="1877" height="202" key="GridCell.Tab.1.right/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" timestamp="1578513818208" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1578476736213">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -409,14 +218,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/RenderUtil.java</url>
-          <line>258</line>
-          <properties />
+          <line>211</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/RenderUtil.java</url>
-          <line>174</line>
-          <properties />
+          <line>127</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
@@ -431,80 +238,6 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/GT_Raytracer$Unnamed.ic" NAME="Unnamed Coverage Results" MODIFIED="1578311508122" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/GT_Raytracer$Raytracer.ic" NAME="Raytracer Coverage Results" MODIFIED="1578498573705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk-11.0.5/lib/src.zip!/java.base/java/lang/Math.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="805" column="25" selection-start-line="805" selection-start-column="25" selection-end-line="805" selection-end-column="25" />
-          <folding>
-            <element signature="e#33242#33243#0" expanded="true" />
-            <element signature="e#33327#33328#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Light.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="51" column="30" lean-forward="true" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Util/RenderUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="173" column="36" selection-start-line="173" selection-start-column="36" selection-end-line="173" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#CookTorranceSimple#0;class#RenderUtil#0" />
-            <element signature="method#getPointinSphere#0;class#RenderUtil#0" />
-            <element signature="method#randomSpherePoint#0;class#RenderUtil#0" />
-            <element signature="method#shadowCheck#0;class#RenderUtil#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/PlaneObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="124" column="53" selection-start-line="124" selection-start-column="53" selection-end-line="124" selection-end-column="53" />
-          <folding>
-            <element signature="method#shadeDiffuse#0;class#PlaneObject#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/SphereObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2363">
-          <caret line="194" selection-start-line="194" selection-end-line="194" />
-          <folding>
-            <element signature="method#shadeDiffuse#0;class#SphereObject#0" />
-            <element signature="method#shadowCheck#0;class#SphereObject#0" />
-            <element signature="e#6470#6471#0" expanded="true" />
-            <element signature="e#6551#6552#0" expanded="true" />
-            <element signature="e#6612#6613#0" expanded="true" />
-            <element signature="e#6691#6692#0" expanded="true" />
-            <element signature="e#6756#6757#0" expanded="true" />
-            <element signature="e#6843#6844#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="232" column="17" selection-start-line="232" selection-start-column="17" selection-end-line="232" selection-end-column="17" />
-          <folding>
-            <element signature="method#createSceneObjects#0;class#RayTracerSimple#0" />
-            <element signature="method#createSpheres#0;class#RayTracerSimple#0" />
-            <element signature="method#randomVecInRange#0;class#RayTracerSimple#0" />
-            <element signature="method#savePic#0;class#RayTracerSimple#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
   </component>
   <component name="masterDetails">
     <states>

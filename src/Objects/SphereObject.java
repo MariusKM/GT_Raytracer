@@ -65,7 +65,7 @@ public class SphereObject extends SceneObject {
         Vector3 finalCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
         // TODO Multiple Lights
 
-        intensity = getIntensity(intersection,light,1);
+        intensity = getIntensity(intersection,light,5);
         finalCol.mult(intensity);
         return finalCol;
 
@@ -190,8 +190,6 @@ public class SphereObject extends SceneObject {
                 return false; // both t0 and t1 are negative, keine schnittpunkte
             }
         }
-
-
 
         if (t0 < Ray.getT0()) {
             Ray.setT0(t0);

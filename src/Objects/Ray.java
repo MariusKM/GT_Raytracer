@@ -31,7 +31,7 @@ public class Ray {
         return t1;
     }
     public void setT1(float t1) {
-        this.t0 = t0;
+        this.t1 = t1;
     }
 
     public float getT0() {

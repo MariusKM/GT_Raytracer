@@ -224,7 +224,54 @@ public class Quadrik extends SceneObject {
         setConstantsFromMatrix();
     }
 
+    public Vector3 shadeDiffuseV(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
+        Vector3 intersection, normal, lightDir;
+        float intensity;
 
+
+        // berechne intersection Point
+        intersection = new Vector3(rayDir);
+        intersection.mult(t);
+        intersection.add(sceneOrigin);
+
+        // find surface normal
+        normal = normal(intersection);
+
+
+        // get light direction
+        lightDir = new Vector3(light.getPosition());
+        lightDir.sub(lightDir, intersection);
+        lightDir.normalize();
+        float lightDist = intersection.distance(light.getPosition());
+        //System.out.println(lightDist);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay);
+        if (shadow) {
+            intensity = 0;
+            return new Vector3(0,0,0);
+        } else {
+            intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
+            intensity *= light.getIntensity();
+        }
+
+        if (intensity < 0.0)
+            intensity = 0.0f;
+
+        if (intensity > 1.0)
+            intensity = 1.0f;
+
+
+        Color lightColor = light.getColor();
+
+        Color shadedLight = new Color((int) (lightColor.getRed() * ((float) intensity)), (int) (lightColor.getGreen() * ((float) intensity)), (int) (lightColor.getBlue() * ((float) intensity)));
+        Vector3 albedo = this.getMaterial().getAlbedoColor();
+        // Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
+        Vector3 objectColor = new Vector3( intensity* albedo.x, intensity*  albedo.y,  intensity * albedo.z);
+
+        // int pixelCol = objectColor.getRGB();
+
+        return (objectColor);
+    }
     @Override
     public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
         Vector3 intersection, normal, lightDir;
@@ -269,6 +316,7 @@ public class Quadrik extends SceneObject {
         Vector3 albedo = this.getMaterial().getAlbedoColor();
         Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
 
+
         int pixelCol = objectColor.getRGB();
 
         return (pixelCol);
@@ -280,11 +328,6 @@ public class Quadrik extends SceneObject {
         float intensity;
         Light light = currentScene.getSceneLight();
         Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
-        float metalness = getMaterial().getMetalness();
-        float roughness = getMaterial().getRoughness();
-        float roughnessSq = (float) Math.pow(roughness, 2);
-        Vector3 albedo = getMaterial().getAlbedoColor();
-
 
         intersection = new Vector3(ray.getDirection());
         intersection.mult(ray.getT0());
@@ -297,54 +340,67 @@ public class Quadrik extends SceneObject {
 
         // find surface normal
         normal = normal(intersection); //normal(intersection);//new math.Vector3(this.normal);
+        setNormal(normal);
 
 
         // get light direction
         lightDir = new Vector3(light.getPosition());
         lightDir.sub(lightDir, intersection);
         lightDir.normalize();
-        float lightDist = intersection.distance(light.getPosition());
+
 
 
         Vector3 finalCol = RenderUtil.CookTorranceNeu(ray, lightDir, normal, this, currentScene, refl, depth);
         // TODO Multiple Lights
         // SHADOWS && INTENSITY
-        Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay);
-        if (shadow) {
-            intensity = 0;
-
-        } else {
-            intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
-            intensity *= light.getIntensity();
-        }
-
+        intensity = getIntensity(intersection,light,5);
         finalCol.mult(intensity);
         return finalCol;
     }
 
-    @Override
-    public boolean shadowCheck(SceneSimple scene, Ray myRay) {
-        for (SceneObject s : scene.getSceneObjects()) {
-            Vector3 offset = new Vector3(myRay.getDirection());
-            offset.mult(-1);
-            offset.mult(0.00001f);
-            offset.add(myRay.getOrigin());
-            myRay.setOrigin(offset);
-            if (!s.equals(this) && !s.isGizmo()) {
-                boolean intersect;
-                if (s instanceof Ellipsoid) {
-                    intersect = ((Ellipsoid) s).intersect(myRay);
-                } else {
-                    intersect = s.intersect(myRay);
-                }
-                if (intersect) {
-                    return true;
-                }
+    public float getIntensity(Vector3 intersection, Light light, int numPoints){
+        // SHADOWS && INTENSITY
+
+        // generate points on sphere
+        Vector3 [] points = new Vector3[numPoints];
+        for (int i = 0; i <numPoints ; i++){
+            points[i]=  RenderUtil.randomSpherePoint(light.getVolume());
+        }
+
+        float totalIntensity = 0;
+
+        for (int i = 0; i <numPoints ; i++){
+            float intensity  = 0 ;
+            Vector3 lightDir;
+            // get random light direction
+            lightDir = new Vector3(points[i]);
+            lightDir.sub(lightDir, intersection);
+            lightDir.normalize();
+
+            float lightDist = intersection.distance(points[i]);
+
+            Ray shadowRay = new Ray(intersection, lightDir);
+
+            boolean shadow = shadowCheck(this.getScene(), shadowRay);
+            if (shadow) {
+                intensity = 0;
+
+            } else {
+                intensity = (float) (getNormal().dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
+                intensity *= light.getIntensity();
             }
+            totalIntensity+= intensity;
 
         }
-        return true;
+
+
+        return  totalIntensity/(float)numPoints;
+    }
+
+    @Override
+    public boolean shadowCheck(SceneSimple scene, Ray myRay) {
+        boolean shadow = RenderUtil.shadowCheck(scene, myRay, this);
+        return shadow;
     }
 
     public void setMatrix(Matrix4x4 matrix) {
