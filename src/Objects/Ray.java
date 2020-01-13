@@ -6,7 +6,7 @@ public class Ray {
 
     private Vector3 Origin;
     private Vector3 Direction;
-    private float t0,t1,t2Nearest;
+    private float t0,t1;
     private SceneObject nearest;
     public Vector3 intersection1, intersection2;
 
@@ -43,13 +43,6 @@ public class Ray {
         this.t0 = t0;
     }
 
-    public float getT2Nearest() {
-        return t2Nearest;
-    }
-
-    public void setT2Nearest(float t2Nearest) {
-        this.t2Nearest = t2Nearest;
-    }
 
     public SceneObject getNearest() {
         return nearest;

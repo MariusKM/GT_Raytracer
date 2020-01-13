@@ -96,7 +96,7 @@ public class PlaneObject extends SceneObject {
         float intensity;
 
 
-        Light light = currentScene.getSceneLight();
+
         Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
         // berechne intersection Point
 
@@ -114,17 +114,20 @@ public class PlaneObject extends SceneObject {
         normal = new Vector3(planeNormal);
         setNormal(normal);
         // get light direction
-        lightDir = new Vector3(light.getPosition());
-        lightDir.sub(lightDir, intersection);
-        lightDir.normalize();
-        float lightDist = pointOnPlane.distance(light.getPosition());
+        Vector3 finalCol = new Vector3(0,0,0);
+        for (Light light: currentScene.getSceneLight()) {
+            lightDir = new Vector3(light.getPosition());
+            lightDir.sub(lightDir, intersection);
+            lightDir.normalize();
+            float lightDist = pointOnPlane.distance(light.getPosition());
 
-        Vector3 finalCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
+            Vector3 currentCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
 
-        // TODO Multiple Lights
-        intensity = getIntensity(intersection,light,5);
 
-        finalCol.mult(intensity);
+            intensity = getIntensity(intersection,light,5);
+            currentCol.mult(intensity);
+            finalCol.add (currentCol);
+        }
         return finalCol;
 
     }

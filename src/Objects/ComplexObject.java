@@ -192,7 +192,7 @@ public class ComplexObject extends SceneObject {
     public Vector3 shadeCookTorrance(Ray ray, SceneSimple currentScene, boolean refl, float depth) {
         Vector3 intersection,intersection2, normal, lightDir;
         float intensity;
-        Light light = currentScene.getSceneLight();
+
         Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
         float metalness = getMaterial().getMetalness();
         float roughness = getMaterial().getRoughness();
@@ -215,26 +215,58 @@ public class ComplexObject extends SceneObject {
         normal = intersectObj.normal(intersection);
 
         // get light direction
-        lightDir = new Vector3(light.getPosition());
-        lightDir.sub(lightDir, intersection);
-        lightDir.normalize();
-        float lightDist = intersection.distance(light.getPosition());
+        Vector3 finalCol = new Vector3(0,0,0);
+        for (Light light: currentScene.getSceneLight()) {
+            lightDir = new Vector3(light.getPosition());
+            lightDir.sub(lightDir, intersection);
+            lightDir.normalize();
+            Vector3 currentCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
 
 
-        Vector3 finalCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
-
-        // SHADOWS && INTENSITY
-        Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay);
-        if (shadow) {
-            intensity = 0;
-
-        } else {
-            intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
-            intensity *= light.getIntensity();
+            intensity = getIntensity(intersection,light,5);
+            currentCol.mult(intensity);
+            finalCol.add (currentCol);
         }
-        finalCol.mult(intensity);
         return finalCol;
+    }
+
+    public float getIntensity(Vector3 intersection, Light light, int numPoints){
+        // SHADOWS && INTENSITY
+
+        // generate points on sphere
+        Vector3 [] points = new Vector3[numPoints];
+        for (int i = 0; i <numPoints ; i++){
+            points[i]=  RenderUtil.randomSpherePoint(light.getVolume());
+        }
+
+        float totalIntensity = 0;
+
+        for (int i = 0; i <numPoints ; i++){
+            float intensity  = 0 ;
+            Vector3 lightDir;
+            // get random light direction
+            lightDir = new Vector3(points[i]);
+            lightDir.sub(lightDir, intersection);
+            lightDir.normalize();
+
+            float lightDist = intersection.distance(points[i]);
+
+            Ray shadowRay = new Ray(intersection, lightDir);
+
+            boolean shadow = shadowCheck(this.getScene(), shadowRay);
+            if (shadow) {
+                intensity = 0;
+
+            } else {
+                intensity = (float) (getNormal().dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
+                intensity *= light.getIntensity();
+            }
+            totalIntensity+= intensity;
+
+        }
+
+
+        return  totalIntensity/(float)numPoints;
     }
 
     @Override

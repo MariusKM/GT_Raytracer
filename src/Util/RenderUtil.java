@@ -28,7 +28,7 @@ public class RenderUtil {
         depth--;
        //  System.out.println(depth);
        if (depth<  3) {
-              System.out.println(depth);
+         //     System.out.println(depth);
         }
         Material Material = objectToShade.getMaterial();
 
@@ -92,7 +92,8 @@ public class RenderUtil {
         Vector3 F = new Vector3();
 
         if (!Material.isTransparent()) {
-
+            // this is here to generste fresnel values
+            Vector3 rayDirRefr = getRefractionVector(rayDir, normal, objectToShade);
             // w1 = NdotL  w2 = -NdotL2
 
             float w1 = refrA;
@@ -124,7 +125,7 @@ public class RenderUtil {
             Vector3 intersection = ray.intersection1;
             totalReflexion = false;
 
-            if (intersection.z < 0.8f){
+            if (intersection.z < 1f){
                 System.out.println("!");
             }
             // w1 = NdotL  w2 = -NdotL2
@@ -149,9 +150,8 @@ public class RenderUtil {
 
             float Ft = 1 - Fr;
             F = new Vector3(Ft, Ft, Ft);
-            Vector3 refracDir = new Vector3(rayDir);
 
-            Vector3 refracColor = (depth != 0)? getColRecursive(refracDir, intersection, objectToShade, currentScene, depth, true): new Vector3(0,0,0);
+            Vector3 refracColor = (depth != 0)? getColRecursive(rayDirRefr, intersection, objectToShade, currentScene, depth, true): new Vector3(0,0,0);
 
             // kd = 1-F
             Vector3 kd = new Vector3(1, 1, 1).sub(F);
@@ -207,12 +207,15 @@ public class RenderUtil {
         refrA = normal.dotProduct(v1);
         // Erkennung über a = v · n möglich: a < 0? Dann a = -a | sonst a > 0? Dann n = -n
         // Frage hier: ist hier auch a = -v1 * n gemeint ode v1 *n
+
         if (refrA < 0) refrA = -refrA;
         else {
             normal.mult(-1);
         }
+       if (objectToShade.getMaterial().isTransparent()){
+            objectToShade.setNormal(normal);
+        }
 
-        objectToShade.setNormal(normal);
 
         // b = sqrrt(1-i^2(1-a^2))
         float b1 = (float) (1 - Math.pow(i, 2));

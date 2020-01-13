@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class SceneSimple{
 
     private ArrayList<SceneObject> sceneObjects;
-    private Light sceneLight;
+    private ArrayList<Light> sceneLights = new ArrayList<>();
     private Camera sceneCam;
     private Color bgCol;
     public SceneSimple(){
@@ -24,12 +24,12 @@ public class SceneSimple{
         this.sceneObjects = sceneObjects;
     }
 
-    public Light getSceneLight() {
-        return sceneLight;
+    public ArrayList<Light> getSceneLight() {
+        return sceneLights;
     }
 
-    public void setSceneLight(Light sceneLight) {
-        this.sceneLight = sceneLight;
+    public void setSceneLight(ArrayList<Light> sceneLight) {
+        this.sceneLights = sceneLight;
     }
 
     public Camera getSceneCam() {

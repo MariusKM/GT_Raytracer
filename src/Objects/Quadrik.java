@@ -326,7 +326,7 @@ public class Quadrik extends SceneObject {
     public Vector3 shadeCookTorrance(Ray ray, SceneSimple currentScene, boolean refl, float depth) {
         Vector3 intersection,intersection2, normal, lightDir;
         float intensity;
-        Light light = currentScene.getSceneLight();
+
         Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
 
         intersection = new Vector3(ray.getDirection());
@@ -344,17 +344,20 @@ public class Quadrik extends SceneObject {
 
 
         // get light direction
-        lightDir = new Vector3(light.getPosition());
-        lightDir.sub(lightDir, intersection);
-        lightDir.normalize();
+        Vector3 finalCol = new Vector3(0,0,0);
+        for (Light light: currentScene.getSceneLight()) {
+            lightDir = new Vector3(light.getPosition());
+            lightDir.sub(lightDir, intersection);
+            lightDir.normalize();
 
 
+            Vector3 currentCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
 
-        Vector3 finalCol = RenderUtil.CookTorranceNeu(ray, lightDir, normal, this, currentScene, refl, depth);
-        // TODO Multiple Lights
-        // SHADOWS && INTENSITY
-        intensity = getIntensity(intersection,light,5);
-        finalCol.mult(intensity);
+
+            intensity = getIntensity(intersection,light,5);
+            currentCol.mult(intensity);
+            finalCol.add (currentCol);
+        }
         return finalCol;
     }
 

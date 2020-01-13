@@ -34,17 +34,16 @@ public class SphereObject extends SceneObject {
 
         Vector3 intersection,intersection2, normal;
         float intensity;
-        Light light = currentScene.getSceneLight();
+
         Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
-        float lightDist = center.distance(light.getPosition());
 
         // berechne intersection Point
         intersection = new Vector3(ray.getDirection());
         intersection.mult(ray.getT0());
         intersection.add(sceneOrigin);
         ray.intersection1 = intersection;
-        intersection2 = new Vector3(ray.getDirection());
 
+        intersection2 = new Vector3(ray.getDirection());
         intersection2.mult(ray.getT1());
         intersection2.add(sceneOrigin);
         ray.intersection2 = intersection2;
@@ -54,19 +53,22 @@ public class SphereObject extends SceneObject {
         normal.sub(normal, getCenter());
         normal.normalize();
         setNormal(normal);
+        Vector3 finalCol = new Vector3(0,0,0);
+        for (Light light: currentScene.getSceneLight()) {
+            Vector3 lightDir;
+            // get light direction
+            lightDir = new Vector3(light.getPosition());
+            lightDir.sub(lightDir, intersection);
+            lightDir.normalize();
+
+            Vector3 currentCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
 
 
-        Vector3 lightDir;
-        // get light direction
-        lightDir = new Vector3(light.getPosition());
-        lightDir.sub(lightDir, intersection);
-        lightDir.normalize();
+            intensity = getIntensity(intersection,light,5);
+            currentCol.mult(intensity);
+            finalCol.add (currentCol);
+        }
 
-        Vector3 finalCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
-        // TODO Multiple Lights
-
-        intensity = getIntensity(intersection,light,5);
-        finalCol.mult(intensity);
         return finalCol;
 
     }
@@ -173,7 +175,7 @@ public class SphereObject extends SceneObject {
         Vector3 dir = Ray.getDirection();
         dir.normalize();
         float a = dir.dotProduct(dir);// directional math.Vector sq
-        float b = 2 * Ray.getDirection().dotProduct(L);
+        float b = 2 * dir.dotProduct(L);
         float c = L.dotProduct(L) - sphere.getRadiusSq();
         float[] quadraticResults = MathUtil.solveQuadratic(a, b, c);
 
