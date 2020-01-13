@@ -33,7 +33,7 @@ public class MathUtil {
             x1 = tempx0;
 
         }
-        ;
+
         results[0] = 1; // identfikator
         results[1] = x0;
         results[2] = x1;

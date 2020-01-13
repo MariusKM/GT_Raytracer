@@ -159,9 +159,15 @@ public class RayTracerSimple extends java.applet.Applet {
                 SceneObject intersectObj;
 
                 for (SceneObject s : sceneSimple.getSceneObjects()) {
-                    intersect = s.intersect(myRay);
+                    if (s instanceof SphereObject){
+                        intersect = ((SphereObject)s).Hit(myRay,0.001, 100000000000000000000.0);
+                    }else{
+                        intersect = s.intersect(myRay);
+                    }
+
                 }
-                int indexer = usePerspective ? (resY - y - 1) * resY + x : (y * resY + x);
+            //    int indexer = usePerspective ? (resY - y - 1) * resY + x : (y * resY + x);
+                int indexer =  (resY - y - 1) * resY + x ;
                 if (myRay.getNearest() != null) {
                     temp = myRay.getNearest();
                     intersectObj = temp;
@@ -184,7 +190,7 @@ public class RayTracerSimple extends java.applet.Applet {
     static void initScene() {
         // TODO test why spheres only get light when under the light
         cam = new Camera(new Vector3(0.75f, 0.65f, 2), new Vector3(0, 0, -1), 90, resX, resY);
-        cameraAlt = new CameraAlt(new Vec3(0.75f, 0.65f, 2), new Vec3(0, 0, -1),new Vec3(0, 1, 0),90,resX/resY);
+        cameraAlt = new CameraAlt(new Vec3(0.75f, 0.65f, -2), new Vec3(0, 0, 1),new Vec3(0, 1, 0),90,resX/resY);
         KeyHandler keyHandler = new KeyHandler();
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here

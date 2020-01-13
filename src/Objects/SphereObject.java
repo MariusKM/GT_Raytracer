@@ -1,7 +1,9 @@
 package Objects;
 
+import Util.Material;
 import Util.RenderUtil;
 import Util.MathUtil;
+import math.Vec3;
 import math.Vector;
 import math.Vector3;
 
@@ -10,6 +12,14 @@ import java.awt.*;
 public class SphereObject extends SceneObject {
     private Vector3 center;
     private float radius, radiusSq; // precompute radiusSq since we use it a lot
+
+    class HitRecord
+    {
+        public float T;
+        public Vector3 PointOfIntersection;
+        public Vector3 Normal;
+        public Util.Material Material;
+    }
 
     // TODO : Clean up shading
     public SphereObject(float x, float y, float z, float r) {
@@ -38,17 +48,19 @@ public class SphereObject extends SceneObject {
         Vector3 sceneOrigin = currentScene.getSceneCam().getPosition();
         float lightDist = center.distance(light.getPosition());
 
-        // berechne intersection Point
+        /*berechne intersection Point
         intersection = new Vector3(ray.getDirection());
         intersection.mult(ray.getT0());
         intersection.add(sceneOrigin);
         ray.intersection1 = intersection;
         intersection2 = new Vector3(ray.getDirection());
 
+
+
         intersection2.mult(ray.getT1());
         intersection2.add(sceneOrigin);
-        ray.intersection2 = intersection2;
-
+        ray.intersection2 = intersection2;*/
+        intersection = new Vector3(ray.intersection1);
         // find surface normal
         normal = new Vector3(intersection);
         normal.sub(normal, getCenter());
@@ -199,6 +211,58 @@ public class SphereObject extends SceneObject {
 
 
         return true;
+    }
+
+    public  boolean Hit(Ray r, double tMin, double tMax)
+    {
+        HitRecord record = new HitRecord();
+
+        var oc = r.getOrigin().sub(center);
+        Vector3 rayDir  =  new Vector3(r.getDirection());
+        var a = rayDir.dotProduct(r.getDirection());
+        var b = oc.dotProduct(r.getDirection());
+        var c = oc.dotProduct(oc) - radius * radius;
+        var discriminant = b * b - a * c;
+
+        if (discriminant > 0)
+        {
+            var sqrtDiscriminant = Math.sqrt(discriminant);
+            var solution1 = (-b - sqrtDiscriminant) / a;
+            if (solution1 < tMax && solution1 > tMin)
+            {
+                record.T = (float)solution1;
+                record.PointOfIntersection = r.PointAtParameter(record.T);
+
+                // Normal is computed by computing the vector center to
+                // point of intersection Dividing by radius causes this
+                // vector to become a unit vector.
+                Vector3 normal = new Vector3(record.PointOfIntersection);
+                normal.sub(center);
+                normal.mult(1/radius);
+                record.Normal = normal;
+                record.Material = getMaterial();
+                r.intersection1 = record.PointOfIntersection;
+                r.setT0(record.T);
+                return true;
+            }
+
+            var solution2 = (-b + sqrtDiscriminant) / a;
+            if (solution2 < tMax && solution2 > tMin)
+            {
+                record.T = (float) solution2;
+                record.PointOfIntersection = r.PointAtParameter(record.T);
+                Vector3 normal = new Vector3(record.PointOfIntersection);
+                normal.sub(center);
+                normal.mult(1/radius);
+                record.Normal = normal;
+                record.Material = getMaterial();
+                r.intersection1 = record.PointOfIntersection;
+                r.setT0(record.T);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean shadowCheck(SceneSimple scene, Ray myRay) {

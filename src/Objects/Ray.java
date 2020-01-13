@@ -55,6 +55,14 @@ public class Ray {
         return nearest;
     }
 
+    public Vector3 PointAtParameter(float t) {
+      Vector3 point = new Vector3(Direction);
+      point.mult(t);
+      point.add(Origin);
+
+
+       return point  ;
+    }
 
     public void setNearest(SceneObject nearest) {
         this.nearest = nearest;
