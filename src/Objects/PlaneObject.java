@@ -76,9 +76,9 @@ public class PlaneObject extends SceneObject {
         if (intensity > 1.0)
             intensity = 1.0f;
 
-        Color lightColor = light.getColor();
+        Vector3 lightColor = light.getColor();
 
-        Color shadedLight = new Color((int) (lightColor.getRed() * ((float) intensity)), (int) (lightColor.getGreen() * ((float) intensity)), (int) (lightColor.getBlue() * ((float) intensity)));
+        Color shadedLight = new Color((int) (lightColor.x* ((float) intensity)), (int) (lightColor.y * ((float) intensity)), (int) (lightColor.z * ((float) intensity)));
         Vector3 albedo = this.getMaterial().getAlbedoColor();
         Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
 
@@ -123,10 +123,11 @@ public class PlaneObject extends SceneObject {
 
             Vector3 currentCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
 
-
+            Vector3 lightCol = light.getColor();
             intensity = getIntensity(intersection,light,5);
             currentCol.mult(intensity);
-            finalCol.add (currentCol);
+            Vector3 computedCol = new Vector3(lightCol.x *currentCol.x ,lightCol.y*currentCol.y ,lightCol.z *currentCol.z );
+            finalCol.add (computedCol);
         }
         return finalCol;
 

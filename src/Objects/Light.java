@@ -7,7 +7,7 @@ import java.awt.Color;
 public class Light {
     private Vector3 position;
     private float intensity;
-    private Color color;
+    private Vector3 color;
     private SphereObject volume;
 
     public SphereObject getVolume() {
@@ -34,15 +34,15 @@ public class Light {
         this.intensity = intensity;
     }
 
-    public Color getColor() {
+    public Vector3 getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(Vector3 color) {
         this.color = color;
     }
 
-    public Light (Vector3 position, float intensity, Color color, float range){
+    public Light (Vector3 position, float intensity, Vector3 color, float range){
 
         this.position  = position;
         this.intensity = intensity;

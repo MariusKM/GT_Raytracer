@@ -171,7 +171,7 @@ public class ComplexObject extends SceneObject {
 
         // int clampedIntensity = RayTracerSimple.clamp((int)intensity,0, 255);
 
-        Color lightColor = light.getColor();
+      /*  Color lightColor = light.getColor();
         //quadrieren
         Color entgammasiertColor = new Color((int) Math.pow(lightColor.getAlpha(), 2), (int) Math.pow(lightColor.getRed(), 2), (int) Math.pow(lightColor.getGreen(), 2), (int) Math.pow(lightColor.getBlue(), 2));
         lightColor = entgammasiertColor;
@@ -182,8 +182,8 @@ public class ComplexObject extends SceneObject {
         //Wurzel ziehen Gammakorrektur
         Color objectColor = new Color((int) (Math.sqrt(shadedLight.getRed() * albedo.x)), (int) (Math.sqrt(shadedLight.getGreen() * albedo.y)), (int) (Math.sqrt(shadedLight.getBlue() * albedo.z)));
 
-        int pixelCol = objectColor.getRGB();
-
+        int pixelCol = objectColor.getRGB(); */
+        int pixelCol = Color.BLACK.getRGB();
         return (pixelCol);
     }
 

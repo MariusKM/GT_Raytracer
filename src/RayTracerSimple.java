@@ -38,6 +38,7 @@ public class RayTracerSimple extends java.applet.Applet {
     static long last_time;
     static int kernelSize = 10; //dimension
     static Color BG_Color = new Color(0.125f, 0.115f, 0.125f);
+    static Image image;
 
     public static boolean isExit() {
         return exit;
@@ -64,12 +65,13 @@ public class RayTracerSimple extends java.applet.Applet {
             drawGUI();
 
 
-            // exit = true;
+            exit = true;
         }
         while (!exit);
 
-        String path = "C:/Users/mariu/Workspaces/uni/GT Objects.Ray Tracing";
-        //savePic(image, "jpeg", path + random() + ".jpeg");
+        String path = "D:/Projekte/uni/GT_Raytracer/render/";
+
+        savePic(image, "jpeg", path + random() + ".jpeg");
     }
 
     private static void filter() {
@@ -206,7 +208,7 @@ public class RayTracerSimple extends java.applet.Applet {
         if (exit) {
             return;
         }
-        Image image = Toolkit.getDefaultToolkit()
+        image = Toolkit.getDefaultToolkit()
                 .createImage(new MemoryImageSource(resX, resY, new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, resX));
 
 
@@ -262,6 +264,8 @@ public class RayTracerSimple extends java.applet.Applet {
                 } else {
                     pixels[indexer] = sceneSimple.getBgCol().getRGB();
                 }
+
+                System.out.println("painted pixel no " + indexer);
             }
         }
 
@@ -275,14 +279,14 @@ public class RayTracerSimple extends java.applet.Applet {
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25, Color.white,0.3f);
+        sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25,  new Vector3(1f,0.7f,1f),0.3f);
         sceneSimple.setSceneCam(cam);
         sceneSimple.getSceneLight().add(sceneLight);
         sceneSimple.setBgCol(BG_Color);
 
-        Light sceneLight2 = new Light(new Vector3(0.75f, 1.5f, 0f), 25, Color.white,0.3f);
+        Light sceneLight2 = new Light(new Vector3(0.75f, 1.5f, 0f), 25, new Vector3(1f,0.7f,1f),0.3f);
         sceneSimple.getSceneLight().add(sceneLight2);
-        Light sceneLight3 = new Light(new Vector3(0f, 0.5f, -0.5f), 25, Color.white,0.3f);
+        Light sceneLight3 = new Light(new Vector3(0f, 0.5f, -0.5f), 25,   new Vector3(1f,0.7f,1f),0.3f);
         sceneSimple.getSceneLight().add(sceneLight2);
 
         PlaneObject groundPlane = new PlaneObject(new Vector3(0.0f, 0, 0), new Vector3(0, 1, 0));
