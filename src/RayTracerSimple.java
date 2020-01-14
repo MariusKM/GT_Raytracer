@@ -15,6 +15,7 @@ import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
 import java.awt.Color;
+import java.util.Arrays;
 
 import static java.lang.Math.*;
 
@@ -34,6 +35,7 @@ public class RayTracerSimple extends java.applet.Applet {
     static int delta_timeMS;
     static float delta_time;
     static long last_time;
+    static int kernelSize = 10; //dimension
     static Color BG_Color = new Color(0.125f, 0.115f, 0.125f);
 
     public static boolean isExit() {
@@ -57,6 +59,7 @@ public class RayTracerSimple extends java.applet.Applet {
             handleAnimation();
 
             paintPix();
+            filter();
             drawGUI();
 
 
@@ -66,6 +69,40 @@ public class RayTracerSimple extends java.applet.Applet {
 
         String path = "C:/Users/mariu/Workspaces/uni/GT Objects.Ray Tracing";
         //savePic(image, "jpeg", path + random() + ".jpeg");
+    }
+
+    private static void filter() {
+        int new_pixels[] = new int[resX*resY];
+        for(int i=0; i < resX*resY; i++) {
+
+            int width = resX;
+            int[] kernel = new int[kernelSize*kernelSize];
+
+            int newPix = Integer.MIN_VALUE;
+
+            int medianEl = kernel.length / 2;
+            for (int y = 0, k = 0; y < kernelSize; y++) {
+                for (int x = 0; x < kernelSize; x++, k++) {
+                    int kernelPos = i + width * y + x;
+                    try {
+                            kernel[k] = pixels[kernelPos];
+                            if (y == kernelSize - 1 && x == kernelSize - 1) {
+                                Arrays.sort(kernel);
+                                if (kernelSize > 1) {
+                                    newPix = kernel[medianEl];
+                                }else {
+                                    newPix = pixels[i + width * y + x];
+                                }
+                            }
+                    } catch (IndexOutOfBoundsException e) {
+                            kernel[k] = pixels[i];
+                    }
+                }
+            }
+            new_pixels[i]= newPix;
+        }
+        //pixels = new_pixels;
+        System.arraycopy( new_pixels, 0, pixels , 0, new_pixels.length );
     }
 
     /*
