@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import static java.lang.Math.*;
 
@@ -59,7 +60,7 @@ public class RayTracerSimple extends java.applet.Applet {
             handleAnimation();
 
             paintPix();
-            filter();
+            gaußFilter();
             drawGUI();
 
 
@@ -103,6 +104,54 @@ public class RayTracerSimple extends java.applet.Applet {
         }
         //pixels = new_pixels;
         System.arraycopy( new_pixels, 0, pixels , 0, new_pixels.length );
+    }
+
+    private static void gaußFilter() {
+        //int[] filter = {1, 2, 1, 2, 4, 2, 1, 2, 1};
+        int[] filter = {
+                1, 4, 6, 4, 1,
+                4, 16, 24, 16, 4,
+                6, 24, 36, 24, 6,
+                4, 16, 24, 16, 4,
+                1, 4, 6, 4, 1};
+        int filterWidth = 5;
+        int output[] = new int[resX*resY];
+
+        final int width = resX;
+        final int height = resY;
+        final int sum = IntStream.of(filter).sum();
+
+        final int pixelIndexOffset = width - filterWidth;
+        final int centerOffsetX = filterWidth / 2;
+        final int centerOffsetY = filter.length / filterWidth / 2;
+
+        // apply filter
+        for (int h = height - filter.length / filterWidth + 1, w = width - filterWidth + 1, y = 0; y < h; y++) {
+            for (int x = 0; x < w; x++) {
+                int r = 0;
+                int g = 0;
+                int b = 0;
+                for (int filterIndex = 0, pixelIndex = y * width + x;
+                     filterIndex < filter.length;
+                     pixelIndex += pixelIndexOffset) {
+                    for (int fx = 0; fx < filterWidth; fx++, pixelIndex++, filterIndex++) {
+                        int col = pixels[pixelIndex];
+                        int factor = filter[filterIndex];
+
+                        // sum up color channels seperately
+                        r += ((col >>> 16) & 0xFF) * factor;
+                        g += ((col >>> 8) & 0xFF) * factor;
+                        b += (col & 0xFF) * factor;
+                    }
+                }
+                r /= sum;
+                g /= sum;
+                b /= sum;
+                // combine channels with full opacity
+                output[x + centerOffsetX + (y + centerOffsetY) * width] = (r << 16) | (g << 8) | b | 0xFF000000;
+            }
+        }
+        System.arraycopy( output, 0, pixels , 0, output.length );
     }
 
     /*
