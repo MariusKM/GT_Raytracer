@@ -25,7 +25,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static SceneSimple sceneSimple;
 
-    static int resX = 1024, resY = 1024;
+    static int resX = 2048, resY = 2048;
     static boolean usePerspective = true;
     static int numSpheres = 25;
     static SceneObject[] sceneObjects;
@@ -279,14 +279,14 @@ public class RayTracerSimple extends java.applet.Applet {
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25,  new Vector3(1f,0.7f,1f),0.3f);
+        sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25,  new Vector3(1f,1f,1f),0.3f);
         sceneSimple.setSceneCam(cam);
         sceneSimple.getSceneLight().add(sceneLight);
         sceneSimple.setBgCol(BG_Color);
 
-        Light sceneLight2 = new Light(new Vector3(0.75f, 1.5f, 0f), 25, new Vector3(1f,0.7f,1f),0.3f);
+        Light sceneLight2 = new Light(new Vector3(0.75f, 1.5f, 0f), 25, new Vector3(1f,1f,1f),0.3f);
         sceneSimple.getSceneLight().add(sceneLight2);
-        Light sceneLight3 = new Light(new Vector3(0f, 0.5f, -0.5f), 25,   new Vector3(1f,0.7f,1f),0.3f);
+        Light sceneLight3 = new Light(new Vector3(0f, 0.5f, -0.5f), 25,   new Vector3(1f,1f,1f),0.3f);
         sceneSimple.getSceneLight().add(sceneLight2);
 
         PlaneObject groundPlane = new PlaneObject(new Vector3(0.0f, 0, 0), new Vector3(0, 1, 0));
@@ -313,13 +313,14 @@ public class RayTracerSimple extends java.applet.Applet {
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.01f, 1f,0.8f,1.3f,false);
 
         testSphere3.setMaterial(defaultMat);
-        sceneObjects = new Objects.SceneObject[]{
+        /*sceneObjects = new Objects.SceneObject[]{
              ///   testSphere,
                  testSphere1,
                 testSphere2,
                  testSphere3
 
-        }; ///createSpheres(numSpheres, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
+        }; */
+        sceneObjects = createSceneObjects(numSpheres, 0.2f, 0.01f);//
         // sceneObjects = createSpheres(numSpheres, 0.15f, 0.02f);
       /*  Objects.SceneObject lightObject = new Objects.SphereObject(sceneLight.getPosition(), 0.05f);
         lightObject.setShade(false);
@@ -329,7 +330,7 @@ public class RayTracerSimple extends java.applet.Applet {
         lightObject.setMaterial(groundMat);*/
         Material ellipsoidMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.01f, 1f,0.9f,1.3f,false);
         TransformationMatrix4x4 trans = new TransformationMatrix4x4();
-        trans.createTranslationMatrix(new Vector3D(1f, 0.5f, 0));
+        trans.createTranslationMatrix(new Vector3D(1f, 0.5f, 0.5));
         SceneObject ellipse = new Ellipsoid(0.4, 0.7, 0.4, trans);
 
         sceneSimple.getSceneObjects().add(ellipse);
@@ -338,7 +339,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
 
         TransformationMatrix4x4 trans2 = new TransformationMatrix4x4();
-        trans2.createTranslationMatrix(new Vector3D(-0.5f, 0.25f, 0));
+        trans2.createTranslationMatrix(new Vector3D(-0.5f, 0.25f, 0.5));
         SceneObject ellipse2 = new Ellipsoid(0.7, 0.4, 0.4, trans2);
         ellipse2.setScene(sceneSimple);
         ellipse2.setMaterial(ellipsoidMat);
@@ -354,9 +355,10 @@ public class RayTracerSimple extends java.applet.Applet {
         ComplexObject xobj3 = new ComplexObject((Quadrik) ellipse, (Quadrik) ellipse2, ComplexObject.Operation.DIFFERENZ);
 
         for (SceneObject s : sceneObjects) {
-          /*  Material defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.5f, 1,0.5f);
 
-            s.setMaterial(defaultMat);*/
+            defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.75f * random()), (float) (0.75f * random())),  0.01f, 1f,0.8f,1.3f,false);
+
+            s.setMaterial(defaultMat);
             sceneSimple.getSceneObjects().add(s);
             s.setScene(sceneSimple);
         }
@@ -367,7 +369,7 @@ public class RayTracerSimple extends java.applet.Applet {
         Vector3 objectPos;
         float radiusX, radiusY, radiusZ;
         for (int i = 0; i < numObjects; i++) {
-            objectPos = randomVecInRange(-0.5f, 1, -0.75f, 1, -0.5, 0);
+            objectPos = randomVecInRange(-0.5f, 1.5f, 0.25f, 1, 0, 1.5);
             radiusX = (float) (random() * maxRad + minRad);
             radiusY = (float) (random() * maxRad + minRad);
             radiusZ = (float) (random() * maxRad + minRad);
