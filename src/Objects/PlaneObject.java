@@ -124,7 +124,7 @@ public class PlaneObject extends SceneObject {
             Vector3 currentCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
 
 
-            intensity = getIntensity(intersection,light,5);
+            intensity = getIntensity(intersection,light,1);
             currentCol.mult(intensity);
             finalCol.add (currentCol);
         }

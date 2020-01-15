@@ -64,7 +64,7 @@ public class SphereObject extends SceneObject {
             Vector3 currentCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
 
 
-            intensity = getIntensity(intersection,light,5);
+            intensity = getIntensity(intersection,light,1);
             currentCol.mult(intensity);
             finalCol.add (currentCol);
         }
@@ -222,6 +222,7 @@ public class SphereObject extends SceneObject {
 
     public void setRadius(float radius) {
         this.radius = radius;
+        this.radiusSq = radius*radius;
     }
 
     public float getRadiusSq() {

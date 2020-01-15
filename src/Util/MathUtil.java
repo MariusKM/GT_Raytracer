@@ -51,6 +51,11 @@ public class MathUtil {
         return Math.max(min, Math.min(max, val));
     }
 
+    public static float lerp(float a, float b, float f)
+    {
+        return a + f * (b - a);
+    }
+
     static Color blend(Color a, Color b) {
 
         double r = (a.getRed() * b.getRed()) / 255;

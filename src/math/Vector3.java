@@ -1,5 +1,7 @@
 package math;
 
+import Util.MathUtil;
+
 public class Vector3{
     public float x,y,z;
 
@@ -80,6 +82,12 @@ public class Vector3{
     public float distance (Vector3 v){
         float d = (float)(Math.sqrt(Math.pow(v.x- this.x,2) + Math.pow(v.y- this.y,2) + Math.pow(v.z- this.z,2)));
         return d;
+
+    }
+    public Vector3 lerp(Vector3 a, Vector3 b, float t){
+
+        Vector3 lerpVec = new Vector3(MathUtil.lerp(a.x, b.x,t),MathUtil.lerp(a.y, b.y,t),MathUtil.lerp(a.z, b.z,t));
+        return lerpVec;
 
     }
 

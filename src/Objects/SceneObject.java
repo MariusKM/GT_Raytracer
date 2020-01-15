@@ -1,5 +1,6 @@
 package Objects;
 
+import Util.Animator;
 import Util.Material;
 import math.Vector3;
 
@@ -13,6 +14,16 @@ public abstract class SceneObject {
     private boolean isGizmo = false;
     private float speed = 0.00f;
     private Vector3 normal;
+    private Animator animator;
+
+    public Animator getAnimator() {
+        return animator;
+    }
+
+    public void setAnimator(Animator animator) {
+        this.animator = animator;
+
+    }
 
     public Vector3 getNormal() {
         return normal;
