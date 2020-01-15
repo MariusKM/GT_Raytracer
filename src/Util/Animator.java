@@ -12,18 +12,13 @@ import java.util.Map;
 public class Animator {
 
     public int howManyFrames = 1;
-    public boolean active;
+    public float speed;
     public SceneObject object;
-    public boolean animatePosition, animateScale;
-    public Vector3 translationSpeed;
-    public float scaleSpeed;
-    public boolean animateMaterial;
-    public Material material, targetMaterial;
-    public float materialSpeed;
-    public boolean lerp;
+    protected float  lerpVal = 0;
+    public boolean pingPong;
 
 
-    public Animator(SceneObject object, boolean animatePosition, Vector3 translationSpeed, boolean animateScale, float scaleSpeed, boolean animateMaterial, Material targetMaterial, float materialSpeed, int howManyFrames){
+   /* public Animator(SceneObject object, boolean animatePosition, Vector3 translationSpeed, boolean animateScale, float scaleSpeed, boolean animateMaterial, Material targetMaterial, float materialSpeed, int howManyFrames){
         this.object = object;
         this.animatePosition = animatePosition;
         this.translationSpeed = translationSpeed;
@@ -37,52 +32,25 @@ public class Animator {
         this.targetMaterial  = targetMaterial;
         this.materialSpeed = materialSpeed;
 
-
+    } */
+   public Animator(SceneObject object,float speed, int howManyFrames){
+        this.speed = speed;
+        this.object = object;
+        this.howManyFrames = howManyFrames;
     }
 
-    public enum AnimationParameter {
-        Position,
-        Rotation,
-        Scale
-
-    }
-
-
-    public void animate (float deltaTime){
-
-        if(animatePosition){
-            if (this.object instanceof SphereObject){
-
-                Vector3 newPos = ((SphereObject) object).getCenter();
-                Vector3 speed = translationSpeed;
-              //  speed.mult(deltaTime);
-
-                newPos.add(speed);
-                ((SphereObject) object).setCenter(newPos);
+    public void animate (){
+        lerpVal+= speed;
+        if (pingPong){
+            if (lerpVal >1 || lerpVal<0){
+                speed *= -1;
             }
-
-            }
-
-        if (animateScale){
-            if (this.object instanceof SphereObject){
-
-                float newRad = ((SphereObject) object).getRadius();
-                newRad += scaleSpeed;//*deltaTime;
-
-                ((SphereObject) object).setRadius(newRad);
-            }
-
-        }
-
-        if (animateMaterial){
-
-
-
         }
 
 
-
     }
+
+
 
 
 

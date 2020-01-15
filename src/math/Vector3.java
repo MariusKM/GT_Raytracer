@@ -84,7 +84,7 @@ public class Vector3{
         return d;
 
     }
-    public Vector3 lerp(Vector3 a, Vector3 b, float t){
+    static public Vector3 lerp(Vector3 a, Vector3 b, float t){
 
         Vector3 lerpVec = new Vector3(MathUtil.lerp(a.x, b.x,t),MathUtil.lerp(a.y, b.y,t),MathUtil.lerp(a.z, b.z,t));
         return lerpVec;

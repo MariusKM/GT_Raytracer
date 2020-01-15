@@ -5,6 +5,7 @@ import Util.Material;
 import math.Vector3;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class SceneObject {
 
@@ -14,14 +15,14 @@ public abstract class SceneObject {
     private boolean isGizmo = false;
     private float speed = 0.00f;
     private Vector3 normal;
-    private Animator animator;
+    private ArrayList<Animator> animators = new ArrayList<>();
 
-    public Animator getAnimator() {
-        return animator;
+    public ArrayList<Animator> getAnimators() {
+        return animators;
     }
 
-    public void setAnimator(Animator animator) {
-        this.animator = animator;
+    public void setAnimator(ArrayList<Animator> animators) {
+        this.animators = animators;
 
     }
 

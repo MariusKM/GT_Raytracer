@@ -14,11 +14,11 @@ public class AnimationUtil {
         AnimationUtil.valuesToAnimate = valuesToAnimate;
     }
 
-    public static void animate(float deltaTime){
+    public static void animate( ){
 
         for (Animator anim:
              valuesToAnimate) {
-            anim.animate(deltaTime);
+            anim.animate();
         }
     }
 }

@@ -157,60 +157,24 @@ public class RayTracerSimple extends java.applet.Applet {
     Do the animation stuff
      */
     static void handleAnimation() {
-      /*  float upperLimit = 1.5f;
-        float lowerLimit = -1f;
-
-        for (SceneObject s : sceneSimple.getSceneObjects()
-        ) {
-
-            if (s instanceof Ellipsoid && !s.isGizmo()) {
-
-                TransformationMatrix4x4 trans = new TransformationMatrix4x4();
-                trans.createTranslationMatrix(new Vector3D(0, s.getSpeed() * delta_time, 0));
-
-                ((Ellipsoid) s).transform(trans);
-                trans = new TransformationMatrix4x4();
-                //trans.createYRotationMatrix(s.getSpeed()*delta_time);
-                trans.createRotationMatrix(s.getSpeed() * delta_time, s.getSpeed() * delta_time, s.getSpeed() * delta_time);
-                ((Ellipsoid) s).transform(trans);
-
-
-            } else if (s instanceof SphereObject && !s.isGizmo()) {
-
-                Vector3 newPos = ((SphereObject) s).getCenter();
-                if (newPos.y > upperLimit || newPos.y < lowerLimit) {
-
-                    ((SphereObject) s).setSpeed(((SphereObject) s).getSpeed() * -1);
-                }
-                newPos.add(new Vector3(0, ((SphereObject) s).getSpeed() * delta_time, 0));
-                ((SphereObject) s).setCenter(newPos);
-            }
-        }*/
-        if (delta_time > 0) {
-            float blah = 0;
-        }
-        AnimationUtil.animate(delta_time);
-
+        AnimationUtil.animate();
     }
 
     static void setUpAnimation() {
-
         for (SceneObject S : sceneSimple.getSceneObjects()
         ) {
-            if (S.getAnimator() != null) AnimationUtil.getValuesToAnimate().add(S.getAnimator());
+            if (S.getAnimators().size() >0) {
+                AnimationUtil.getValuesToAnimate().addAll(S.getAnimators());
+            };
         }
-
-
     }
 
 
     static void handleTime() {
-
         long time = System.nanoTime();
         delta_timeMS = (int) ((time - last_time) / 1000000);
         delta_time = ((float) delta_timeMS) / 1000;
         last_time = time;
-        //System.out.println("last frame took :: "+delta_time+"s");
     }
 
     static void drawGUI() {
@@ -306,9 +270,9 @@ public class RayTracerSimple extends java.applet.Applet {
         groundPlane.setScene(sceneSimple);
         SceneObject testSphere = new SphereObject(new Vector3(0.5f, 0.5f, 1.05f), 0.3f);
         SphereObject testSphere1 = new SphereObject(new Vector3(0.25f, 1.25f, 0), 0.5f);
-        Float animSpeedY = 1f;
-        Animator anim = new Animator(true, new Vector3(0, 0.0f, 0), true, 0.1f, 10);
-        testSphere1.setAnimator(anim);
+        TransformationAnimator anim = new TransformationAnimator(testSphere1,0.1f, TransformationAnimator.Vector3Type.scale,new Vector3(0, 0.0f, 0),10);
+        anim.pingPong = true;
+        testSphere1.getAnimators().add(anim);
         SceneObject testSphere2 = new SphereObject(new Vector3(1f, 0.25f, 1.05f), 0.2f);
 
         SceneObject testSphere3 = new SphereObject(new Vector3(0.0f, 0.25f, 1.05f), 0.2f);
@@ -334,21 +298,16 @@ public class RayTracerSimple extends java.applet.Applet {
 
         }; ///createSpheres(numSpheres, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
         // sceneObjects = createSpheres(numSpheres, 0.15f, 0.02f);
-      /*  Objects.SceneObject lightObject = new Objects.SphereObject(sceneLight.getPosition(), 0.05f);
-        lightObject.setShade(false);
-        lightObject.setGizmo(true);
-        sceneSimple.getSceneObjects().add(lightObject);
-        lightObject.setScene(sceneSimple);
-        lightObject.setMaterial(groundMat);*/
         Material ellipsoidMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.01f, 1f, 0.9f, 1.3f, false);
         TransformationMatrix4x4 trans = new TransformationMatrix4x4();
         trans.createTranslationMatrix(new Vector3D(1f, 0.5f, 0));
         SceneObject ellipse = new Ellipsoid(0.4, 0.7, 0.4, trans);
-
         sceneSimple.getSceneObjects().add(ellipse);
         ellipse.setScene(sceneSimple);
         ellipse.setMaterial(ellipsoidMat);
+        TransformationAnimator anim2 = new TransformationAnimator(ellipse,0.1f, TransformationAnimator.Vector3Type.position,new Vector3(1, 2, 1),10);
 
+        ellipse.getAnimators().add(anim2);
 
         TransformationMatrix4x4 trans2 = new TransformationMatrix4x4();
         trans2.createTranslationMatrix(new Vector3D(-0.5f, 0.25f, 0));
@@ -356,11 +315,6 @@ public class RayTracerSimple extends java.applet.Applet {
         ellipse2.setScene(sceneSimple);
         ellipse2.setMaterial(ellipsoidMat);
         sceneSimple.getSceneObjects().add(ellipse2);
-       /* sceneSimple.getSceneObjects().add(ellipse2);
-        //ellipse2.setShade(false);
-        ellipse2.setGizmo(true);
-        ellipse2.setScene(sceneSimple);
-        ellipse2.setMaterial(groundMat);*/
 
         ComplexObject xobj = new ComplexObject((Quadrik) ellipse, (Quadrik) ellipse2, ComplexObject.Operation.DIFFERENZ);
         ComplexObject xobj2 = new ComplexObject((Quadrik) ellipse, (Quadrik) ellipse2, ComplexObject.Operation.DIFFERENZ);
