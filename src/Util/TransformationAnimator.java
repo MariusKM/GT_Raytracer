@@ -1,5 +1,6 @@
 package Util;
 
+import Objects.Ellipsoid;
 import Objects.Quadrik;
 import Objects.SceneObject;
 import Objects.SphereObject;
@@ -32,7 +33,14 @@ public class TransformationAnimator extends Animator {
                     startVec = ((SphereObject) object).getCenter();
                 }else if( this.object instanceof Quadrik){
 
-                     startVec = new Vector3(0,0,0);
+                    Matrix4x4 matrix = ((Quadrik) object).getMatrix();
+                    startVec = new Vector3((float)matrix.m03,(float)matrix.m13,(float)matrix.m23);
+                    TransformationMatrix4x4 trans = new TransformationMatrix4x4();
+                    trans.createTranslationMatrix(new Vector3D(targetVec.x,targetVec.y, targetVec.z));
+                    SceneObject temp = new Ellipsoid(0.4, 0.7, 0.4, trans);
+                    Matrix4x4 matrixTarget = ((Quadrik) temp).getMatrix();
+                    Vector3 newVec = new Vector3((float)matrixTarget.m03,(float)matrixTarget.m13,(float)matrixTarget.m23);
+                    this.targetVec = new Vector3(newVec);
                 }
                 break;
 
@@ -62,6 +70,7 @@ public class TransformationAnimator extends Animator {
         super.animate();
 
         TransformationMatrix4x4 trans = new TransformationMatrix4x4();
+        Vector3 newVec;
         switch (vectorType) {
 
             case position:
@@ -69,9 +78,17 @@ public class TransformationAnimator extends Animator {
                     Vector3 newPos = Vector3.lerp(startVec, targetVec, lerpVal);
                     ((SphereObject) object).setCenter(newPos);
                 }else if( this.object instanceof Quadrik){
-                    Vector3 newVec = Vector3.lerp(startVec, targetVec, lerpVal);
+                     newVec = Vector3.lerp(startVec, targetVec, lerpVal);
                     trans.createTranslationMatrix(new Vector3D(newVec.x,newVec.y, newVec.z));
                     ((Quadrik) object).transform(trans);
+
+                  /*  newVec = Vector3.lerp(startVec, targetVec, lerpVal);
+                    Matrix4x4 transformMat =  ((Quadrik) object).getMatrix();
+                    transformMat.m03 =newVec.x;
+                    transformMat.m13 =newVec.y;
+                    transformMat.m23 =newVec.z;
+                    ((Quadrik) object).setMatrix(transformMat);
+                    ((Quadrik) object).setConstantsFromMatrix();;*/
                 }
                 break;
 
@@ -80,7 +97,7 @@ public class TransformationAnimator extends Animator {
                     float newScl = MathUtil.lerp(startVec.x, targetVec.x, lerpVal);
                     ((SphereObject) object).setRadius(newScl);
                 }else if( this.object instanceof Quadrik) {
-                    Vector3 newVec = Vector3.lerp(startVec, targetVec, lerpVal);
+                     newVec = Vector3.lerp(startVec, targetVec, lerpVal);
                     Matrix4x4 scaleMat =  ((Quadrik) object).getMatrix();
                     scaleMat.m00 =newVec.x;
                     scaleMat.m11 =newVec.y;
@@ -93,7 +110,7 @@ public class TransformationAnimator extends Animator {
             case rotation:
 
                 if( this.object instanceof Quadrik){
-                    Vector3 newVec = Vector3.lerp(startVec, targetVec, lerpVal);
+                    newVec = Vector3.lerp(startVec, targetVec, lerpVal);
                     trans.createRotationMatrix(newVec.x, newVec.y, newVec.z);
                     ((Quadrik) object).transform(trans);
                 }

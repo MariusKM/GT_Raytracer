@@ -13,7 +13,7 @@ public abstract class SceneObject {
     private Material material;
     private SceneSimple scene;
     private boolean isGizmo = false;
-    private float speed = 0.00f;
+
     private Vector3 normal;
     private ArrayList<Animator> animators = new ArrayList<>();
 
@@ -73,13 +73,7 @@ public abstract class SceneObject {
     public void setGizmo(boolean gizmo) {
         isGizmo = gizmo;
     }
-    public float getSpeed() {
-        return speed;
-    }
 
-    public void setSpeed(float speed) {
-        this.speed = speed;
-    }
 
 
 }

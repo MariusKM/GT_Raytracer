@@ -56,7 +56,7 @@ public class RayTracerSimple extends java.applet.Applet {
         do {
 
             paintPix();
-            //    gaußFilter();
+            gaußFilter();
             drawGUI();
             handleTime();
             handleAnimation();
@@ -226,12 +226,11 @@ public class RayTracerSimple extends java.applet.Applet {
                 if (myRay.getNearest() != null) {
                     temp = myRay.getNearest();
                     intersectObj = temp;
-                    //int pixelColor = (intersectObj.isShade()) ? (intersectObj instanceof Objects.PlaneObject) ? intersectObj.shadeDiffuse(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) :   intersectObj.shadeCookTorrance(rayDir, cam.getPosition(), sceneLight, myRay.getT0()) : Color.WHITE.getRGB();
-                    //  Vector3 finalCol = (intersectObj instanceof Ellipsoid)?  ((Ellipsoid) intersectObj).shadeDiffuseV(rayDir, cam.getPosition(), sceneLight, myRay.getT0()): intersectObj.shadeCookTorrance(myRay, sceneSimple, false,5);
-                    Vector3 finalCol = intersectObj.shadeCookTorrance(myRay, sceneSimple, false, 1);
-                    //System.out.println(finalCol.toString());
+
+                    Vector3 finalCol = intersectObj.shadeCookTorrance(myRay, sceneSimple, false, 5);
+
                     Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
-                    //Color finalColorRGB = new Color(finalCol.x, finalCol.y, finalCol.z );
+
                     int pixelColor = (intersectObj.isShade()) ? finalColorRGB.getRGB() : Color.WHITE.getRGB();
                     pixels[indexer] = pixelColor;
 
@@ -268,23 +267,23 @@ public class RayTracerSimple extends java.applet.Applet {
         groundPlane.setMaterial(groundMat);
         sceneSimple.getSceneObjects().add(groundPlane);
         groundPlane.setScene(sceneSimple);
-        SceneObject testSphere = new SphereObject(new Vector3(0.5f, 0.5f, 1.05f), 0.3f);
-        SphereObject testSphere1 = new SphereObject(new Vector3(0.25f, 1.25f, 0), 0.5f);
-        TransformationAnimator anim = new TransformationAnimator(testSphere1,0.1f, TransformationAnimator.Vector3Type.scale,new Vector3(0, 0.0f, 0),10);
-        anim.pingPong = true;
-        testSphere1.getAnimators().add(anim);
-        SceneObject testSphere2 = new SphereObject(new Vector3(1f, 0.25f, 1.05f), 0.2f);
 
-        SceneObject testSphere3 = new SphereObject(new Vector3(0.0f, 0.25f, 1.05f), 0.2f);
-        testSphere.setSpeed(0.0f);
-        testSphere1.setSpeed(0.0f);
-        testSphere2.setSpeed(0.0f);
-        testSphere3.setSpeed(0.0f);
+        SceneObject testSphere = new SphereObject(new Vector3(0.5f, 0.5f, 1.05f), 0.3f);
         Material defaultMat = new Material(new Vector3((float) (0.5f), (float) (0.5f), (float) (0.5)), 0.01f, 1, 0f, 1f, true);
         testSphere.setMaterial(defaultMat);
 
+        SphereObject testSphere1 = new SphereObject(new Vector3(0.25f, 1.25f, 0), 0.5f);
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.001f, 1f, 0.8f, 1.3f, false);
         testSphere1.setMaterial(defaultMat);
+        TransformationAnimator anim = new TransformationAnimator(testSphere1,0.2f, TransformationAnimator.Vector3Type.scale,new Vector3(0, 0.0f, 0),10);
+        anim.pingPong = true;
+        MaterialAnimator animMat = new MaterialAnimator(testSphere1,0.1f, MaterialAnimator.MaterialValueType.color,new Material(new Vector3(1,1,1),0,0,0),10);
+        animMat.pingPong = true;
+        testSphere1.getAnimators().add(anim);
+        testSphere1.getAnimators().add(animMat);
+
+        SceneObject testSphere2 = new SphereObject(new Vector3(1f, 0.25f, 1.05f), 0.2f);
+        SceneObject testSphere3 = new SphereObject(new Vector3(0.0f, 0.25f, 1.05f), 0.2f);
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.01f, 1f, 0.8f, 1.3f, false);
         testSphere2.setMaterial(defaultMat);
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.01f, 1f, 0.8f, 1.3f, false);
@@ -296,8 +295,8 @@ public class RayTracerSimple extends java.applet.Applet {
                 testSphere2,
                 testSphere3
 
-        }; ///createSpheres(numSpheres, 0.15f, 0.01f);//createSceneObjects(numSpheres, 0.15f, 0.01f);//
-        // sceneObjects = createSpheres(numSpheres, 0.15f, 0.02f);
+        };
+
         Material ellipsoidMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.01f, 1f, 0.9f, 1.3f, false);
         TransformationMatrix4x4 trans = new TransformationMatrix4x4();
         trans.createTranslationMatrix(new Vector3D(1f, 0.5f, 0));
@@ -305,7 +304,7 @@ public class RayTracerSimple extends java.applet.Applet {
         sceneSimple.getSceneObjects().add(ellipse);
         ellipse.setScene(sceneSimple);
         ellipse.setMaterial(ellipsoidMat);
-        TransformationAnimator anim2 = new TransformationAnimator(ellipse,0.1f, TransformationAnimator.Vector3Type.position,new Vector3(1, 2, 1),10);
+        TransformationAnimator anim2 = new TransformationAnimator(ellipse,0.1f, TransformationAnimator.Vector3Type.position,new Vector3(0, 0.1f, 0),10);
 
         ellipse.getAnimators().add(anim2);
 
