@@ -32,15 +32,15 @@ public class TransformationAnimator extends Animator {
                 if (this.object instanceof SphereObject) {
                     startVec = ((SphereObject) object).getCenter();
                 }else if( this.object instanceof Quadrik){
-
-                    Matrix4x4 matrix = ((Quadrik) object).getMatrix();
+                    startVec = new Vector3(0,0,0);
+                  /*  Matrix4x4 matrix = ((Quadrik) object).getMatrix();
                     startVec = new Vector3((float)matrix.m03,(float)matrix.m13,(float)matrix.m23);
                     TransformationMatrix4x4 trans = new TransformationMatrix4x4();
                     trans.createTranslationMatrix(new Vector3D(targetVec.x,targetVec.y, targetVec.z));
                     SceneObject temp = new Ellipsoid(0.4, 0.7, 0.4, trans);
                     Matrix4x4 matrixTarget = ((Quadrik) temp).getMatrix();
                     Vector3 newVec = new Vector3((float)matrixTarget.m03,(float)matrixTarget.m13,(float)matrixTarget.m23);
-                    this.targetVec = new Vector3(newVec);
+                    this.targetVec = new Vector3(newVec);*/
                 }
                 break;
 
