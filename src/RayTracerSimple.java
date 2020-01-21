@@ -52,14 +52,12 @@ public class RayTracerSimple extends java.applet.Applet {
     static JLabel graphics = new JLabel();
 
     public static void main(String args[]) {
-
         initScene();
         last_time = System.nanoTime();
         boolean test = true;
         do {
             handleTime();
             handleAnimation();
-
             paintPix();
             gaußFilter();
             drawGUI();
@@ -279,14 +277,14 @@ public class RayTracerSimple extends java.applet.Applet {
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         sceneSimple = new SceneSimple();
-        sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25,  new Vector3(1f,1f,1f),0.3f);
+        sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25,  new Vector3(0.9f,0.7f,1f),0.3f);
         sceneSimple.setSceneCam(cam);
         sceneSimple.getSceneLight().add(sceneLight);
         sceneSimple.setBgCol(BG_Color);
 
-        Light sceneLight2 = new Light(new Vector3(0.75f, 1.5f, 0f), 25, new Vector3(1f,1f,1f),0.3f);
+        Light sceneLight2 = new Light(new Vector3(0.75f, 1.5f, 0f), 25, new Vector3(0.9f,0.6f,1f),0.3f);
         sceneSimple.getSceneLight().add(sceneLight2);
-        Light sceneLight3 = new Light(new Vector3(0f, 0.5f, -0.5f), 25,   new Vector3(1f,1f,1f),0.3f);
+        Light sceneLight3 = new Light(new Vector3(0f, 0.5f, -0.5f), 25,   new Vector3(1f,0.8f,1f),0.3f);
         sceneSimple.getSceneLight().add(sceneLight2);
 
         PlaneObject groundPlane = new PlaneObject(new Vector3(0.0f, 0, 0), new Vector3(0, 1, 0));
@@ -320,15 +318,15 @@ public class RayTracerSimple extends java.applet.Applet {
                  testSphere3
 
         }; */
-        sceneObjects = createSceneObjects(numSpheres, 0.2f, 0.01f);//
+        sceneObjects = createSceneObjects(numSpheres, 0.2f, 0.01f);
         // sceneObjects = createSpheres(numSpheres, 0.15f, 0.02f);
-      /*  Objects.SceneObject lightObject = new Objects.SphereObject(sceneLight.getPosition(), 0.05f);
+      /*Objects.SceneObject lightObject = new Objects.SphereObject(sceneLight.getPosition(), 0.05f);
         lightObject.setShade(false);
         lightObject.setGizmo(true);
         sceneSimple.getSceneObjects().add(lightObject);
         lightObject.setScene(sceneSimple);
         lightObject.setMaterial(groundMat);*/
-        Material ellipsoidMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.01f, 1f,0.9f,1.3f,false);
+        Material ellipsoidMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.2f * random()), (float) (0.2 * random())), 0.01f, 1f,0.9f,1.3f,false);
         TransformationMatrix4x4 trans = new TransformationMatrix4x4();
         trans.createTranslationMatrix(new Vector3D(1f, 0.5f, 0.5));
         SceneObject ellipse = new Ellipsoid(0.4, 0.7, 0.4, trans);
@@ -349,14 +347,13 @@ public class RayTracerSimple extends java.applet.Applet {
         ellipse2.setGizmo(true);
         ellipse2.setScene(sceneSimple);
         ellipse2.setMaterial(groundMat);*/
-
         ComplexObject xobj = new ComplexObject((Quadrik) ellipse, (Quadrik) ellipse2, ComplexObject.Operation.DIFFERENZ);
         ComplexObject xobj2 = new ComplexObject((Quadrik) ellipse, (Quadrik) ellipse2, ComplexObject.Operation.DIFFERENZ);
         ComplexObject xobj3 = new ComplexObject((Quadrik) ellipse, (Quadrik) ellipse2, ComplexObject.Operation.DIFFERENZ);
 
         for (SceneObject s : sceneObjects) {
 
-            defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.75f * random()), (float) (0.75f * random())),  0.01f, 1f,0.8f,1.3f,false);
+            defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.25f * random()), (float) (0.75f * random())),  0.01f, 1f,0.8f,1.3f,false);
 
             s.setMaterial(defaultMat);
             sceneSimple.getSceneObjects().add(s);
