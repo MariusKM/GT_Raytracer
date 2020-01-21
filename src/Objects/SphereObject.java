@@ -223,6 +223,7 @@ public class SphereObject extends SceneObject {
 
     public void setRadius(float radius) {
         this.radius = radius;
+        this.radiusSq = radius*radius;
     }
 
     public float getRadiusSq() {

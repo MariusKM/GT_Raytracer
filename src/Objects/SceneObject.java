@@ -1,9 +1,11 @@
 package Objects;
 
+import Util.Animator;
 import Util.Material;
 import math.Vector3;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class SceneObject {
 
@@ -11,8 +13,18 @@ public abstract class SceneObject {
     private Material material;
     private SceneSimple scene;
     private boolean isGizmo = false;
-    private float speed = 0.00f;
+
     private Vector3 normal;
+    private ArrayList<Animator> animators = new ArrayList<>();
+
+    public ArrayList<Animator> getAnimators() {
+        return animators;
+    }
+
+    public void setAnimator(ArrayList<Animator> animators) {
+        this.animators = animators;
+
+    }
 
     public Vector3 getNormal() {
         return normal;
@@ -61,13 +73,7 @@ public abstract class SceneObject {
     public void setGizmo(boolean gizmo) {
         isGizmo = gizmo;
     }
-    public float getSpeed() {
-        return speed;
-    }
 
-    public void setSpeed(float speed) {
-        this.speed = speed;
-    }
 
 
 }
