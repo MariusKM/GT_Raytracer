@@ -1,9 +1,7 @@
 
 
 import Objects.*;
-import Util.Material;
-import Util.MathUtil;
-import Util.RenderUtil;
+import Util.*;
 import math.TransformationMatrix4x4;
 import math.Vector3;
 import math.Vector3D;
