@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+import static Util.MathUtil.generatRandomPositiveNegitiveValue;
 import static java.lang.Math.*;
 
 public class RayTracerSimple extends java.applet.Applet {
@@ -23,7 +24,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static SceneSimple sceneSimple;
 
-    static int resX = 2048, resY = 2048;
+    static int resX = 1024, resY = 1024;
     static boolean usePerspective = true;
     static int numSpheres = 25;
     static SceneObject[] sceneObjects;
@@ -37,7 +38,8 @@ public class RayTracerSimple extends java.applet.Applet {
     static int kernelSize = 10; //dimension
     static Color BG_Color = new Color(0.125f, 0.115f, 0.125f);
     static Image image;
-
+    static int animationLength = 300;
+    static int frameCounter = 0;
     public static boolean isExit() {
         return exit;
     }
@@ -61,15 +63,20 @@ public class RayTracerSimple extends java.applet.Applet {
             handleTime();
             handleAnimation();
 
+            if (frameCounter<=animationLength){
+                String path = "D:/Projekte/uni/GT_Raytracer/render/Anim/PresiAnim";
 
+                savePic(image, "jpeg", path +"00"+frameCounter+ ".jpeg");
+                frameCounter++;
+            }else{
+                exit = true;
+            }
 
-            // exit = true;
+            System.out.println("Last frame took " + delta_time);
         }
         while (!exit);
 
-        String path = "D:/Projekte/uni/GT_Raytracer/render/";
 
-        savePic(image, "jpeg", path + random() + ".jpeg");
     }
 
     private static void filter() {
@@ -103,7 +110,7 @@ public class RayTracerSimple extends java.applet.Applet {
             new_pixels[i] = newPix;
         }
         //pixels = new_pixels;
-        System.arraycopy(new_pixels, 0, pixels, 0, new_pixels.length);
+       // System.arraycopy(new_pixels, 0, pixels, 0, new_pixels.length);
     }
 
     private static void gaußFilter() {
@@ -239,7 +246,7 @@ public class RayTracerSimple extends java.applet.Applet {
                     pixels[indexer] = sceneSimple.getBgCol().getRGB();
                 }
 
-                System.out.println("painted pixel no " + indexer);
+               // System.out.println("painted pixel no " + indexer);
             }
 
         }
@@ -262,7 +269,7 @@ public class RayTracerSimple extends java.applet.Applet {
         Light sceneLight2 = new Light(new Vector3(0.75f, 1.5f, 0f), 25, new Vector3(0.9f,0.6f,1f),0.3f);
         sceneSimple.getSceneLight().add(sceneLight2);
         Light sceneLight3 = new Light(new Vector3(0f, 0.5f, -0.5f), 25,   new Vector3(1f,0.8f,1f),0.3f);
-        sceneSimple.getSceneLight().add(sceneLight2);
+        sceneSimple.getSceneLight().add(sceneLight3);
 
         PlaneObject groundPlane = new PlaneObject(new Vector3(0.0f, 0, 0), new Vector3(0, 1, 0));
         Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.1f, 0f,1f,1.3f,false);
@@ -277,10 +284,13 @@ public class RayTracerSimple extends java.applet.Applet {
         SphereObject testSphere1 = new SphereObject(new Vector3(0.25f, 1.25f, 0), 0.5f);
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.001f, 1f, 0.8f, 1.3f, false);
         testSphere1.setMaterial(defaultMat);
+
         TransformationAnimator anim = new TransformationAnimator(testSphere1,0.2f, TransformationAnimator.Vector3Type.scale,new Vector3(0, 0.0f, 0),10);
         anim.pingPong = true;
+
         MaterialAnimator animMat = new MaterialAnimator(testSphere1,0.1f, MaterialAnimator.MaterialValueType.color,new Material(new Vector3(1,1,1),0,0,0),10);
         animMat.pingPong = true;
+
         testSphere1.getAnimators().add(anim);
         testSphere1.getAnimators().add(animMat);
 
@@ -293,9 +303,9 @@ public class RayTracerSimple extends java.applet.Applet {
         testSphere3.setMaterial(defaultMat);
         sceneObjects = new Objects.SceneObject[]{
                 ///   testSphere,
-                testSphere1,
-                testSphere2,
-                testSphere3
+           //     testSphere1,
+              //  testSphere2,
+            //    testSphere3
 
         };
 
@@ -311,7 +321,7 @@ public class RayTracerSimple extends java.applet.Applet {
         sceneSimple.getSceneObjects().add(ellipse);
         ellipse.setScene(sceneSimple);
         ellipse.setMaterial(ellipsoidMat);
-        TransformationAnimator anim2 = new TransformationAnimator(ellipse,0.1f, TransformationAnimator.Vector3Type.position,new Vector3(0, 0.1f, 0),10);
+        TransformationAnimator anim2 = new TransformationAnimator(ellipse,0.1f, TransformationAnimator.Vector3Type.position,new Vector3(0.0f, 0.11f, 0.0f),10);
 
         ellipse.getAnimators().add(anim2);
 
@@ -334,6 +344,37 @@ public class RayTracerSimple extends java.applet.Applet {
             s.setMaterial(defaultMat);
             sceneSimple.getSceneObjects().add(s);
             s.setScene(sceneSimple);
+            if (s instanceof Quadrik){
+
+                int scaleOrTrans = generatRandomPositiveNegitiveValue(1,-1);
+
+                if (scaleOrTrans >0){
+
+                    Vector3 vec =new Vector3(((float)Math.random()) *((Ellipsoid)s).initScale.x+((Ellipsoid)s).initScale.x,((float)Math.random())*((Ellipsoid)s).initScale.y+((Ellipsoid)s).initScale.y,((float)Math.random()) *((Ellipsoid)s).initScale.z+((Ellipsoid)s).initScale.z);
+                    TransformationAnimator  sAnim = new TransformationAnimator(s,0.001f * (float)Math.random(), TransformationAnimator.Vector3Type.scale,vec,10);
+                    sAnim.pingPong = true;
+                    s.getAnimators().add(sAnim);
+
+                }else{
+                    int posOrNeg = generatRandomPositiveNegitiveValue(1,-1);
+                    TransformationAnimator  sAnim = new TransformationAnimator(s,0.1f * (float)Math.random(), TransformationAnimator.Vector3Type.position,new Vector3(0, 0.1f*posOrNeg, 0),10);
+                    sAnim.pingPong = true;
+                    s.getAnimators().add(sAnim);
+
+                }
+
+
+                scaleOrTrans = generatRandomPositiveNegitiveValue(1,-1);
+
+                if (scaleOrTrans >0){
+
+
+                    MaterialAnimator SanimMat = new MaterialAnimator(s,0.1f, MaterialAnimator.MaterialValueType.color,new Material(new Vector3(1 * (float)Math.random(),1 * (float)Math.random(),1 * (float)Math.random()),0,0,0),10);
+                    SanimMat.pingPong = true;
+                    s.getAnimators().add(SanimMat);
+                }
+
+            }
         }
         setUpAnimation();
     }
@@ -349,7 +390,6 @@ public class RayTracerSimple extends java.applet.Applet {
             radiusZ = (float) (random() * maxRad + minRad);
             TransformationMatrix4x4 trans = new TransformationMatrix4x4();
             trans.createTranslationMatrix(new Vector3D(objectPos.x, objectPos.y, objectPos.z));
-            SceneObject ellipse = new Ellipsoid(0.9, 0.6, 0.2, trans);
             objects[i] = new Ellipsoid(radiusX, radiusY, radiusZ, trans);
         }
         return objects;

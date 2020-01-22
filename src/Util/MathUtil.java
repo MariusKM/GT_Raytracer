@@ -69,4 +69,9 @@ public class MathUtil {
 
     }
 
+    public static int generatRandomPositiveNegitiveValue(int max , int min) {
+        int ii = -min + (int) (Math.random() * ((max - (-min)) + 1));
+        return ii;
+    }
+
 }

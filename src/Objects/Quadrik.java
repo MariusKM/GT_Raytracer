@@ -355,7 +355,7 @@ public class Quadrik extends SceneObject {
 
 
             Vector3 lightCol = light.getColor();
-            intensity = getIntensity(intersection,light,5);
+            intensity = getIntensity(intersection,light,2);
             currentCol.mult(intensity);
             Vector3 computedCol = new Vector3(lightCol.x *currentCol.x ,lightCol.y*currentCol.y ,lightCol.z *currentCol.z );
             finalCol.add (computedCol);
