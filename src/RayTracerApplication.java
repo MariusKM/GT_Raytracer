@@ -13,13 +13,11 @@ import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
 import java.awt.Color;
-import java.util.Arrays;
-import java.util.stream.IntStream;
 
 import static Util.MathUtil.generatRandomPositiveNegitiveValue;
 import static java.lang.Math.*;
 
-public class RayTracerSimple extends java.applet.Applet {
+public class RayTracerApplication extends java.applet.Applet {
 
 
     static SceneSimple sceneSimple;
@@ -31,14 +29,12 @@ public class RayTracerSimple extends java.applet.Applet {
     static Camera cam;
     static Light sceneLight;
     private static boolean exit;
-    static int delta_timeMS;
-    static float delta_time;
-    static long last_time;
+
     static Image image;
     static int frameCounter = 0;
 
     public static void setExit(boolean exit) {
-        RayTracerSimple.exit = exit;
+        RayTracerApplication.exit = exit;
     }
 
     static JFrame frame = new JFrame();
@@ -47,12 +43,11 @@ public class RayTracerSimple extends java.applet.Applet {
     public static void main(String args[]) {
         loadApplicationSettings();
         initScene();
-        last_time = System.nanoTime();
+        AnimationManager.last_time = System.nanoTime();
         do {
             paintPix();
             handleFilter();
             drawGUI();
-            handleTime();
             handleAnimation();
 
             if (frameCounter<=applicationSettings.animationLength){
@@ -63,7 +58,7 @@ public class RayTracerSimple extends java.applet.Applet {
                 exit = true;
             }
 
-            System.out.println("Last frame took " + delta_time);
+            System.out.println("Last frame took " + AnimationManager.delta_time);
         }
         while (!exit);
     }
@@ -82,25 +77,20 @@ public class RayTracerSimple extends java.applet.Applet {
     Do the animation stuff
      */
     static void handleAnimation() {
-        AnimationUtil.animate();
+        AnimationManager.animate();
     }
 
     static void setUpAnimation() {
         for (SceneObject S : sceneSimple.getSceneObjects()
         ) {
             if (S.getAnimators().size() >0) {
-                AnimationUtil.getValuesToAnimate().addAll(S.getAnimators());
+                AnimationManager.getValuesToAnimate().addAll(S.getAnimators());
             };
         }
     }
 
 
-    static void handleTime() {
-        long time = System.nanoTime();
-        delta_timeMS = (int) ((time - last_time) / 1000000);
-        delta_time = ((float) delta_timeMS) / 1000;
-        last_time = time;
-    }
+
 
     static void drawGUI() {
 

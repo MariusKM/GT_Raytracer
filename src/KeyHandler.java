@@ -11,8 +11,8 @@ public class KeyHandler implements KeyListener {
         printEventInfo("Key Pressed", event);
 
         if (event.getKeyCode() == KeyEvent.VK_ENTER){
-            RayTracerSimple.setExit(true);
-            RayTracerSimple.frame.dispose();
+            RayTracerApplication.setExit(true);
+            RayTracerApplication.frame.dispose();
         }
 
     }

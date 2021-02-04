@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ApplicationSettings.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DefaultApplicationSettings.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Filter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GaussFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/render/Anim000.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim000.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim001.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim001.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RayTracerSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerSimple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/KeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/KeyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Quadrik.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Quadrik.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RayTracerSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/AnimationUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/AnimationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Util.plantuml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Util.plantuml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,17 +75,17 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="Application.Raytracer">
-    <configuration name="Raytracer" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="11" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="RayTracerSimple" />
+    <configuration name="RayTracerApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="RayTracerApplication" />
       <module name="GT_raytracing" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="RayTracerSimple" />
+    <configuration name="Raytracer" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="RayTracerApplication" />
       <module name="GT_raytracing" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -104,8 +103,8 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Unnamed" />
       <item itemvalue="Application.Raytracer" />
+      <item itemvalue="Application.RayTracerApplication" />
     </list>
   </component>
   <component name="ServiceViewManager">
@@ -131,7 +130,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574251630095</updated>
-      <workItem from="1612449386437" duration="5253000" />
+      <workItem from="1612449386437" duration="8839000" />
     </task>
     <servers />
   </component>
