@@ -24,8 +24,7 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static SceneSimple sceneSimple;
 
-    static int resX = 1024, resY = 1024;
-    static boolean usePerspective = true;
+
     static int numSpheres = 25;
     static SceneObject[] sceneObjects;
     static int[] pixels;
@@ -35,14 +34,8 @@ public class RayTracerSimple extends java.applet.Applet {
     static int delta_timeMS;
     static float delta_time;
     static long last_time;
-    static int kernelSize = 10; //dimension
-    static Color BG_Color = new Color(0.125f, 0.115f, 0.125f);
     static Image image;
-    static int animationLength = 300;
     static int frameCounter = 0;
-    public static boolean isExit() {
-        return exit;
-    }
 
     public static void setExit(boolean exit) {
         RayTracerSimple.exit = exit;
@@ -50,22 +43,20 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static JFrame frame = new JFrame();
     static JLabel graphics = new JLabel();
-
+    static ApplicationSettings applicationSettings;
     public static void main(String args[]) {
+        loadApplicationSettings();
         initScene();
         last_time = System.nanoTime();
-        boolean test = true;
         do {
-
             paintPix();
-            gaußFilter();
+            handleFilter();
             drawGUI();
             handleTime();
             handleAnimation();
 
-            if (frameCounter<=animationLength){
+            if (frameCounter<=applicationSettings.animationLength){
                 String path = "D:/Uni/GT2A2 Raytracer/GT_Raytracer/render/Anim";
-
                 savePic(image, "jpeg", path +"00"+frameCounter+ ".jpeg");
                 frameCounter++;
             }else{
@@ -75,90 +66,16 @@ public class RayTracerSimple extends java.applet.Applet {
             System.out.println("Last frame took " + delta_time);
         }
         while (!exit);
-
-
     }
 
-    private static void filter() {
-        int new_pixels[] = new int[resX * resY];
-        for (int i = 0; i < resX * resY; i++) {
-
-            int width = resX;
-            int[] kernel = new int[kernelSize * kernelSize];
-
-            int newPix = Integer.MIN_VALUE;
-
-            int medianEl = kernel.length / 2;
-            for (int y = 0, k = 0; y < kernelSize; y++) {
-                for (int x = 0; x < kernelSize; x++, k++) {
-                    int kernelPos = i + width * y + x;
-                    try {
-                        kernel[k] = pixels[kernelPos];
-                        if (y == kernelSize - 1 && x == kernelSize - 1) {
-                            Arrays.sort(kernel);
-                            if (kernelSize > 1) {
-                                newPix = kernel[medianEl];
-                            } else {
-                                newPix = pixels[i + width * y + x];
-                            }
-                        }
-                    } catch (IndexOutOfBoundsException e) {
-                        kernel[k] = pixels[i];
-                    }
-                }
-            }
-            new_pixels[i] = newPix;
-        }
-        //pixels = new_pixels;
-       // System.arraycopy(new_pixels, 0, pixels, 0, new_pixels.length);
+    static void loadApplicationSettings(){
+        applicationSettings = new DefaultApplicationSettings();
     }
-
-    private static void gaußFilter() {
-        //int[] filter = {1, 2, 1, 2, 4, 2, 1, 2, 1};
-        int[] filter = {
-                1, 4, 6, 4, 1,
-                4, 16, 24, 16, 4,
-                6, 24, 36, 24, 6,
-                4, 16, 24, 16, 4,
-                1, 4, 6, 4, 1};
-        int filterWidth = 5;
-        int output[] = new int[resX * resY];
-
-        final int width = resX;
-        final int height = resY;
-        final int sum = IntStream.of(filter).sum();
-
-        final int pixelIndexOffset = width - filterWidth;
-        final int centerOffsetX = filterWidth / 2;
-        final int centerOffsetY = filter.length / filterWidth / 2;
-
-        // apply filter
-        for (int h = height - filter.length / filterWidth + 1, w = width - filterWidth + 1, y = 0; y < h; y++) {
-            for (int x = 0; x < w; x++) {
-                int r = 0;
-                int g = 0;
-                int b = 0;
-                for (int filterIndex = 0, pixelIndex = y * width + x;
-                     filterIndex < filter.length;
-                     pixelIndex += pixelIndexOffset) {
-                    for (int fx = 0; fx < filterWidth; fx++, pixelIndex++, filterIndex++) {
-                        int col = pixels[pixelIndex];
-                        int factor = filter[filterIndex];
-
-                        // sum up color channels seperately
-                        r += ((col >>> 16) & 0xFF) * factor;
-                        g += ((col >>> 8) & 0xFF) * factor;
-                        b += (col & 0xFF) * factor;
-                    }
-                }
-                r /= sum;
-                g /= sum;
-                b /= sum;
-                // combine channels with full opacity
-                output[x + centerOffsetX + (y + centerOffsetY) * width] = (r << 16) | (g << 8) | b | 0xFF000000;
-            }
-        }
+    static void handleFilter(){
+        var filter = new GaussFilter(applicationSettings.resX,applicationSettings.resY);
+        var output = filter.applyFilter(pixels);
         System.arraycopy(output, 0, pixels, 0, output.length);
+
     }
 
     /*
@@ -191,7 +108,7 @@ public class RayTracerSimple extends java.applet.Applet {
             return;
         }
         image = Toolkit.getDefaultToolkit()
-                .createImage(new MemoryImageSource(resX, resY, new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, resX));
+                .createImage(new MemoryImageSource(applicationSettings.resX, applicationSettings.resY, new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, applicationSettings.resX));
 
 
         //JLabel graphics = new JLabel(new ImageIcon(image));
@@ -206,11 +123,14 @@ public class RayTracerSimple extends java.applet.Applet {
 
     static void paintPix() {
         float t = 0;
+
+        int resX =applicationSettings.resX;
+        int resY =applicationSettings.resY;
         int insideCounter = 0, outsideCounter = 0;
         for (int y = 0; y < resY; ++y) {
             for (int x = 0; x < resX; ++x) {
                 Vector3 rayDir;
-                if (usePerspective) {
+                if (applicationSettings.usePerspective) {
                     Vector3 pixelPos = cam.pixelCenterCoordinate(x, y);
 
                     rayDir = pixelPos.sub(cam.getPosition());
@@ -230,7 +150,7 @@ public class RayTracerSimple extends java.applet.Applet {
                 for (SceneObject s : sceneSimple.getSceneObjects()) {
                     intersect = s.intersect(myRay);
                 }
-                int indexer = usePerspective ? (resY - y - 1) * resY + x : (y * resY + x);
+                int indexer = applicationSettings.usePerspective ? (resY - y - 1) * resY + x : (y * resY + x);
                 if (myRay.getNearest() != null) {
                     temp = myRay.getNearest();
                     intersectObj = temp;
@@ -254,6 +174,9 @@ public class RayTracerSimple extends java.applet.Applet {
     }
 
     static void initScene() {
+        int resX =applicationSettings.resX;
+        int resY =applicationSettings.resY;
+
         // TODO test why spheres only get light when under the light
         cam = new Camera(new Vector3(0.75f, 0.65f, 2), new Vector3(0, 0, -1), 90, resX, resY);
 
@@ -264,7 +187,7 @@ public class RayTracerSimple extends java.applet.Applet {
         sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25,  new Vector3(0.9f,0.7f,1f),0.3f);
         sceneSimple.setSceneCam(cam);
         sceneSimple.getSceneLight().add(sceneLight);
-        sceneSimple.setBgCol(BG_Color);
+        sceneSimple.setBgCol(applicationSettings.BG_Color);
 
         Light sceneLight2 = new Light(new Vector3(0.75f, 1.5f, 0f), 25, new Vector3(0.9f,0.6f,1f),0.3f);
         sceneSimple.getSceneLight().add(sceneLight2);
@@ -414,8 +337,9 @@ public class RayTracerSimple extends java.applet.Applet {
     }
 
     static void savePic(Image image, String type, String dst) {
-        int width = resX;
-        int height = resY;
+
+        int width = applicationSettings.resX;
+        int height = applicationSettings.resY;
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
         Graphics g = bi.getGraphics();
         try {
