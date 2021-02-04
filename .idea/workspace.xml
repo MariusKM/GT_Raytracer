@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/Ellipsoid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Ellipsoid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/PlaneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/PlaneObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/Quadrik.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Quadrik.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RayTracerSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerSimple.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/MathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/MathUtil.java" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/out/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,107 +21,6 @@
   <component name="ErrorTreeViewConfiguration">
     <option name="hideWarnings" value="true" />
     <option name="HIDE_WARNINGS" value="true" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1515">
-              <caret line="288" column="29" lean-forward="true" selection-start-line="288" selection-start-column="29" selection-end-line="288" selection-end-column="29" />
-              <folding>
-                <element signature="method#createSpheres#0;class#RayTracerSimple#0" />
-                <element signature="method#randomVecInRange#0;class#RayTracerSimple#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/math/MatrixOps.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/math/Quaternion.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/math/TransformationMatrix4x4.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/math/VectorOps.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/math/Point3D.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/math/Vector3D.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="37" lean-forward="true" selection-start-line="3" selection-start-column="52" selection-end-line="4" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Objects/Ellipsoid.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Objects/PlaneObject.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1241">
-              <caret line="127" column="39" selection-start-line="127" selection-start-column="39" selection-end-line="127" selection-end-column="39" />
-              <folding>
-                <element signature="method#shadeDiffuse#0;class#PlaneObject#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Util/MathUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1054">
-              <caret line="71" column="22" selection-start-line="71" selection-start-column="22" selection-end-line="71" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -151,20 +46,6 @@
     <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/Objects/Light.java" />
-        <option value="$PROJECT_DIR$/src/Objects/ComplexObject.java" />
-        <option value="$PROJECT_DIR$/src/Objects/SphereObject.java" />
-        <option value="$PROJECT_DIR$/src/Util/MathUtil.java" />
-        <option value="$PROJECT_DIR$/src/Objects/Ellipsoid.java" />
-        <option value="$PROJECT_DIR$/src/Objects/Quadrik.java" />
-        <option value="$PROJECT_DIR$/src/Objects/PlaneObject.java" />
-        <option value="$PROJECT_DIR$/src/RayTracerSimple.java" />
-      </list>
-    </option>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="723" />
     <option name="y" value="55" />
@@ -172,63 +53,26 @@
     <option name="height" value="790" />
   </component>
   <component name="ProjectId" id="1UWzYh05FTshz8DQ33z0e80pC26" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="GT_Raytracer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GT_Raytracer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GT_Raytracer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GT_Raytracer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GT_Raytracer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../M1/MP_VC_Ue02_MariusMorhard" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager" selected="Application.Raytracer">
     <configuration name="Raytracer" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="RayTracerSimple" />
       <module name="GT_raytracing" />
       <method v="2">
@@ -238,6 +82,17 @@
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="RayTracerSimple" />
       <module name="GT_raytracing" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -259,6 +114,7 @@
       </list>
     </option>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -269,6 +125,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574251630095</updated>
+      <workItem from="1612449386437" duration="1226000" />
     </task>
     <servers />
   </component>
@@ -281,81 +138,15 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.23933902" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info id="simpleUML" order="7" weight="0.36353946" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" weight="0.22535211" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.34236187" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.24160346" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5010661" side_tool="true" weight="0.156013" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.1191766" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Capture Analysis" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Coverage" order="8" side_tool="true" weight="0.32995737" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="Image Layers" order="0" />
-      <window_info id="Designer" order="1" />
-      <window_info id="UI Designer" order="2" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.14232409" />
-      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info anchor="bottom" id="Terminal" order="1" weight="0.24160346" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="3" weight="0.32936078" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.32394367" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.41386783" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="10" />
-      <window_info anchor="right" id="Palette" order="0" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Theme Preview" order="2" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Maven" order="4" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-    </layout-to-restore>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -374,46 +165,7 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="552" y="178" key="#Project_Structure" />
-    <state x="552" y="178" key="#Project_Structure/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" />
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state x="765" y="240" key="#com.intellij.ide.util.MemberChooser" />
-    <state x="765" y="249" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" />
-    <state x="765" y="240" key="#com.intellij.ide.util.MemberChooser/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state x="689" y="303" key="#com.intellij.ide.util.TreeClassChooserDialog" />
-    <state x="689" y="303" key="#com.intellij.ide.util.TreeClassChooserDialog/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state x="808" y="412" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" />
-    <state x="808" y="428" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" />
-    <state x="808" y="412" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state width="1877" height="179" key="GridCell.Tab.0.bottom" />
-    <state width="1860" height="175" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" />
-    <state width="1877" height="179" key="GridCell.Tab.0.bottom/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state width="1877" height="179" key="GridCell.Tab.0.center" />
-    <state width="1860" height="175" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" />
-    <state width="1877" height="179" key="GridCell.Tab.0.center/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state width="1877" height="179" key="GridCell.Tab.0.left" />
-    <state width="1860" height="175" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" />
-    <state width="1877" height="179" key="GridCell.Tab.0.left/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state width="1877" height="179" key="GridCell.Tab.0.right" />
-    <state width="1860" height="175" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" />
-    <state width="1877" height="179" key="GridCell.Tab.0.right/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state width="1877" height="202" key="GridCell.Tab.1.bottom" />
-    <state width="1860" height="206" key="GridCell.Tab.1.bottom/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" />
-    <state width="1877" height="202" key="GridCell.Tab.1.bottom/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state width="1877" height="202" key="GridCell.Tab.1.center" />
-    <state width="1860" height="206" key="GridCell.Tab.1.center/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" />
-    <state width="1877" height="202" key="GridCell.Tab.1.center/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state width="1877" height="202" key="GridCell.Tab.1.left" />
-    <state width="1860" height="206" key="GridCell.Tab.1.left/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" />
-    <state width="1877" height="202" key="GridCell.Tab.1.left/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state width="1877" height="202" key="GridCell.Tab.1.right" />
-    <state width="1860" height="206" key="GridCell.Tab.1.right/0.0.1920.1080/1920.0.2048.1152/4480.0.1920.1080@0.0.1920.1080" />
-    <state width="1877" height="202" key="GridCell.Tab.1.right/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
-    <state x="616" y="240" key="run.anything.popup" />
-    <state x="616" y="240" key="run.anything.popup/1920.0.2048.1120/0.0.1920.1040/4480.0.1920.1040@0.0.1920.1040" />
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -421,13 +173,11 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/RenderUtil.java</url>
           <line>211</line>
-          <properties />
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/RenderUtil.java</url>
           <line>127</line>
-          <properties />
           <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
@@ -439,175 +189,13 @@
       </configuration>
     </watches-manager>
   </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/GT_Raytracer$Unnamed.ic" NAME="Unnamed Coverage Results" MODIFIED="1578311508122" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/GT_Raytracer$Raytracer.ic" NAME="Raytracer Coverage Results" MODIFIED="1578498573705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Util/RenderUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-393">
-          <caret line="127" column="36" selection-start-line="127" selection-start-column="36" selection-end-line="127" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getPointinSphere#0;class#RenderUtil#0" />
-            <element signature="method#randomSpherePoint#0;class#RenderUtil#0" />
-            <element signature="method#shadowCheck#0;class#RenderUtil#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/KeyHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Ray.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/EllipticalCylinder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/SceneObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Light.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
-          <folding>
-            <element signature="e#699#700#0" expanded="true" />
-            <element signature="e#727#728#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/ComplexObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="185" column="44" selection-start-line="185" selection-start-column="44" selection-end-line="185" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/SphereObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="65" column="9" selection-start-line="65" selection-start-column="9" selection-end-line="69" selection-end-column="39" />
-          <folding>
-            <element signature="method#shadowCheck#0;class#SphereObject#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Util/TransformationAnimator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Quadrik.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4420">
-          <caret line="357" column="57" selection-start-line="357" selection-start-column="57" selection-end-line="357" selection-end-column="57" />
-          <folding>
-            <element signature="method#shadeDiffuseV#0;class#Quadrik#0" />
-            <element signature="method#shadeDiffuse#0;class#Quadrik#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Ellipsoid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/PlaneObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1241">
-          <caret line="127" column="39" selection-start-line="127" selection-start-column="39" selection-end-line="127" selection-end-column="39" />
-          <folding>
-            <element signature="method#shadeDiffuse#0;class#PlaneObject#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Util/MathUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1054">
-          <caret line="71" column="22" selection-start-line="71" selection-start-column="22" selection-end-line="71" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/math/VectorOps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/math/Point3D.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/math/MatrixOps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/math/Quaternion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/math/TransformationMatrix4x4.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/RayTracerSimple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1515">
-          <caret line="288" column="29" lean-forward="true" selection-start-line="288" selection-start-column="29" selection-end-line="288" selection-end-column="29" />
-          <folding>
-            <element signature="method#createSpheres#0;class#RayTracerSimple#0" />
-            <element signature="method#randomVecInRange#0;class#RayTracerSimple#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/math/Vector3D.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="37" lean-forward="true" selection-start-line="3" selection-start-column="52" selection-end-line="4" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
   </component>
   <component name="masterDetails">
     <states>

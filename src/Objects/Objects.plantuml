@@ -1,0 +1,292 @@
+@startuml
+
+title __OBJECTS's Class Diagram__\n
+
+  namespace  {
+    namespace bjects {
+      class Objects.Camera {
+          - FOV : float
+          - aspectRatio : float
+          - height : float
+          - pixelHeight : float
+          - pixelWidth : float
+          - planeHeight : float
+          - planeWidth : float
+          - scale : float
+          - width : float
+          + Camera()
+          + getAspectRatio()
+          + getFOV()
+          + getFocusPoint()
+          + getPosition()
+          + getScale()
+          + pixelCenterCoordinate()
+          + setAspectRatio()
+          + setFOV()
+          + setFocusPoint()
+          + setPosition()
+          + setScale()
+          ~ init()
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace bjects {
+      class Objects.ComplexObject {
+          - Tintersectzion : float
+          + ComplexObject()
+          + getIntensity()
+          + intersect()
+          + normal()
+          + shadeCookTorrance()
+          + shadeDiffuse()
+          + shadowCheck()
+          + transform()
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace bjects {
+      enum Operation {
+        DIFFERENZ
+        SCHNITT
+        VEREINIGUNG
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace bjects {
+      class Objects.Ellipsoid {
+          + Ellipsoid()
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace bjects {
+      class Objects.EllipticalCylinder {
+          + EllipticalCylinder()
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace bjects {
+      class Objects.Light {
+          - intensity : float
+          + Light()
+          + getColor()
+          + getIntensity()
+          + getPosition()
+          + getVolume()
+          + setColor()
+          + setIntensity()
+          + setPosition()
+          + setVolume()
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace bjects {
+      class Objects.PlaneObject {
+          + PlaneObject()
+          + getIntensity()
+          + getPlaneNormal()
+          + getPointOnPlane()
+          + intersect()
+          + setPlaneNormal()
+          + setPointOnPlane()
+          + shadeCookTorrance()
+          + shadeDiffuse()
+          + shadowCheck()
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace bjects {
+      class Objects.Quadrik {
+          - a : double
+          - b : double
+          - c : double
+          - d : double
+          - e : double
+          - f : double
+          - g : double
+          - h : double
+          - j : double
+          - k : double
+          + Quadrik()
+          + getIntensity()
+          + getMatrix()
+          + intersect()
+          + intersectBody()
+          + isInside()
+          + normal()
+          + q()
+          + setConstantsFromMatrix()
+          + setMatrix()
+          + shadeCookTorrance()
+          + shadeDiffuse()
+          + shadeDiffuseV()
+          + shadowCheck()
+          + transform()
+          - setMatrixFromConstants()
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace bjects {
+      class Objects.Ray {
+          - t0 : float
+          - t1 : float
+          + Ray()
+          + Ray()
+          + getDirection()
+          + getNearest()
+          + getOrigin()
+          + getPoint()
+          + getT0()
+          + getT1()
+          + setDirection()
+          + setNearest()
+          + setOrigin()
+          + setT0()
+          + setT1()
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace bjects {
+      abstract class Objects.SceneObject {
+          - animators : ArrayList<Animator>
+          - isGizmo : boolean
+          - shade : boolean
+          + getAnimators()
+          + getMaterial()
+          + getNormal()
+          + getScene()
+          {abstract} + intersect()
+          + isGizmo()
+          + isShade()
+          + setAnimator()
+          + setGizmo()
+          + setMaterial()
+          + setNormal()
+          + setScene()
+          + setShade()
+          {abstract} + shadeCookTorrance()
+          {abstract} + shadeDiffuse()
+          {abstract} + shadowCheck()
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace bjects {
+      class Objects.SceneSimple {
+          - bgCol : Color
+          - sceneLights : ArrayList<Light>
+          - sceneObjects : ArrayList<SceneObject>
+          + SceneSimple()
+          + getBgCol()
+          + getSceneCam()
+          + getSceneLight()
+          + getSceneObjects()
+          + setBgCol()
+          + setSceneCam()
+          + setSceneLight()
+          + setSceneObjects()
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace bjects {
+      class Objects.SphereObject {
+          - radius : float
+          - radiusSq : float
+          + SphereObject()
+          + SphereObject()
+          + SphereObject()
+          + getCenter()
+          + getIntensity()
+          + getRadius()
+          + getRadiusSq()
+          + intersect()
+          + setCenter()
+          + setRadius()
+          + setRadiusSq()
+          + shadeCookTorrance()
+          + shadeDiffuse()
+          + shadowCheck()
+      }
+    }
+  }
+  
+
+  Objects.Camera o-- math.Vector3 : focusPoint
+  Objects.Camera o-- math.Vector3 : pixelCenterCoordinate
+  Objects.Camera o-- math.Vector3 : planeBottomLeft
+  Objects.Camera o-- math.Vector3 : planeCenter
+  Objects.Camera o-- math.Vector3 : position
+  Objects.Camera o-- math.Vector3 : rotatedUpVector
+  Objects.Camera o-- math.Vector3 : uVec
+  Objects.Camera o-- math.Vector3 : vVec
+  Objects.Camera o-- math.Vector3 : viewDir
+  Objects.ComplexObject -up-|> Objects.SceneObject
+  Objects.ComplexObject o-- Objects.Quadrik : intersectObj
+  Objects.ComplexObject o-- math.Vector3 : normal
+  Objects.ComplexObject o-- Objects.Quadrik : quadA
+  Objects.ComplexObject o-- Objects.Quadrik : quadB
+  Objects.ComplexObject o-- Objects.ComplexObject.Operation : operation
+  Objects.ComplexObject +-down- Objects.ComplexObject.Operation
+  Objects.Ellipsoid -up-|> Objects.Quadrik
+  Objects.Ellipsoid o-- math.Vector3 : initScale
+  Objects.EllipticalCylinder -up-|> Objects.Quadrik
+  Objects.Light o-- math.Vector3 : color
+  Objects.Light o-- math.Vector3 : position
+  Objects.Light o-- Objects.SphereObject : volume
+  Objects.PlaneObject -up-|> Objects.SceneObject
+  Objects.PlaneObject o-- math.Vector3 : planeNormal
+  Objects.PlaneObject o-- math.Vector3 : pointOnPlane
+  Objects.Quadrik -up-|> Objects.SceneObject
+  Objects.Quadrik o-- math.Matrix4x4 : matrix
+  Objects.Ray o-- math.Vector3 : intersection1
+  Objects.Ray o-- math.Vector3 : intersection2
+  Objects.Ray o-- math.Vector3 : Direction
+  Objects.Ray o-- math.Vector3 : Origin
+  Objects.Ray o-- Objects.SceneObject : nearest
+  Objects.SceneObject o-- Util.Material : material
+  Objects.SceneObject o-- math.Vector3 : normal
+  Objects.SceneObject o-- Objects.SceneSimple : scene
+  Objects.SceneSimple o-- Objects.Camera : sceneCam
+  Objects.SphereObject -up-|> Objects.SceneObject
+  Objects.SphereObject o-- math.Vector3 : center
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

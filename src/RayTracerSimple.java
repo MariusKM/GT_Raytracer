@@ -64,7 +64,7 @@ public class RayTracerSimple extends java.applet.Applet {
             handleAnimation();
 
             if (frameCounter<=animationLength){
-                String path = "D:/Projekte/uni/GT_Raytracer/render/Anim/PresiAnim";
+                String path = "D:/Uni/GT2A2 Raytracer/GT_Raytracer/render/Anim";
 
                 savePic(image, "jpeg", path +"00"+frameCounter+ ".jpeg");
                 frameCounter++;
