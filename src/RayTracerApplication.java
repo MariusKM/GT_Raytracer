@@ -31,7 +31,7 @@ public class RayTracerApplication extends java.applet.Applet {
     private static boolean exit;
 
     static Image image;
-    static int frameCounter = 0;
+
 
     public static void setExit(boolean exit) {
         RayTracerApplication.exit = exit;
@@ -43,34 +43,32 @@ public class RayTracerApplication extends java.applet.Applet {
     public static void main(String args[]) {
         loadApplicationSettings();
         initScene();
-        AnimationManager.last_time = System.nanoTime();
+        AnimationManager.setLast_time(System.nanoTime());
         do {
             paintPix();
             handleFilter();
             drawGUI();
             handleAnimation();
-
-            if (frameCounter<=applicationSettings.animationLength){
+            if (AnimationManager.isFinished()){
                 String path = "D:/Uni/GT2A2 Raytracer/GT_Raytracer/render/Anim";
-                savePic(image, "jpeg", path +"00"+frameCounter+ ".jpeg");
-                frameCounter++;
+                savePic(image, "jpeg", path +"00"+AnimationManager.getFrameCounter() + ".jpeg");
             }else{
                 exit = true;
             }
 
-            System.out.println("Last frame took " + AnimationManager.delta_time);
+            System.out.println("Last frame took " + AnimationManager.getDelta_time());
         }
         while (!exit);
     }
 
     static void loadApplicationSettings(){
         applicationSettings = new DefaultApplicationSettings();
+        AnimationManager.setAnimationLength(applicationSettings.getAnimationLength());
     }
     static void handleFilter(){
-        var filter = new GaussFilter(applicationSettings.resX,applicationSettings.resY);
+        var filter = new GaussFilter(applicationSettings.getResX(),applicationSettings.getResY());
         var output = filter.applyFilter(pixels);
         System.arraycopy(output, 0, pixels, 0, output.length);
-
     }
 
     /*
@@ -98,7 +96,7 @@ public class RayTracerApplication extends java.applet.Applet {
             return;
         }
         image = Toolkit.getDefaultToolkit()
-                .createImage(new MemoryImageSource(applicationSettings.resX, applicationSettings.resY, new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, applicationSettings.resX));
+                .createImage(new MemoryImageSource(applicationSettings.getResX(),applicationSettings.getResY(), new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, applicationSettings.getResX()));
 
 
         //JLabel graphics = new JLabel(new ImageIcon(image));
@@ -114,13 +112,13 @@ public class RayTracerApplication extends java.applet.Applet {
     static void paintPix() {
         float t = 0;
 
-        int resX =applicationSettings.resX;
-        int resY =applicationSettings.resY;
+        int resX =applicationSettings.getResX();
+        int resY =applicationSettings.getResY();
         int insideCounter = 0, outsideCounter = 0;
         for (int y = 0; y < resY; ++y) {
             for (int x = 0; x < resX; ++x) {
                 Vector3 rayDir;
-                if (applicationSettings.usePerspective) {
+                if (applicationSettings.isUsePerspective()) {
                     Vector3 pixelPos = cam.pixelCenterCoordinate(x, y);
 
                     rayDir = pixelPos.sub(cam.getPosition());
@@ -140,7 +138,7 @@ public class RayTracerApplication extends java.applet.Applet {
                 for (SceneObject s : sceneSimple.getSceneObjects()) {
                     intersect = s.intersect(myRay);
                 }
-                int indexer = applicationSettings.usePerspective ? (resY - y - 1) * resY + x : (y * resY + x);
+                int indexer = applicationSettings.isUsePerspective() ? (resY - y - 1) * resY + x : (y * resY + x);
                 if (myRay.getNearest() != null) {
                     temp = myRay.getNearest();
                     intersectObj = temp;
@@ -164,8 +162,8 @@ public class RayTracerApplication extends java.applet.Applet {
     }
 
     static void initScene() {
-        int resX =applicationSettings.resX;
-        int resY =applicationSettings.resY;
+        int resX =applicationSettings.getResX();
+        int resY =applicationSettings.getResY();
 
         // TODO test why spheres only get light when under the light
         cam = new Camera(new Vector3(0.75f, 0.65f, 2), new Vector3(0, 0, -1), 90, resX, resY);
@@ -177,7 +175,7 @@ public class RayTracerApplication extends java.applet.Applet {
         sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25,  new Vector3(0.9f,0.7f,1f),0.3f);
         sceneSimple.setSceneCam(cam);
         sceneSimple.getSceneLight().add(sceneLight);
-        sceneSimple.setBgCol(applicationSettings.BG_Color);
+        sceneSimple.setBgCol(applicationSettings.getBG_Color());
 
         Light sceneLight2 = new Light(new Vector3(0.75f, 1.5f, 0f), 25, new Vector3(0.9f,0.6f,1f),0.3f);
         sceneSimple.getSceneLight().add(sceneLight2);
@@ -328,8 +326,8 @@ public class RayTracerApplication extends java.applet.Applet {
 
     static void savePic(Image image, String type, String dst) {
 
-        int width = applicationSettings.resX;
-        int height = applicationSettings.resY;
+        int width = applicationSettings.getResX();
+        int height = applicationSettings.getResY();
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
         Graphics g = bi.getGraphics();
         try {

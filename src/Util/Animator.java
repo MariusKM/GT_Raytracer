@@ -2,7 +2,7 @@ package Util;
 
 import Objects.SceneObject;
 
-public class Animator {
+public abstract class Animator {
 
     public int howManyFrames = 1;
     public float speed;
