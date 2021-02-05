@@ -1,5 +1,8 @@
 package Util;
 
+import Objects.SceneObject;
+import Objects.SceneSimple;
+
 import java.util.ArrayList;
 
 public class AnimationManager {
@@ -32,6 +35,15 @@ public class AnimationManager {
 
     public static void setValuesToAnimate(ArrayList<Animator> valuesToAnimate) {
         AnimationManager.valuesToAnimate = valuesToAnimate;
+    }
+
+    public static void  setUpAnimation(SceneSimple currentScene) {
+        for (SceneObject S : currentScene.getSceneObjects()
+        ) {
+            if (S.getAnimators().size() >0) {
+                AnimationManager.getValuesToAnimate().addAll(S.getAnimators());
+            };
+        }
     }
 
     public static boolean isFinished(){

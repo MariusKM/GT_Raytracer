@@ -40,58 +40,38 @@ public class RayTracerApplication extends java.applet.Applet {
     static JLabel graphics = new JLabel();
     static ApplicationSettings applicationSettings;
     static RayTracer rayTracer;
+    static GaussFilter filter;
 
     public static void main(String args[]) {
         initialize();
         do {
             rayTracer.render(pixels,cam, currentScene);
-            paintPix();
             handleFilter();
             drawGUI();
-            handleAnimation();
+            AnimationManager.animate();
             if (AnimationManager.isFinished()){
                 String path = "D:/Uni/GT2A2 Raytracer/GT_Raytracer/render/Anim";
                 savePic(image, "jpeg", path +"00"+AnimationManager.getFrameCounter() + ".jpeg");
             }else{
                 exit = true;
             }
-
             System.out.println("Last frame took " + AnimationManager.getDelta_time());
         }
         while (!exit);
     }
     static void initialize(){
-
-        loadApplicationSettings();
+        applicationSettings = new DefaultApplicationSettings();
         rayTracer = new RayTracer(applicationSettings);
+        filter = new GaussFilter(applicationSettings.getResX(),applicationSettings.getResY());
+        AnimationManager.setAnimationLength(applicationSettings.getAnimationLength());
         initScene();
         AnimationManager.setLast_time(System.nanoTime());
     }
 
 
-
-    static void loadApplicationSettings(){
-        applicationSettings = new DefaultApplicationSettings();
-        AnimationManager.setAnimationLength(applicationSettings.getAnimationLength());
-    }
-
     static void handleFilter(){
-        var filter = new GaussFilter(applicationSettings.getResX(),applicationSettings.getResY());
         var output = filter.applyFilter(pixels);
         System.arraycopy(output, 0, pixels, 0, output.length);
-    }
-
-    static void handleAnimation() {
-        AnimationManager.animate();
-    }
-
-    static void setUpAnimation() {
-        for (SceneObject S : currentScene.getSceneObjects()
-        ) {
-            if (S.getAnimators().size() >0) {
-                AnimationManager.getValuesToAnimate().addAll(S.getAnimators());
-            };
-        }
     }
 
     static void drawGUI() {
@@ -113,57 +93,6 @@ public class RayTracerApplication extends java.applet.Applet {
         frame.setVisible(true);
     }
 
-    static void paintPix() {
-        float t = 0;
-
-        int resX =applicationSettings.getResX();
-        int resY =applicationSettings.getResY();
-        int insideCounter = 0, outsideCounter = 0;
-        for (int y = 0; y < resY; ++y) {
-            for (int x = 0; x < resX; ++x) {
-                Vector3 rayDir;
-                if (applicationSettings.isUsePerspective()) {
-                    Vector3 pixelPos = cam.pixelCenterCoordinate(x, y);
-
-                    rayDir = pixelPos.sub(cam.getPosition());
-
-
-                } else {
-                    float pixelPosX = (2 * (x + 0.5f) / (float) resX - 1) * cam.getAspectRatio() * cam.getScale();
-                    float pixelPosY = (1 - 2 * (y + 0.5f) / (float) resY) * cam.getScale();
-                    rayDir = new Vector3(pixelPosX, pixelPosY, 0).sub(cam.getPosition());
-                }
-                rayDir.normalize();
-                Ray myRay = new Ray(cam.getPosition(), rayDir);
-                boolean intersect = false;
-                SceneObject temp;
-                SceneObject intersectObj;
-
-                for (SceneObject s : currentScene.getSceneObjects()) {
-                    intersect = s.intersect(myRay);
-                }
-                int indexer = applicationSettings.isUsePerspective() ? (resY - y - 1) * resY + x : (y * resY + x);
-                if (myRay.getNearest() != null) {
-                    temp = myRay.getNearest();
-                    intersectObj = temp;
-
-                    Vector3 finalCol = intersectObj.shadeCookTorrance(myRay, currentScene, false, 5);
-
-                    Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
-
-                    int pixelColor = (intersectObj.isShade()) ? finalColorRGB.getRGB() : Color.WHITE.getRGB();
-                    pixels[indexer] = pixelColor;
-
-                } else {
-                    pixels[indexer] = currentScene.getBgCol().getRGB();
-                }
-
-               // System.out.println("painted pixel no " + indexer);
-            }
-
-        }
-
-    }
 
     static void initScene() {
         int resX =applicationSettings.getResX();
@@ -291,7 +220,7 @@ public class RayTracerApplication extends java.applet.Applet {
 
             }
         }
-        setUpAnimation();
+        AnimationManager.setUpAnimation(currentScene);
     }
 
     static SceneObject[] createSceneObjects(int numObjects, float maxRad, float minRad) {
