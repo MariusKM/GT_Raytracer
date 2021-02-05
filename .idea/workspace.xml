@@ -2,13 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/RayTracer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/render/Anim000.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim000.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApplicationSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApplicationSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DefaultApplicationSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DefaultApplicationSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim001.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim001.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim002.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim002.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim003.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim003.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim004.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim004.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim005.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim005.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RayTracerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/AnimationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/AnimationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Animator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Animator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +69,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
@@ -91,13 +94,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -130,7 +135,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574251630095</updated>
-      <workItem from="1612449386437" duration="10182000" />
+      <workItem from="1612449386437" duration="11905000" />
+      <workItem from="1612538220061" duration="3761000" />
     </task>
     <servers />
   </component>

@@ -20,16 +20,15 @@ import static java.lang.Math.*;
 public class RayTracerApplication extends java.applet.Applet {
 
 
-    static SceneSimple sceneSimple;
+    static SceneSimple currentScene;
 
 
     static int numSpheres = 25;
     static SceneObject[] sceneObjects;
     static int[] pixels;
-    static Camera cam;
+    protected static Camera cam;
     static Light sceneLight;
     private static boolean exit;
-
     static Image image;
 
 
@@ -40,11 +39,12 @@ public class RayTracerApplication extends java.applet.Applet {
     static JFrame frame = new JFrame();
     static JLabel graphics = new JLabel();
     static ApplicationSettings applicationSettings;
+    static RayTracer rayTracer;
+
     public static void main(String args[]) {
-        loadApplicationSettings();
-        initScene();
-        AnimationManager.setLast_time(System.nanoTime());
+        initialize();
         do {
+            rayTracer.render(pixels,cam, currentScene);
             paintPix();
             handleFilter();
             drawGUI();
@@ -60,35 +60,39 @@ public class RayTracerApplication extends java.applet.Applet {
         }
         while (!exit);
     }
+    static void initialize(){
+
+        loadApplicationSettings();
+        rayTracer = new RayTracer(applicationSettings);
+        initScene();
+        AnimationManager.setLast_time(System.nanoTime());
+    }
+
+
 
     static void loadApplicationSettings(){
         applicationSettings = new DefaultApplicationSettings();
         AnimationManager.setAnimationLength(applicationSettings.getAnimationLength());
     }
+
     static void handleFilter(){
         var filter = new GaussFilter(applicationSettings.getResX(),applicationSettings.getResY());
         var output = filter.applyFilter(pixels);
         System.arraycopy(output, 0, pixels, 0, output.length);
     }
 
-    /*
-    Do the animation stuff
-     */
     static void handleAnimation() {
         AnimationManager.animate();
     }
 
     static void setUpAnimation() {
-        for (SceneObject S : sceneSimple.getSceneObjects()
+        for (SceneObject S : currentScene.getSceneObjects()
         ) {
             if (S.getAnimators().size() >0) {
                 AnimationManager.getValuesToAnimate().addAll(S.getAnimators());
             };
         }
     }
-
-
-
 
     static void drawGUI() {
 
@@ -135,7 +139,7 @@ public class RayTracerApplication extends java.applet.Applet {
                 SceneObject temp;
                 SceneObject intersectObj;
 
-                for (SceneObject s : sceneSimple.getSceneObjects()) {
+                for (SceneObject s : currentScene.getSceneObjects()) {
                     intersect = s.intersect(myRay);
                 }
                 int indexer = applicationSettings.isUsePerspective() ? (resY - y - 1) * resY + x : (y * resY + x);
@@ -143,7 +147,7 @@ public class RayTracerApplication extends java.applet.Applet {
                     temp = myRay.getNearest();
                     intersectObj = temp;
 
-                    Vector3 finalCol = intersectObj.shadeCookTorrance(myRay, sceneSimple, false, 5);
+                    Vector3 finalCol = intersectObj.shadeCookTorrance(myRay, currentScene, false, 5);
 
                     Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
 
@@ -151,7 +155,7 @@ public class RayTracerApplication extends java.applet.Applet {
                     pixels[indexer] = pixelColor;
 
                 } else {
-                    pixels[indexer] = sceneSimple.getBgCol().getRGB();
+                    pixels[indexer] = currentScene.getBgCol().getRGB();
                 }
 
                // System.out.println("painted pixel no " + indexer);
@@ -171,22 +175,22 @@ public class RayTracerApplication extends java.applet.Applet {
         KeyHandler keyHandler = new KeyHandler();
         frame.addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
-        sceneSimple = new SceneSimple();
+        currentScene = new SceneSimple();
         sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25,  new Vector3(0.9f,0.7f,1f),0.3f);
-        sceneSimple.setSceneCam(cam);
-        sceneSimple.getSceneLight().add(sceneLight);
-        sceneSimple.setBgCol(applicationSettings.getBG_Color());
+        currentScene.setSceneCam(cam);
+        currentScene.getSceneLight().add(sceneLight);
+        currentScene.setBgCol(applicationSettings.getBG_Color());
 
         Light sceneLight2 = new Light(new Vector3(0.75f, 1.5f, 0f), 25, new Vector3(0.9f,0.6f,1f),0.3f);
-        sceneSimple.getSceneLight().add(sceneLight2);
+        currentScene.getSceneLight().add(sceneLight2);
         Light sceneLight3 = new Light(new Vector3(0f, 0.5f, -0.5f), 25,   new Vector3(1f,0.8f,1f),0.3f);
-        sceneSimple.getSceneLight().add(sceneLight3);
+        currentScene.getSceneLight().add(sceneLight3);
 
         PlaneObject groundPlane = new PlaneObject(new Vector3(0.0f, 0, 0), new Vector3(0, 1, 0));
         Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.1f, 0f,1f,1.3f,false);
         groundPlane.setMaterial(groundMat);
-        sceneSimple.getSceneObjects().add(groundPlane);
-        groundPlane.setScene(sceneSimple);
+        currentScene.getSceneObjects().add(groundPlane);
+        groundPlane.setScene(currentScene);
 
         SceneObject testSphere = new SphereObject(new Vector3(0.5f, 0.5f, 1.05f), 0.3f);
         Material defaultMat = new Material(new Vector3((float) (0.5f), (float) (0.5f), (float) (0.5)), 0.01f, 1, 0f, 1f, true);
@@ -229,8 +233,8 @@ public class RayTracerApplication extends java.applet.Applet {
         TransformationMatrix4x4 trans = new TransformationMatrix4x4();
         trans.createTranslationMatrix(new Vector3D(1f, 0.5f, 0));
         SceneObject ellipse = new Ellipsoid(0.4, 0.7, 0.4, trans);
-        sceneSimple.getSceneObjects().add(ellipse);
-        ellipse.setScene(sceneSimple);
+        currentScene.getSceneObjects().add(ellipse);
+        ellipse.setScene(currentScene);
         ellipse.setMaterial(ellipsoidMat);
         TransformationAnimator anim2 = new TransformationAnimator(ellipse,0.1f, TransformationAnimator.Vector3Type.position,new Vector3(0.0f, 0.11f, 0.0f),10);
 
@@ -239,9 +243,9 @@ public class RayTracerApplication extends java.applet.Applet {
         TransformationMatrix4x4 trans2 = new TransformationMatrix4x4();
         trans2.createTranslationMatrix(new Vector3D(-0.5f, 0.25f, 0.5));
         SceneObject ellipse2 = new Ellipsoid(0.7, 0.4, 0.4, trans2);
-        ellipse2.setScene(sceneSimple);
+        ellipse2.setScene(currentScene);
         ellipse2.setMaterial(ellipsoidMat);
-        sceneSimple.getSceneObjects().add(ellipse2);
+        currentScene.getSceneObjects().add(ellipse2);
 
         ComplexObject xobj = new ComplexObject((Quadrik) ellipse, (Quadrik) ellipse2, ComplexObject.Operation.DIFFERENZ);
         ComplexObject xobj2 = new ComplexObject((Quadrik) ellipse, (Quadrik) ellipse2, ComplexObject.Operation.DIFFERENZ);
@@ -253,8 +257,8 @@ public class RayTracerApplication extends java.applet.Applet {
             defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.25f * random()), (float) (0.75f * random())),  0.01f, 1f,0.8f,1.3f,false);
 
             s.setMaterial(defaultMat);
-            sceneSimple.getSceneObjects().add(s);
-            s.setScene(sceneSimple);
+            currentScene.getSceneObjects().add(s);
+            s.setScene(currentScene);
             if (s instanceof Quadrik){
 
                 int scaleOrTrans = generatRandomPositiveNegitiveValue(1,-1);
