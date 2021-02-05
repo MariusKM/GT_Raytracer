@@ -29,29 +29,27 @@ public class RayTracerApplication extends java.applet.Applet {
     protected static Camera cam;
     static Light sceneLight;
     private static boolean exit;
-    static Image image;
-
 
     public static void setExit(boolean exit) {
         RayTracerApplication.exit = exit;
     }
 
-    static JFrame frame = new JFrame();
-    static JLabel graphics = new JLabel();
+
     static ApplicationSettings applicationSettings;
     static RayTracer rayTracer;
     static GaussFilter filter;
+
 
     public static void main(String args[]) {
         initialize();
         do {
             rayTracer.render(pixels,cam, currentScene);
             handleFilter();
-            drawGUI();
+            GUI.drawGUI(exit,pixels);
             AnimationManager.animate();
             if (AnimationManager.isFinished()){
                 String path = "D:/Uni/GT2A2 Raytracer/GT_Raytracer/render/Anim";
-                savePic(image, "jpeg", path +"00"+AnimationManager.getFrameCounter() + ".jpeg");
+                savePic(GUI.getImage(), "jpeg", path +"00"+AnimationManager.getFrameCounter() + ".jpeg");
             }else{
                 exit = true;
             }
@@ -59,11 +57,13 @@ public class RayTracerApplication extends java.applet.Applet {
         }
         while (!exit);
     }
+
     static void initialize(){
         applicationSettings = new DefaultApplicationSettings();
         rayTracer = new RayTracer(applicationSettings);
         filter = new GaussFilter(applicationSettings.getResX(),applicationSettings.getResY());
         AnimationManager.setAnimationLength(applicationSettings.getAnimationLength());
+        GUI.initialize(applicationSettings);
         initScene();
         AnimationManager.setLast_time(System.nanoTime());
     }
@@ -74,24 +74,7 @@ public class RayTracerApplication extends java.applet.Applet {
         System.arraycopy(output, 0, pixels, 0, output.length);
     }
 
-    static void drawGUI() {
 
-        if (exit) {
-            return;
-        }
-        image = Toolkit.getDefaultToolkit()
-                .createImage(new MemoryImageSource(applicationSettings.getResX(),applicationSettings.getResY(), new DirectColorModel(24, 0xff0000, 0xff00, 0xff), pixels, 0, applicationSettings.getResX()));
-
-
-        //JLabel graphics = new JLabel(new ImageIcon(image));
-        graphics.setIcon(new ImageIcon(image));
-        frame.add(graphics);
-
-        frame.setResizable(false);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
 
 
     static void initScene() {
@@ -102,7 +85,7 @@ public class RayTracerApplication extends java.applet.Applet {
         cam = new Camera(new Vector3(0.75f, 0.65f, 2), new Vector3(0, 0, -1), 90, resX, resY);
 
         KeyHandler keyHandler = new KeyHandler();
-        frame.addKeyListener(keyHandler);
+        GUI.getFrame().addKeyListener(keyHandler);
         pixels = new int[resX * resY]; // put RGB values here
         currentScene = new SceneSimple();
         sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25,  new Vector3(0.9f,0.7f,1f),0.3f);

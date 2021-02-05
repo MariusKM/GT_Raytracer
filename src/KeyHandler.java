@@ -12,7 +12,7 @@ public class KeyHandler implements KeyListener {
 
         if (event.getKeyCode() == KeyEvent.VK_ENTER){
             RayTracerApplication.setExit(true);
-            RayTracerApplication.frame.dispose();
+            GUI.getFrame().dispose();
         }
 
     }
