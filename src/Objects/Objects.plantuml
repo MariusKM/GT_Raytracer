@@ -200,7 +200,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      class Objects.SceneSimple {
+      class Objects.Scene {
           - bgCol : Color
           - sceneLights : ArrayList<Light>
           - sceneObjects : ArrayList<SceneObject>
@@ -276,8 +276,8 @@ title __OBJECTS's Class Diagram__\n
   Objects.Ray o-- Objects.SceneObject : nearest
   Objects.SceneObject o-- Util.Material : material
   Objects.SceneObject o-- math.Vector3 : normal
-  Objects.SceneObject o-- Objects.SceneSimple : scene
-  Objects.SceneSimple o-- Objects.Camera : sceneCam
+  Objects.SceneObject o-- Objects.Scene : scene
+  Objects.Scene o-- Objects.Camera : sceneCam
   Objects.SphereObject -up-|> Objects.SceneObject
   Objects.SphereObject o-- math.Vector3 : center
 

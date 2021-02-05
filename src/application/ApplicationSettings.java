@@ -1,3 +1,5 @@
+package application;
+
 import java.awt.*;
 
 public abstract class ApplicationSettings {
@@ -45,4 +47,5 @@ public abstract class ApplicationSettings {
     public void setBG_Color(Color BG_Color) {
         this.BG_Color = BG_Color;
     }
+
 }

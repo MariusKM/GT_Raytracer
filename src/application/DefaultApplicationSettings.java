@@ -1,3 +1,5 @@
+package application;
+
 import java.awt.*;
 
 public class DefaultApplicationSettings extends ApplicationSettings {

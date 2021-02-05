@@ -1,3 +1,5 @@
+package application;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -11,7 +13,7 @@ public class KeyHandler implements KeyListener {
         printEventInfo("Key Pressed", event);
 
         if (event.getKeyCode() == KeyEvent.VK_ENTER){
-            RayTracerApplication.setExit(true);
+            //RayTracerApplication.setExit(true);
             GUI.getFrame().dispose();
         }
 

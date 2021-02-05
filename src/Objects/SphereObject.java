@@ -2,7 +2,6 @@ package Objects;
 
 import Util.RenderUtil;
 import Util.MathUtil;
-import math.Vector;
 import math.Vector3;
 
 import java.awt.*;
@@ -30,7 +29,7 @@ public class SphereObject extends SceneObject {
     }
 
     @Override
-    public Vector3 shadeCookTorrance(Ray ray, SceneSimple currentScene, boolean refl, float depth) {
+    public Vector3 shadeCookTorrance(Ray ray, Scene currentScene, boolean refl, float depth) {
 
         Vector3 intersection,intersection2, normal;
         float intensity;
@@ -204,7 +203,7 @@ public class SphereObject extends SceneObject {
         return true;
     }
 
-    public boolean shadowCheck(SceneSimple scene, Ray myRay) {
+    public boolean shadowCheck(Scene scene, Ray myRay) {
         boolean shadow = RenderUtil.shadowCheck(scene, myRay, this);
         return shadow;
     }

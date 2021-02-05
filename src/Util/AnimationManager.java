@@ -1,7 +1,7 @@
 package Util;
 
+import Objects.Scene;
 import Objects.SceneObject;
-import Objects.SceneSimple;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class AnimationManager {
         AnimationManager.valuesToAnimate = valuesToAnimate;
     }
 
-    public static void  setUpAnimation(SceneSimple currentScene) {
+    public static void  setUpAnimation(Scene currentScene) {
         for (SceneObject S : currentScene.getSceneObjects()
         ) {
             if (S.getAnimators().size() >0) {

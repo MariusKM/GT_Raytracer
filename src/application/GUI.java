@@ -1,3 +1,5 @@
+package application;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.DirectColorModel;
@@ -17,12 +19,12 @@ public class GUI {
         return frame;
     }
 
-    static void initialize(ApplicationSettings applicationSettings){
+    public static void initialize(ApplicationSettings applicationSettings){
         resX = applicationSettings.getResX();
         resY = applicationSettings.getResY();
     }
 
-    static void drawGUI(boolean exit, int[] pixels ) {
+    public static void drawGUI(boolean exit, int[] pixels) {
 
         if (exit) {
             return;

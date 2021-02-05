@@ -1,10 +1,8 @@
 package Util;
 
 import Objects.*;
-import math.Vector;
 import math.Vector3;
 
-import java.awt.*;
 import java.util.Random;
 
 
@@ -24,7 +22,7 @@ public class RenderUtil {
 
 
 
-    public static Vector3 CookTorranceNeu(Ray ray, Vector3 lightDir, Vector3 normal, SceneObject objectToShade, SceneSimple currentScene, boolean refl, float depth) {
+    public static Vector3 CookTorranceNeu(Ray ray, Vector3 lightDir, Vector3 normal, SceneObject objectToShade, Scene currentScene, boolean refl, float depth) {
         depth--;
        //  System.out.println(depth);
        if (depth<  3) {
@@ -254,7 +252,7 @@ public class RenderUtil {
     }
 
 
-    public static Vector3 getColRecursive(Vector3 rayDir, Vector3 intersection, SceneObject objectToShade, SceneSimple currentScene, float depth, boolean refraction) {
+    public static Vector3 getColRecursive(Vector3 rayDir, Vector3 intersection, SceneObject objectToShade, Scene currentScene, float depth, boolean refraction) {
 
         //strahl von p starten mit Richtung r
         Ray ray = new Ray(intersection, rayDir);
@@ -320,7 +318,7 @@ public class RenderUtil {
     }
 
 
-    public static boolean shadowCheck(SceneSimple myScene, Ray myRay, SceneObject castingObject) {
+    public static boolean shadowCheck(Scene myScene, Ray myRay, SceneObject castingObject) {
         for (SceneObject s : myScene.getSceneObjects()) {
             Vector3 offset = new Vector3(myRay.getDirection());
             offset.mult(-1);

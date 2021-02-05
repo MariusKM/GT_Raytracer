@@ -1,9 +1,9 @@
-import java.util.stream.IntStream;
+package application;
 
 public class GaussFilter extends Filter {
 
 
-    GaussFilter(int X, int Y) {
+    public GaussFilter(int X, int Y) {
         super(X, Y);
     }
 

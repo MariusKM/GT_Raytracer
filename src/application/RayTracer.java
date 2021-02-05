@@ -1,7 +1,9 @@
+package application;
+
 import Objects.Camera;
 import Objects.Ray;
+import Objects.Scene;
 import Objects.SceneObject;
-import Objects.SceneSimple;
 import Util.MathUtil;
 import math.Vector3;
 
@@ -14,7 +16,7 @@ public class RayTracer implements Renderer {
 
 
     @Override
-    public void render(int[] pixels, Camera cam, SceneSimple Scene) {
+    public void render(int[] pixels, Camera cam, Scene Scene) {
         float t = 0;
 
         int resX =ResX;

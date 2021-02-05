@@ -323,7 +323,7 @@ public class Quadrik extends SceneObject {
     }
 
     @Override
-    public Vector3 shadeCookTorrance(Ray ray, SceneSimple currentScene, boolean refl, float depth) {
+    public Vector3 shadeCookTorrance(Ray ray, Scene currentScene, boolean refl, float depth) {
         Vector3 intersection,intersection2, normal, lightDir;
         float intensity;
 
@@ -355,7 +355,7 @@ public class Quadrik extends SceneObject {
 
 
             Vector3 lightCol = light.getColor();
-            intensity = getIntensity(intersection,light,10);
+            intensity = getIntensity(intersection,light,2);
             currentCol.mult(intensity);
             Vector3 computedCol = new Vector3(lightCol.x *currentCol.x ,lightCol.y*currentCol.y ,lightCol.z *currentCol.z );
             finalCol.add (computedCol);
@@ -403,7 +403,7 @@ public class Quadrik extends SceneObject {
     }
 
     @Override
-    public boolean shadowCheck(SceneSimple scene, Ray myRay) {
+    public boolean shadowCheck(Scene scene, Ray myRay) {
         boolean shadow = RenderUtil.shadowCheck(scene, myRay, this);
         return shadow;
     }

@@ -91,7 +91,7 @@ public class PlaneObject extends SceneObject {
 
 
     @Override
-    public Vector3 shadeCookTorrance(Ray ray, SceneSimple currentScene, boolean refl, float depth) {
+    public Vector3 shadeCookTorrance(Ray ray, Scene currentScene, boolean refl, float depth) {
         Vector3 intersection,intersection2, normal, lightDir;
         float intensity;
 
@@ -133,7 +133,7 @@ public class PlaneObject extends SceneObject {
 
     }
 
-    public boolean shadowCheck(SceneSimple scene, Ray myRay) {
+    public boolean shadowCheck(Scene scene, Ray myRay) {
         boolean shadow = RenderUtil.shadowCheck(scene, myRay, this);
         return shadow;
     }
