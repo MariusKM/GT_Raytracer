@@ -34,11 +34,9 @@ public class RayTracerApplication extends java.applet.Applet {
         RayTracerApplication.exit = exit;
     }
 
-
     static ApplicationSettings applicationSettings;
     static RayTracer rayTracer;
     static GaussFilter filter;
-
 
     public static void main(String args[]) {
         initialize();
@@ -49,7 +47,7 @@ public class RayTracerApplication extends java.applet.Applet {
             AnimationManager.animate();
             if (AnimationManager.isFinished()){
                 String path = "D:/Uni/GT2A2 Raytracer/GT_Raytracer/render/Anim";
-                savePic(GUI.getImage(), "jpeg", path +"00"+AnimationManager.getFrameCounter() + ".jpeg");
+                ImageWriter.saveImage(GUI.getImage(), "jpeg", path +"00"+AnimationManager.getFrameCounter() + ".jpeg",applicationSettings);
             }else{
                 exit = true;
             }
@@ -68,13 +66,10 @@ public class RayTracerApplication extends java.applet.Applet {
         AnimationManager.setLast_time(System.nanoTime());
     }
 
-
     static void handleFilter(){
         var output = filter.applyFilter(pixels);
         System.arraycopy(output, 0, pixels, 0, output.length);
     }
-
-
 
 
     static void initScene() {
@@ -240,20 +235,7 @@ public class RayTracerApplication extends java.applet.Applet {
         return randomVec;
     }
 
-    static void savePic(Image image, String type, String dst) {
 
-        int width = applicationSettings.getResX();
-        int height = applicationSettings.getResY();
-        BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
-        Graphics g = bi.getGraphics();
-        try {
-            g.drawImage(image, 0, 0, null);
-            ImageIO.write(bi, type, new File(dst));
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-    }
 
 
 }
