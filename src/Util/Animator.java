@@ -1,6 +1,6 @@
 package Util;
 
-import Objects.SceneObject;
+import objects.SceneObject;
 
 public abstract class Animator {
 

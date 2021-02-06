@@ -1,9 +1,9 @@
 package application;
 
-import Objects.Camera;
-import Objects.Ray;
-import Objects.Scene;
-import Objects.SceneObject;
+import components.Camera;
+import objects.Ray;
+import components.Scene;
+import objects.SceneObject;
 import Util.MathUtil;
 import math.Vector3;
 

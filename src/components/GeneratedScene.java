@@ -1,5 +1,8 @@
-package Objects;
+package components;
 
+import objects.Ellipsoid;
+import objects.SceneObject;
+import objects.SphereObject;
 import Util.Material;
 import Util.TransformationAnimator;
 import application.ApplicationSettings;
@@ -9,7 +12,7 @@ import math.Vector3D;
 
 import static java.lang.Math.random;
 
-public class GeneratedScene extends Scene{
+public class GeneratedScene extends Scene {
     private int numObjects;
     public GeneratedScene(ApplicationSettings applicationSettings, int numObjects) {
         super(applicationSettings);

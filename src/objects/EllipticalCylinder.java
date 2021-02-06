@@ -1,4 +1,4 @@
-package Objects;
+package objects;
 
 import math.TransformationMatrix4x4;
 

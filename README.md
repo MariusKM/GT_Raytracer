@@ -1,2 +1,2 @@
 # GT_Raytracer
-Java Objects.Ray Tracer for a university course
+Java objects.Ray Tracer for a university course

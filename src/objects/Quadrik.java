@@ -1,6 +1,8 @@
-package Objects;
+package objects;
 
 import Util.RenderUtil;
+import components.Light;
+import components.Scene;
 import math.*;
 
 import java.awt.*;

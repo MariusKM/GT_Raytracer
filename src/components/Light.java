@@ -1,8 +1,7 @@
-package Objects;
+package components;
 
+import objects.SphereObject;
 import math.Vector3;
-
-import java.awt.Color;
 
 public class Light {
     private Vector3 position;

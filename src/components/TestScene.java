@@ -1,5 +1,7 @@
-package Objects;
+package components;
 
+import objects.SceneObject;
+import objects.SphereObject;
 import Util.Material;
 import Util.MaterialAnimator;
 import Util.TransformationAnimator;
@@ -54,7 +56,7 @@ public class TestScene extends Scene {
         defaultMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.01f, 1f, 0.8f, 1.3f, false);
         testSphere3.setMaterial(defaultMat);
 
-        return  new Objects.SceneObject[]{
+        return  new SceneObject[]{
                 testSphere,
                 testSphere1,
                 testSphere2,

@@ -1,12 +1,7 @@
 package Util;
 
-import Objects.Quadrik;
-import Objects.SceneObject;
-import Objects.SphereObject;
-import math.Matrix4x4;
-import math.TransformationMatrix4x4;
+import objects.SceneObject;
 import math.Vector3;
-import math.Vector3D;
 
 public class MaterialAnimator  extends Animator {
 

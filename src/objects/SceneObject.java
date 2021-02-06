@@ -1,5 +1,8 @@
-package Objects;
+package objects;
 
+import components.Light;
+import components.Scene;
+import objects.Ray;
 import Util.Animator;
 import Util.Material;
 import math.Vector3;

@@ -1,9 +1,8 @@
 package Util;
 
-import Objects.Ellipsoid;
-import Objects.Quadrik;
-import Objects.SceneObject;
-import Objects.SphereObject;
+import objects.Quadrik;
+import objects.SceneObject;
+import objects.SphereObject;
 import math.Matrix4x4;
 import math.TransformationMatrix4x4;
 import math.Vector3;

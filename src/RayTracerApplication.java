@@ -1,6 +1,5 @@
-import Objects.GeneratedScene;
-import Objects.Scene;
-import Objects.TestScene;
+import components.Scene;
+import components.TestScene;
 import Util.AnimationManager;
 import application.*;
 

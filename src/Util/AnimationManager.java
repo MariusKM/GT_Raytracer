@@ -1,7 +1,7 @@
 package Util;
 
-import Objects.Scene;
-import Objects.SceneObject;
+import components.Scene;
+import objects.SceneObject;
 
 import java.util.ArrayList;
 

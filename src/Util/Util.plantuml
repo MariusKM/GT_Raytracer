@@ -140,7 +140,7 @@ title __UTIL's Class Diagram__\n
   }
   
 
-  Util.Animator o-- Objects.SceneObject : object
+  Util.Animator o-- objects.SceneObject : object
   Util.Material o-- math.Vector3 : albedoColor
   Util.MaterialAnimator -up-|> Util.Animator
   Util.MaterialAnimator o-- math.Vector3 : targetVec

@@ -4,7 +4,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      class Objects.Camera {
+      class components.Camera {
           - FOV : float
           - aspectRatio : float
           - height : float
@@ -34,7 +34,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      class Objects.ComplexObject {
+      class objects.ComplexObject {
           - Tintersectzion : float
           + ComplexObject()
           + getIntensity()
@@ -62,7 +62,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      class Objects.Ellipsoid {
+      class objects.Ellipsoid {
           + Ellipsoid()
       }
     }
@@ -71,7 +71,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      class Objects.EllipticalCylinder {
+      class objects.EllipticalCylinder {
           + EllipticalCylinder()
       }
     }
@@ -80,7 +80,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      class Objects.Light {
+      class components.Light {
           - intensity : float
           + Light()
           + getColor()
@@ -98,7 +98,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      class Objects.PlaneObject {
+      class objects.PlaneObject {
           + PlaneObject()
           + getIntensity()
           + getPlaneNormal()
@@ -116,7 +116,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      class Objects.Quadrik {
+      class objects.Quadrik {
           - a : double
           - b : double
           - c : double
@@ -150,7 +150,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      class Objects.Ray {
+      class objects.Ray {
           - t0 : float
           - t1 : float
           + Ray()
@@ -173,7 +173,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      abstract class Objects.SceneObject {
+      abstract class objects.SceneObject {
           - animators : ArrayList<Animator>
           - isGizmo : boolean
           - shade : boolean
@@ -200,7 +200,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      class Objects.Scene {
+      class components.Scene {
           - bgCol : Color
           - sceneLights : ArrayList<Light>
           - sceneObjects : ArrayList<SceneObject>
@@ -220,7 +220,7 @@ title __OBJECTS's Class Diagram__\n
 
   namespace  {
     namespace bjects {
-      class Objects.SphereObject {
+      class objects.SphereObject {
           - radius : float
           - radiusSq : float
           + SphereObject()
@@ -242,44 +242,44 @@ title __OBJECTS's Class Diagram__\n
   }
   
 
-  Objects.Camera o-- math.Vector3 : focusPoint
-  Objects.Camera o-- math.Vector3 : pixelCenterCoordinate
-  Objects.Camera o-- math.Vector3 : planeBottomLeft
-  Objects.Camera o-- math.Vector3 : planeCenter
-  Objects.Camera o-- math.Vector3 : position
-  Objects.Camera o-- math.Vector3 : rotatedUpVector
-  Objects.Camera o-- math.Vector3 : uVec
-  Objects.Camera o-- math.Vector3 : vVec
-  Objects.Camera o-- math.Vector3 : viewDir
-  Objects.ComplexObject -up-|> Objects.SceneObject
-  Objects.ComplexObject o-- Objects.Quadrik : intersectObj
-  Objects.ComplexObject o-- math.Vector3 : normal
-  Objects.ComplexObject o-- Objects.Quadrik : quadA
-  Objects.ComplexObject o-- Objects.Quadrik : quadB
-  Objects.ComplexObject o-- Objects.ComplexObject.Operation : operation
-  Objects.ComplexObject +-down- Objects.ComplexObject.Operation
-  Objects.Ellipsoid -up-|> Objects.Quadrik
-  Objects.Ellipsoid o-- math.Vector3 : initScale
-  Objects.EllipticalCylinder -up-|> Objects.Quadrik
-  Objects.Light o-- math.Vector3 : color
-  Objects.Light o-- math.Vector3 : position
-  Objects.Light o-- Objects.SphereObject : volume
-  Objects.PlaneObject -up-|> Objects.SceneObject
-  Objects.PlaneObject o-- math.Vector3 : planeNormal
-  Objects.PlaneObject o-- math.Vector3 : pointOnPlane
-  Objects.Quadrik -up-|> Objects.SceneObject
-  Objects.Quadrik o-- math.Matrix4x4 : matrix
-  Objects.Ray o-- math.Vector3 : intersection1
-  Objects.Ray o-- math.Vector3 : intersection2
-  Objects.Ray o-- math.Vector3 : Direction
-  Objects.Ray o-- math.Vector3 : Origin
-  Objects.Ray o-- Objects.SceneObject : nearest
-  Objects.SceneObject o-- Util.Material : material
-  Objects.SceneObject o-- math.Vector3 : normal
-  Objects.SceneObject o-- Objects.Scene : scene
-  Objects.Scene o-- Objects.Camera : sceneCam
-  Objects.SphereObject -up-|> Objects.SceneObject
-  Objects.SphereObject o-- math.Vector3 : center
+  components.Camera o-- math.Vector3 : focusPoint
+  components.Camera o-- math.Vector3 : pixelCenterCoordinate
+  components.Camera o-- math.Vector3 : planeBottomLeft
+  components.Camera o-- math.Vector3 : planeCenter
+  components.Camera o-- math.Vector3 : position
+  components.Camera o-- math.Vector3 : rotatedUpVector
+  components.Camera o-- math.Vector3 : uVec
+  components.Camera o-- math.Vector3 : vVec
+  components.Camera o-- math.Vector3 : viewDir
+  objects.ComplexObject -up-|> objects.SceneObject
+  objects.ComplexObject o-- objects.Quadrik : intersectObj
+  objects.ComplexObject o-- math.Vector3 : normal
+  objects.ComplexObject o-- objects.Quadrik : quadA
+  objects.ComplexObject o-- objects.Quadrik : quadB
+  objects.ComplexObject o-- objects.ComplexObject.Operation : operation
+  objects.ComplexObject +-down- objects.ComplexObject.Operation
+  objects.Ellipsoid -up-|> objects.Quadrik
+  objects.Ellipsoid o-- math.Vector3 : initScale
+  objects.EllipticalCylinder -up-|> objects.Quadrik
+  components.Light o-- math.Vector3 : color
+  components.Light o-- math.Vector3 : position
+  components.Light o-- objects.SphereObject : volume
+  objects.PlaneObject -up-|> objects.SceneObject
+  objects.PlaneObject o-- math.Vector3 : planeNormal
+  objects.PlaneObject o-- math.Vector3 : pointOnPlane
+  objects.Quadrik -up-|> objects.SceneObject
+  objects.Quadrik o-- math.Matrix4x4 : matrix
+  objects.Ray o-- math.Vector3 : intersection1
+  objects.Ray o-- math.Vector3 : intersection2
+  objects.Ray o-- math.Vector3 : Direction
+  objects.Ray o-- math.Vector3 : Origin
+  objects.Ray o-- objects.SceneObject : nearest
+  objects.SceneObject o-- Util.Material : material
+  objects.SceneObject o-- math.Vector3 : normal
+  objects.SceneObject o-- components.Scene : scene
+  components.Scene o-- components.Camera : sceneCam
+  objects.SphereObject -up-|> objects.SceneObject
+  objects.SphereObject o-- math.Vector3 : center
 
 
 right footer

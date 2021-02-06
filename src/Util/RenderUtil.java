@@ -1,6 +1,8 @@
 package Util;
 
-import Objects.*;
+import objects.*;
+import components.Scene;
+import objects.SceneObject;
 import math.Vector3;
 
 import java.util.Random;

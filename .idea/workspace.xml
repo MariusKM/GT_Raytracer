@@ -2,46 +2,47 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/render/Anim" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Objects/GeneratedScene.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Objects/TestScene.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/Renderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/render/Anim000.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim000.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/render/Anim001.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim001.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim0010.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim0011.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim0012.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim0013.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim0014.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim0015.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim0010.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim0010.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim0011.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim0011.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim0012.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim0012.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim0013.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim0013.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim0014.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim0014.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim0015.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim0015.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/render/Anim002.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim002.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim003.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim004.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim005.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim006.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim007.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim008.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render/Anim009.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApplicationSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/ApplicationSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DefaultApplicationSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/DefaultApplicationSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Filter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/Filter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GaussFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/GaussFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/ImageWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/KeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/KeyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/ComplexObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/ComplexObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/Objects.plantuml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Objects.plantuml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/PlaneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/PlaneObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/Quadrik.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Quadrik.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/SceneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/SceneObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/SceneSimple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Scene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/SphereObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/SphereObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RayTracer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/RayTracer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim003.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim003.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim004.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim004.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim005.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim005.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim006.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim006.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim007.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim007.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim008.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim008.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim009.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim009.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/ComplexObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/ComplexObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Ellipsoid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/Ellipsoid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/EllipticalCylinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/EllipticalCylinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/GeneratedScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GeneratedScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Light.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Light.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Objects.plantuml" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/Objects.plantuml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/PlaneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/PlaneObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Quadrik.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/Quadrik.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/Ray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Scene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/SceneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/SceneObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/SphereObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/SphereObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/TestScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TestScene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RayTracerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Renderer.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/AnimationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/AnimationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Animator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Animator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/MaterialAnimator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/MaterialAnimator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/RenderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/RenderUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/TransformationAnimator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/TransformationAnimator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Util.plantuml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Util.plantuml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/RayTracer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/RayTracer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/Renderer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,17 +135,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.Raytracer" />
       <item itemvalue="Application.RayTracerApplication" />
@@ -175,7 +165,7 @@
       <updated>1574251630095</updated>
       <workItem from="1612449386437" duration="11905000" />
       <workItem from="1612538220061" duration="11228000" />
-      <workItem from="1612550679973" duration="2648000" />
+      <workItem from="1612550679973" duration="5358000" />
     </task>
     <servers />
   </component>
@@ -225,12 +215,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/RenderUtil.java</url>
-          <line>209</line>
+          <line>211</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Util/RenderUtil.java</url>
-          <line>125</line>
+          <line>127</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>

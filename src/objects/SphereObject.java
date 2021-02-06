@@ -1,7 +1,9 @@
-package Objects;
+package objects;
 
 import Util.RenderUtil;
 import Util.MathUtil;
+import components.Light;
+import components.Scene;
 import math.Vector3;
 
 import java.awt.*;

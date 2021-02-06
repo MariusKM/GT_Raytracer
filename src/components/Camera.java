@@ -1,4 +1,4 @@
-package Objects;
+package components;
 
 import math.Vector3;
 

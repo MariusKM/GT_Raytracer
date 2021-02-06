@@ -1,7 +1,7 @@
 package application;
 
-import Objects.Camera;
-import Objects.Scene;
+import components.Camera;
+import components.Scene;
 
 public  interface Renderer {
 

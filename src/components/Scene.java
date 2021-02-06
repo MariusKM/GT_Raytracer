@@ -1,7 +1,10 @@
-package Objects;
+package components;
 
 import java.awt.*;
 
+import objects.Ellipsoid;
+import objects.PlaneObject;
+import objects.Quadrik;
 import Util.AnimationManager;
 import Util.Material;
 import Util.MaterialAnimator;
@@ -10,6 +13,7 @@ import application.ApplicationSettings;
 import application.GUI;
 import application.KeyHandler;
 import math.Vector3;
+import objects.SceneObject;
 
 import java.util.ArrayList;
 
@@ -73,13 +77,16 @@ public class Scene {
         getSceneObjects().add(groundPlane);
         groundPlane.setScene(this);
     }
+
     protected  void setUpCamera(){
         setSceneCam(new Camera(new Vector3(0.75f, 0.65f, 2), new Vector3(0, 0, -1), 90, resX, resY));
     }
+
     protected void setUpKeyHandler(){
         KeyHandler keyHandler = new KeyHandler();
         GUI.getFrame().addKeyListener(keyHandler);
     }
+
     protected void setUpLight(){
         Light sceneLight = new Light(new Vector3(0.75f, 1.5f, 1.5f), 25,  new Vector3(0.9f,0.7f,1f),0.3f);
         getSceneLight().add(sceneLight);
