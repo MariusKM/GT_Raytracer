@@ -1,6 +1,6 @@
 package objects;
 
-import Util.RenderUtil;
+import util.RenderUtil;
 import components.Light;
 import components.Scene;
 import math.Matrix4x4;

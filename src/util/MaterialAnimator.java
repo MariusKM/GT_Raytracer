@@ -1,4 +1,4 @@
-package Util;
+package util;
 
 import objects.SceneObject;
 import math.Vector3;

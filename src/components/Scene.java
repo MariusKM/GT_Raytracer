@@ -5,10 +5,10 @@ import java.awt.*;
 import objects.Ellipsoid;
 import objects.PlaneObject;
 import objects.Quadrik;
-import Util.AnimationManager;
-import Util.Material;
-import Util.MaterialAnimator;
-import Util.TransformationAnimator;
+import util.AnimationManager;
+import util.Material;
+import util.MaterialAnimator;
+import util.TransformationAnimator;
 import application.ApplicationSettings;
 import application.GUI;
 import application.KeyHandler;
@@ -17,7 +17,7 @@ import objects.SceneObject;
 
 import java.util.ArrayList;
 
-import static Util.MathUtil.generatRandomPositiveNegitiveValue;
+import static util.MathUtil.generatRandomPositiveNegitiveValue;
 import static java.lang.Math.random;
 
 public class Scene {

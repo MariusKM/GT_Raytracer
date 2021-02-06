@@ -1,6 +1,6 @@
 package application;
 
-import Util.AnimationManager;
+import util.AnimationManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

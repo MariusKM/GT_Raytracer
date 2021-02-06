@@ -4,7 +4,7 @@ import components.Camera;
 import objects.Ray;
 import components.Scene;
 import objects.SceneObject;
-import Util.MathUtil;
+import util.MathUtil;
 import math.Vector3;
 
 import java.awt.*;

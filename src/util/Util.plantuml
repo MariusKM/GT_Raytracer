@@ -4,7 +4,7 @@ title __UTIL's Class Diagram__\n
 
   namespace  {
     namespace til {
-      class Util.AnimationManager {
+      class util.AnimationManager {
           {static} - valuesToAnimate : ArrayList<Animator>
           {static} + animate()
           {static} + getValuesToAnimate()
@@ -16,7 +16,7 @@ title __UTIL's Class Diagram__\n
 
   namespace  {
     namespace til {
-      class Util.Animator {
+      class util.Animator {
           + howManyFrames : int
           + pingPong : boolean
           + speed : float
@@ -30,7 +30,7 @@ title __UTIL's Class Diagram__\n
 
   namespace  {
     namespace til {
-      class Util.Material {
+      class util.Material {
           - metalness : float
           - reflectivity : float
           - refractiveIndex : float
@@ -60,7 +60,7 @@ title __UTIL's Class Diagram__\n
 
   namespace  {
     namespace til {
-      class Util.MaterialAnimator {
+      class util.MaterialAnimator {
           - startFloat : float
           - targetFloat : float
           + MaterialAnimator()
@@ -84,7 +84,7 @@ title __UTIL's Class Diagram__\n
 
   namespace  {
     namespace til {
-      class Util.MathUtil {
+      class util.MathUtil {
           {static} + clamp()
           {static} + clampF()
           {static} + generatRandomPositiveNegitiveValue()
@@ -98,7 +98,7 @@ title __UTIL's Class Diagram__\n
 
   namespace  {
     namespace til {
-      class Util.RenderUtil {
+      class util.RenderUtil {
           {static} ~ F0 : float
           {static} ~ indexGlas : float
           {static} ~ indexLuft : float
@@ -121,7 +121,7 @@ title __UTIL's Class Diagram__\n
 
   namespace  {
     namespace til {
-      class Util.TransformationAnimator {
+      class util.TransformationAnimator {
           + TransformationAnimator()
           + animate()
       }
@@ -140,20 +140,20 @@ title __UTIL's Class Diagram__\n
   }
   
 
-  Util.Animator o-- objects.SceneObject : object
-  Util.Material o-- math.Vector3 : albedoColor
-  Util.MaterialAnimator -up-|> Util.Animator
-  Util.MaterialAnimator o-- math.Vector3 : targetVec
-  Util.MaterialAnimator o-- Util.MaterialAnimator.MaterialValueType : valueType
-  Util.MaterialAnimator o-- Util.Material : startMat
-  Util.MaterialAnimator o-- math.Vector3 : startVec
-  Util.MaterialAnimator o-- Util.Material : targetMat
-  Util.MaterialAnimator +-down- Util.MaterialAnimator.MaterialValueType
-  Util.TransformationAnimator -up-|> Util.Animator
-  Util.TransformationAnimator o-- math.Vector3 : targetVec
-  Util.TransformationAnimator o-- Util.TransformationAnimator.Vector3Type : vectorType
-  Util.TransformationAnimator o-- math.Vector3 : startVec
-  Util.TransformationAnimator +-down- Util.TransformationAnimator.Vector3Type
+  util.Animator o-- objects.SceneObject : object
+  util.Material o-- math.Vector3 : albedoColor
+  util.MaterialAnimator -up-|> util.Animator
+  util.MaterialAnimator o-- math.Vector3 : targetVec
+  util.MaterialAnimator o-- util.MaterialAnimator.MaterialValueType : valueType
+  util.MaterialAnimator o-- util.Material : startMat
+  util.MaterialAnimator o-- math.Vector3 : startVec
+  util.MaterialAnimator o-- util.Material : targetMat
+  util.MaterialAnimator +-down- util.MaterialAnimator.MaterialValueType
+  util.TransformationAnimator -up-|> util.Animator
+  util.TransformationAnimator o-- math.Vector3 : targetVec
+  util.TransformationAnimator o-- util.TransformationAnimator.Vector3Type : vectorType
+  util.TransformationAnimator o-- math.Vector3 : startVec
+  util.TransformationAnimator +-down- util.TransformationAnimator.Vector3Type
 
 
 right footer

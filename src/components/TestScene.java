@@ -2,9 +2,9 @@ package components;
 
 import objects.SceneObject;
 import objects.SphereObject;
-import Util.Material;
-import Util.MaterialAnimator;
-import Util.TransformationAnimator;
+import util.Material;
+import util.MaterialAnimator;
+import util.TransformationAnimator;
 import application.ApplicationSettings;
 import math.Vector3;
 

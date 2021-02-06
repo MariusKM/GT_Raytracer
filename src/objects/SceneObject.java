@@ -2,9 +2,8 @@ package objects;
 
 import components.Light;
 import components.Scene;
-import objects.Ray;
-import Util.Animator;
-import Util.Material;
+import util.Animator;
+import util.Material;
 import math.Vector3;
 
 import java.util.ArrayList;

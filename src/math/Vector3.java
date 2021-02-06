@@ -1,6 +1,6 @@
 package math;
 
-import Util.MathUtil;
+import util.MathUtil;
 
 public class Vector3{
     public float x,y,z;

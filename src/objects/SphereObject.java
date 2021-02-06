@@ -1,7 +1,7 @@
 package objects;
 
-import Util.RenderUtil;
-import Util.MathUtil;
+import util.RenderUtil;
+import util.MathUtil;
 import components.Light;
 import components.Scene;
 import math.Vector3;

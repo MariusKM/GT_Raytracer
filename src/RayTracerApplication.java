@@ -1,6 +1,6 @@
 import components.Scene;
 import components.TestScene;
-import Util.AnimationManager;
+import util.AnimationManager;
 import application.*;
 
 public class RayTracerApplication extends java.applet.Applet {

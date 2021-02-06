@@ -274,7 +274,7 @@ title __OBJECTS's Class Diagram__\n
   objects.Ray o-- math.Vector3 : Direction
   objects.Ray o-- math.Vector3 : Origin
   objects.Ray o-- objects.SceneObject : nearest
-  objects.SceneObject o-- Util.Material : material
+  objects.SceneObject o-- util.Material : material
   objects.SceneObject o-- math.Vector3 : normal
   objects.SceneObject o-- components.Scene : scene
   components.Scene o-- components.Camera : sceneCam
