@@ -2,29 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/util/ObjectGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim000.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim000.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim001.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim001.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RayTracerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/AnimationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/AnimationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Animator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Animator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Material.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/MaterialAnimator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/MaterialAnimator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/MathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/MathUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/RenderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/RenderUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/TransformationAnimator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/TransformationAnimator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Util.plantuml" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Util.plantuml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/ImageWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/ImageWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/RayTracer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/RayTracer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/GeneratedScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GeneratedScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Scene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TestScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TestScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/math/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/math/Vector3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/objects/ComplexObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/ComplexObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/objects/Objects.plantuml" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/Objects.plantuml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/objects/PlaneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/PlaneObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/objects/Quadrik.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/Quadrik.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/objects/SceneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/SceneObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/objects/SphereObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/SphereObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/AnimationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/AnimationManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,15 +100,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -161,7 +142,8 @@
       <workItem from="1612449386437" duration="11905000" />
       <workItem from="1612538220061" duration="11228000" />
       <workItem from="1612550679973" duration="5358000" />
-      <workItem from="1612631759475" duration="827000" />
+      <workItem from="1612631759475" duration="1353000" />
+      <workItem from="1612716210246" duration="1967000" />
     </task>
     <servers />
   </component>
@@ -213,11 +195,6 @@
           <url>file://$PROJECT_DIR$/src/util/RenderUtil.java</url>
           <line>211</line>
           <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/util/RenderUtil.java</url>
-          <line>127</line>
-          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

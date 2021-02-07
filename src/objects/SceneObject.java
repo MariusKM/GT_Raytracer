@@ -14,7 +14,6 @@ public abstract class SceneObject {
     private Material material;
     private Scene scene;
     private boolean isGizmo = false;
-
     private Vector3 normal;
     private ArrayList<Animator> animators = new ArrayList<>();
 
@@ -74,7 +73,5 @@ public abstract class SceneObject {
     public void setGizmo(boolean gizmo) {
         isGizmo = gizmo;
     }
-
-
 
 }

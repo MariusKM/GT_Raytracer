@@ -64,5 +64,6 @@ public class AnimationManager {
              valuesToAnimate) {
             anim.animate();
         }
+        System.out.println("Last frame took " + AnimationManager.getDelta_time());
     }
 }

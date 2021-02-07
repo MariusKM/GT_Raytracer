@@ -17,12 +17,12 @@ public class RayTracerApplication extends java.applet.Applet {
         initialize();
         do {
             rayTracer.render(pixels,currentScene.getSceneCam(), currentScene);
-            handleFilter();
+            pixels = filter.applyFilter(pixels);
             GUI.drawGUI(exit,pixels);
             AnimationManager.animate();
             if (AnimationManager.isFinished()) ImageWriter.saveImage(GUI.getImage(), applicationSettings);
             else exit = true;
-            System.out.println("Last frame took " + AnimationManager.getDelta_time());
+
         }
         while (!exit);
     }
@@ -39,10 +39,6 @@ public class RayTracerApplication extends java.applet.Applet {
         AnimationManager.setLast_time(System.nanoTime());
     }
 
-    static void handleFilter(){
-        var output = filter.applyFilter(pixels);
-        System.arraycopy(output, 0, pixels, 0, output.length);
-    }
 
 
 
