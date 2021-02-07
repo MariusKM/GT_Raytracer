@@ -50,7 +50,7 @@ public class RayTracer implements Renderer {
                     temp = myRay.getNearest();
                     intersectObj = temp;
 
-                    Vector3 finalCol = intersectObj.shadeCookTorrance(myRay, Scene, false, 5);
+                    Vector3 finalCol = intersectObj.shade(myRay, Scene, false, 5);
 
                     Color finalColorRGB = new Color(MathUtil.clampF(finalCol.x, 0, 1), MathUtil.clampF(finalCol.y, 0, 1), MathUtil.clampF(finalCol.z, 0, 1));
 

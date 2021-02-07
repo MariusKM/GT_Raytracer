@@ -4,7 +4,7 @@ title __UTIL's Class Diagram__\n
 
   namespace  {
     namespace til {
-      class util.AnimationManager {
+      class application.AnimationManager {
           {static} - valuesToAnimate : ArrayList<Animator>
           {static} + animate()
           {static} + getValuesToAnimate()

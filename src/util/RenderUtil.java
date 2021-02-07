@@ -5,9 +5,12 @@ import components.Scene;
 import objects.SceneObject;
 import math.Vector3;
 
+import java.awt.*;
 import java.util.Random;
 
-
+/*
+THIS CLASS IS DEPRECIATED; IT IS NOW BEING HANDLED BY SHADING MODEL AND ITS IMPLEMENTATIONS!
+ */
 @SuppressWarnings("ALL")
 public class RenderUtil {
 
@@ -279,7 +282,7 @@ public class RenderUtil {
         if (ray.getNearest() != null) {
             SceneObject temp = ray.getNearest();
             SceneObject intersectObj = temp;
-            Color = intersectObj.shadeCookTorrance(ray, currentScene, true, depth);
+            Color = intersectObj.shade(ray, currentScene, true, depth);
         }
         return Color;
     }
@@ -338,6 +341,223 @@ public class RenderUtil {
         }
         return false;
     }
+
+    /*
+    Sphere Diffuse
+       public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
+
+        Vector3 intersection, normal, lightDir;
+        float intensity;
+
+
+        // berechne intersection Point
+        intersection = new Vector3(rayDir);
+        intersection.mult(t);
+        intersection.add(sceneOrigin);
+
+        // find surface normal
+        normal = new Vector3(intersection);
+        normal.sub(normal, center);
+        normal.normalize();
+
+        // get light direction
+        lightDir = new Vector3(light.getPosition());
+        lightDir.sub(lightDir, intersection);
+        lightDir.normalize();
+        float lightDist = center.distance(light.getPosition());
+        //System.out.println(lightDist);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = shadowCheck(this.getScene(), shadowRay);
+        if (shadow) {
+            intensity = 0;
+            return Color.black.getRGB();
+        } else {
+            intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
+            intensity *= light.getIntensity();
+        }
+
+        if (intensity < 0.0)
+            intensity = 0.0f;
+
+        if (intensity > 1.0)
+            intensity = 1.0f;
+
+
+        // int clampedIntensity = RayTracerSimple.clamp((int)intensity,0, 255);
+
+        Vector3 lightColor = light.getColor();
+
+        Color shadedLight = new Color((int) (lightColor.x* ((float) intensity)), (int) (lightColor.y * ((float) intensity)), (int) (lightColor.z * ((float) intensity)));
+        Vector3 albedo = this.getMaterial().getAlbedoColor();
+        Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
+
+        int pixelCol = objectColor.getRGB();
+
+        return (pixelCol);
+    }
+
+     */
+    /*
+    Quadrik Diffuse
+    public Vector3 shadeDiffuseV(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
+        Vector3 intersection, normal, lightDir;
+        float intensity;
+
+
+        // berechne intersection Point
+        intersection = new Vector3(rayDir);
+        intersection.mult(t);
+        intersection.add(sceneOrigin);
+
+        // find surface normal
+        normal = normal(intersection);
+
+
+        // get light direction
+        lightDir = new Vector3(light.getPosition());
+        lightDir.sub(lightDir, intersection);
+        lightDir.normalize();
+        float lightDist = intersection.distance(light.getPosition());
+        //System.out.println(lightDist);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay);
+        if (shadow) {
+            intensity = 0;
+            return new Vector3(0,0,0);
+        } else {
+            intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
+            intensity *= light.getIntensity();
+        }
+
+        if (intensity < 0.0)
+            intensity = 0.0f;
+
+        if (intensity > 1.0)
+            intensity = 1.0f;
+
+
+        Vector3 lightColor = light.getColor();
+
+        Color shadedLight = new Color((int) (lightColor.x* ((float) intensity)), (int) (lightColor.y * ((float) intensity)), (int) (lightColor.z * ((float) intensity)));
+        Vector3 albedo = this.getMaterial().getAlbedoColor();
+        // Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
+        Vector3 objectColor = new Vector3( intensity* albedo.x, intensity*  albedo.y,  intensity * albedo.z);
+
+        // int pixelCol = objectColor.getRGB();
+
+        return (objectColor);
+    }
+     */
+    /*
+    Plane diffuse
+        public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
+
+        Vector3 intersection, normal, lightDir;
+        float intensity;
+
+        // berechne intersection Point
+        intersection = new Vector3(rayDir);
+        intersection.mult(t);
+        intersection.add(sceneOrigin);
+
+
+
+        // find surface normal
+        normal = new Vector3(planeNormal);
+
+
+        // get light direction
+        lightDir = new Vector3(light.getPosition());
+        lightDir.sub(lightDir, intersection);
+        lightDir.normalize();
+        float lightDist = pointOnPlane.distance(light.getPosition());
+        //System.out.println(lightDist);
+
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay);
+        if (shadow) {
+            intensity = 0;
+            return Color.black.getRGB();
+        } else {
+            intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
+            intensity *= light.getIntensity();
+        }
+
+
+        if (intensity < 0.0)
+            intensity = 0.0f;
+
+        if (intensity > 1.0)
+            intensity = 1.0f;
+
+        Vector3 lightColor = light.getColor();
+
+        Color shadedLight = new Color((int) (lightColor.x* ((float) intensity)), (int) (lightColor.y * ((float) intensity)), (int) (lightColor.z * ((float) intensity)));
+        Vector3 albedo = this.getMaterial().getAlbedoColor();
+        Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
+
+
+        int pixelCol = objectColor.getRGB();
+
+
+        return (pixelCol);
+    }
+     */
+    /*
+    public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
+        Vector3 intersection, normal, lightDir;
+        float intensity;
+
+
+        // berechne intersection Point
+        intersection = new Vector3(rayDir);
+        intersection.mult(Tintersectzion);
+        intersection.add(sceneOrigin);
+
+        // find surface normal
+        normal = intersectObj.normal(intersection);
+
+        // get light direction
+        lightDir = new Vector3(light.getPosition());
+        lightDir.sub(lightDir, intersection);
+        lightDir.normalize();
+        float lightDist = intersection.distance(light.getPosition());
+        //System.out.println(lightDist);
+        Ray shadowRay = new Ray(intersection, lightDir);
+        boolean shadow = false;
+        if (shadow) {
+            intensity = 0;
+            return Color.black.getRGB();
+        } else {
+            intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
+            intensity = intensity * (float) light.getIntensity();
+        }
+
+        if (intensity < 0.0)
+            intensity = 0.0f;
+
+        if (intensity > 1.0)
+            intensity = 1.0f;
+
+
+        // int clampedIntensity = RayTracerSimple.clamp((int)intensity,0, 255);
+
+      /*  Color lightColor = light.getColor();
+        //quadrieren
+        Color entgammasiertColor = new Color((int) Math.pow(lightColor.getAlpha(), 2), (int) Math.pow(lightColor.getRed(), 2), (int) Math.pow(lightColor.getGreen(), 2), (int) Math.pow(lightColor.getBlue(), 2));
+        lightColor = entgammasiertColor;
+        Color shadedLight = new Color((int) (lightColor.getRed() * ((float) intensity)), (int) (lightColor.getGreen() * ((float) intensity)), (int) (lightColor.getBlue() * ((float) intensity)));
+        Vector3 albedo = this.getMaterial().getAlbedoColor();
+        //Without Gamma
+        // Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
+        //Wurzel ziehen Gammakorrektur
+        Color objectColor = new Color((int) (Math.sqrt(shadedLight.getRed() * albedo.x)), (int) (Math.sqrt(shadedLight.getGreen() * albedo.y)), (int) (Math.sqrt(shadedLight.getBlue() * albedo.z)));
+
+        int pixelCol = objectColor.getRGB();
+    int pixelCol = Color.BLACK.getRGB();
+        return (pixelCol);
+}
+     */
 }
 
 

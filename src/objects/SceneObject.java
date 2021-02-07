@@ -3,8 +3,10 @@ package objects;
 import components.Light;
 import components.Scene;
 import util.Animator;
+import util.CookTorrance;
 import util.Material;
 import math.Vector3;
+import util.ShadingModel;
 
 import java.util.ArrayList;
 
@@ -16,6 +18,7 @@ public abstract class SceneObject {
     private boolean isGizmo = false;
     private Vector3 normal;
     private ArrayList<Animator> animators = new ArrayList<>();
+    protected ShadingModel shader = new CookTorrance();
 
     public ArrayList<Animator> getAnimators() {
         return animators;
@@ -36,9 +39,7 @@ public abstract class SceneObject {
 
     public abstract boolean intersect(Ray ray);
 
-    public abstract int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t);
-
-    public abstract Vector3 shadeCookTorrance(Ray ray, Scene currentScene, boolean refl, float depth);
+    public abstract Vector3 shade(Ray ray, Scene currentScene, boolean refl, float depth);
 
     public abstract boolean shadowCheck(Scene scene, Ray myRay);
 

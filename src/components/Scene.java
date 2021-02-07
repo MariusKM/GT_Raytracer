@@ -5,7 +5,7 @@ import java.awt.*;
 import objects.Ellipsoid;
 import objects.PlaneObject;
 import objects.Quadrik;
-import util.AnimationManager;
+import application.AnimationManager;
 import util.Material;
 import util.MaterialAnimator;
 import util.TransformationAnimator;
@@ -138,7 +138,7 @@ public class Scene {
 
             }
         }
-        AnimationManager.setUpAnimation(this);
+        AnimationManager.getInstance().setUpAnimation(this);
 
     }
 

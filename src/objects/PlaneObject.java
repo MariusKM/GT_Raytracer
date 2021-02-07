@@ -37,63 +37,12 @@ public class PlaneObject extends SceneObject {
         return false;
     }
 
-    @Override
-    public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
-
-        Vector3 intersection, normal, lightDir;
-        float intensity;
-
-        // berechne intersection Point
-        intersection = new Vector3(rayDir);
-        intersection.mult(t);
-        intersection.add(sceneOrigin);
 
 
-
-        // find surface normal
-        normal = new Vector3(planeNormal);
-
-
-        // get light direction
-        lightDir = new Vector3(light.getPosition());
-        lightDir.sub(lightDir, intersection);
-        lightDir.normalize();
-        float lightDist = pointOnPlane.distance(light.getPosition());
-        //System.out.println(lightDist);
-
-        Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = false;//shadowCheck(this.getScene(), shadowRay);
-        if (shadow) {
-            intensity = 0;
-            return Color.black.getRGB();
-        } else {
-            intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
-            intensity *= light.getIntensity();
-        }
-
-
-        if (intensity < 0.0)
-            intensity = 0.0f;
-
-        if (intensity > 1.0)
-            intensity = 1.0f;
-
-        Vector3 lightColor = light.getColor();
-
-        Color shadedLight = new Color((int) (lightColor.x* ((float) intensity)), (int) (lightColor.y * ((float) intensity)), (int) (lightColor.z * ((float) intensity)));
-        Vector3 albedo = this.getMaterial().getAlbedoColor();
-        Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
-
-
-        int pixelCol = objectColor.getRGB();
-
-
-        return (pixelCol);
-    }
 
 
     @Override
-    public Vector3 shadeCookTorrance(Ray ray, Scene currentScene, boolean refl, float depth) {
+    public Vector3 shade(Ray ray, Scene currentScene, boolean refl, float depth) {
         Vector3 intersection,intersection2, normal, lightDir;
         float intensity;
 
@@ -123,7 +72,7 @@ public class PlaneObject extends SceneObject {
             lightDir.normalize();
             float lightDist = pointOnPlane.distance(light.getPosition());
 
-            Vector3 currentCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
+            Vector3 currentCol = shader.computeColor(ray,lightDir, normal, this, currentScene, refl, depth);
 
             Vector3 lightCol = light.getColor();
             intensity = getIntensity(intersection,light,2);

@@ -31,7 +31,7 @@ public class SphereObject extends SceneObject {
     }
 
     @Override
-    public Vector3 shadeCookTorrance(Ray ray, Scene currentScene, boolean refl, float depth) {
+    public Vector3 shade(Ray ray, Scene currentScene, boolean refl, float depth) {
 
         Vector3 intersection,intersection2, normal;
         float intensity;
@@ -54,6 +54,7 @@ public class SphereObject extends SceneObject {
         normal.sub(normal, getCenter());
         normal.normalize();
         setNormal(normal);
+
         Vector3 finalCol = new Vector3(0,0,0);
         for (Light light: currentScene.getSceneLight()) {
             Vector3 lightDir;
@@ -62,7 +63,7 @@ public class SphereObject extends SceneObject {
             lightDir.sub(lightDir, intersection);
             lightDir.normalize();
 
-            Vector3 currentCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
+            Vector3 currentCol = shader.computeColor(ray,lightDir, normal, this, currentScene, refl, depth);
 
             Vector3 lightCol = light.getColor();
             intensity = getIntensity(intersection,light,5);
@@ -70,61 +71,7 @@ public class SphereObject extends SceneObject {
             Vector3 computedCol = new Vector3(lightCol.x *currentCol.x ,lightCol.y*currentCol.y ,lightCol.z *currentCol.z );
             finalCol.add (computedCol);
         }
-
         return finalCol;
-
-    }
-
-    public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
-
-        Vector3 intersection, normal, lightDir;
-        float intensity;
-
-
-        // berechne intersection Point
-        intersection = new Vector3(rayDir);
-        intersection.mult(t);
-        intersection.add(sceneOrigin);
-
-        // find surface normal
-        normal = new Vector3(intersection);
-        normal.sub(normal, center);
-        normal.normalize();
-
-        // get light direction
-        lightDir = new Vector3(light.getPosition());
-        lightDir.sub(lightDir, intersection);
-        lightDir.normalize();
-        float lightDist = center.distance(light.getPosition());
-        //System.out.println(lightDist);
-        Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = shadowCheck(this.getScene(), shadowRay);
-        if (shadow) {
-            intensity = 0;
-            return Color.black.getRGB();
-        } else {
-            intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
-            intensity *= light.getIntensity();
-        }
-
-        if (intensity < 0.0)
-            intensity = 0.0f;
-
-        if (intensity > 1.0)
-            intensity = 1.0f;
-
-
-        // int clampedIntensity = RayTracerSimple.clamp((int)intensity,0, 255);
-
-        Vector3 lightColor = light.getColor();
-
-        Color shadedLight = new Color((int) (lightColor.x* ((float) intensity)), (int) (lightColor.y * ((float) intensity)), (int) (lightColor.z * ((float) intensity)));
-        Vector3 albedo = this.getMaterial().getAlbedoColor();
-        Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
-
-        int pixelCol = objectColor.getRGB();
-
-        return (pixelCol);
     }
 
     public float getIntensity(Vector3 intersection, Light light, int numPoints){

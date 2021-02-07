@@ -1,12 +1,11 @@
 package application;
 
-import util.AnimationManager;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
 
 public class ImageWriter {
     private static String path; //= "D:/Uni/GT2A2 Raytracer/GT_Raytracer/render/Anim";
@@ -24,7 +23,7 @@ public class ImageWriter {
         Graphics g = bi.getGraphics();
         try {
             g.drawImage(image, 0, 0, null);
-            ImageIO.write(bi, type, new File(path+"00"+ AnimationManager.getFrameCounter()+ ".jpeg"));
+            ImageIO.write(bi, type, new File(path+"00"+ TimeHandler.getFrameCounter()+ ".jpeg"));
         } catch (IOException e) {
             e.printStackTrace();
         }

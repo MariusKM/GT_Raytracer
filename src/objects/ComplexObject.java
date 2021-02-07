@@ -134,64 +134,12 @@ public class ComplexObject extends SceneObject {
 
     }
 
-    @Override
-    public int shadeDiffuse(Vector3 rayDir, Vector3 sceneOrigin, Light light, float t) {
-        Vector3 intersection, normal, lightDir;
-        float intensity;
 
 
-        // berechne intersection Point
-        intersection = new Vector3(rayDir);
-        intersection.mult(Tintersectzion);
-        intersection.add(sceneOrigin);
-
-        // find surface normal
-        normal = intersectObj.normal(intersection);
-
-        // get light direction
-        lightDir = new Vector3(light.getPosition());
-        lightDir.sub(lightDir, intersection);
-        lightDir.normalize();
-        float lightDist = intersection.distance(light.getPosition());
-        //System.out.println(lightDist);
-        Ray shadowRay = new Ray(intersection, lightDir);
-        boolean shadow = false;
-        if (shadow) {
-            intensity = 0;
-            return Color.black.getRGB();
-        } else {
-            intensity = (float) (normal.dotProduct(lightDir) / Math.pow(lightDist + 1, 2));
-            intensity = intensity * (float) light.getIntensity();
-        }
-
-        if (intensity < 0.0)
-            intensity = 0.0f;
-
-        if (intensity > 1.0)
-            intensity = 1.0f;
-
-
-        // int clampedIntensity = RayTracerSimple.clamp((int)intensity,0, 255);
-
-      /*  Color lightColor = light.getColor();
-        //quadrieren
-        Color entgammasiertColor = new Color((int) Math.pow(lightColor.getAlpha(), 2), (int) Math.pow(lightColor.getRed(), 2), (int) Math.pow(lightColor.getGreen(), 2), (int) Math.pow(lightColor.getBlue(), 2));
-        lightColor = entgammasiertColor;
-        Color shadedLight = new Color((int) (lightColor.getRed() * ((float) intensity)), (int) (lightColor.getGreen() * ((float) intensity)), (int) (lightColor.getBlue() * ((float) intensity)));
-        Vector3 albedo = this.getMaterial().getAlbedoColor();
-        //Without Gamma
-        // Color objectColor = new Color((int) (shadedLight.getRed() * albedo.x), (int) (shadedLight.getGreen() * albedo.y), (int) (shadedLight.getBlue() * albedo.z));
-        //Wurzel ziehen Gammakorrektur
-        Color objectColor = new Color((int) (Math.sqrt(shadedLight.getRed() * albedo.x)), (int) (Math.sqrt(shadedLight.getGreen() * albedo.y)), (int) (Math.sqrt(shadedLight.getBlue() * albedo.z)));
-
-        int pixelCol = objectColor.getRGB(); */
-        int pixelCol = Color.BLACK.getRGB();
-        return (pixelCol);
-    }
 
 
     @Override
-    public Vector3 shadeCookTorrance(Ray ray, Scene currentScene, boolean refl, float depth) {
+    public Vector3 shade(Ray ray, Scene currentScene, boolean refl, float depth) {
         Vector3 intersection,intersection2, normal, lightDir;
         float intensity;
 
@@ -222,7 +170,7 @@ public class ComplexObject extends SceneObject {
             lightDir = new Vector3(light.getPosition());
             lightDir.sub(lightDir, intersection);
             lightDir.normalize();
-            Vector3 currentCol = RenderUtil.CookTorranceNeu(ray,lightDir, normal, this, currentScene, refl, depth);
+            Vector3 currentCol = shader.computeColor(ray,lightDir, normal, this, currentScene, refl, depth);
 
 
             intensity = getIntensity(intersection,light,5);

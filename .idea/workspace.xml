@@ -2,12 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63a1825b-5fc3-4b81-b9cd-723c9715a5f2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/RayTracerSimple.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/application/TimeHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/render/Anim000.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim000.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/render/Anim001.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim001.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim0010.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim0010.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim002.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim002.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim003.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim003.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim004.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim004.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim005.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim005.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim006.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim006.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim007.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim007.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim008.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim008.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/render/Anim009.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/render/Anim009.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RayTracerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RayTracerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/ImageWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/ImageWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/RayTracer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/RayTracer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Scene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/objects/ComplexObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/ComplexObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/objects/PlaneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/PlaneObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/objects/Quadrik.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/Quadrik.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/objects/SceneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/SceneObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/AnimationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/AnimationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/objects/SphereObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/SphereObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/AnimationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/AnimationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/CookTorrance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/CookTorrance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/RenderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/RenderUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/ShadingModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/ShadingModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Util.plantuml" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Util.plantuml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +70,14 @@
   <component name="Git.Settings">
     <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="723" />
@@ -143,7 +173,7 @@
       <workItem from="1612538220061" duration="11228000" />
       <workItem from="1612550679973" duration="5358000" />
       <workItem from="1612631759475" duration="1353000" />
-      <workItem from="1612716210246" duration="1967000" />
+      <workItem from="1612716210246" duration="14455000" />
     </task>
     <servers />
   </component>
@@ -189,15 +219,6 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/util/RenderUtil.java</url>
-          <line>211</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="albedo.z" />
