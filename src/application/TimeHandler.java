@@ -1,13 +1,11 @@
 package application;
 
-import java.sql.Time;
 
 public abstract class TimeHandler {
     private static int delta_timeMS;
     private static float delta_time;
     private static long last_time;
     public static int frameCounter = -1;
-    private static TimeHandler instance;
     public static void setLast_time(long last_time) {
         TimeHandler.last_time = last_time;
     }

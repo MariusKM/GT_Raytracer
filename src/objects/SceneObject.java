@@ -1,12 +1,11 @@
 package objects;
 
-import components.Light;
 import components.Scene;
-import util.Animator;
-import util.CookTorrance;
-import util.Material;
+import animation.Animator;
+import render.CookTorrance;
+import render.Material;
 import math.Vector3;
-import util.ShadingModel;
+import render.ShadingModel;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package util;
+package objects;
 
 import math.TransformationMatrix4x4;
 import math.Vector3;

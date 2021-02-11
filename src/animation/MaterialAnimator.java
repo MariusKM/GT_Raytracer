@@ -1,7 +1,9 @@
-package util;
+package animation;
 
 import objects.SceneObject;
 import math.Vector3;
+import render.Material;
+import math.MathUtil;
 
 public class MaterialAnimator  extends Animator {
 
@@ -15,7 +17,7 @@ public class MaterialAnimator  extends Animator {
     }
 
     public MaterialAnimator.MaterialValueType valueType;
-    private  Material startMat, targetMat;
+    private Material startMat, targetMat;
     public Vector3 targetVec;
     private Vector3 startVec;
     private float startFloat, targetFloat;

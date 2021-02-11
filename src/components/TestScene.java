@@ -2,9 +2,9 @@ package components;
 
 import objects.SceneObject;
 import objects.SphereObject;
-import util.Material;
-import util.MaterialAnimator;
-import util.TransformationAnimator;
+import render.Material;
+import animation.MaterialAnimator;
+import animation.TransformationAnimator;
 import application.ApplicationSettings;
 import math.Vector3;
 
@@ -18,14 +18,7 @@ public class TestScene extends Scene {
 
     @Override
     public void initializeScene() {
-        // setup Camera
-        setUpCamera();
-        // setup Keyhandler
-        setUpKeyHandler();
-        // setup Light
-        setUpLight();
-        // SetUpGround
-        setupGround();
+        setUpEnvironment();
         // Configure Objects
         configureObjects(GenerateTestObjects());
     }

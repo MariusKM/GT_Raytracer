@@ -1,12 +1,10 @@
 package objects;
 
-import util.RenderUtil;
-import util.MathUtil;
+import render.RenderUtil;
+import math.MathUtil;
 import components.Light;
 import components.Scene;
 import math.Vector3;
-
-import java.awt.*;
 
 public class SphereObject extends SceneObject {
     private Vector3 center;

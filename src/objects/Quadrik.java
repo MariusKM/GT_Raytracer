@@ -1,11 +1,9 @@
 package objects;
 
-import util.RenderUtil;
+import render.RenderUtil;
 import components.Light;
 import components.Scene;
 import math.*;
-
-import java.awt.*;
 
 public class Quadrik extends SceneObject {
 

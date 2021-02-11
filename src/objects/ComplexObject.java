@@ -1,13 +1,11 @@
 package objects;
 
-import util.RenderUtil;
+import render.RenderUtil;
 import components.Light;
 import components.Scene;
 import math.Matrix4x4;
 import math.MatrixOps;
 import math.Vector3;
-
-import java.awt.*;
 
 public class ComplexObject extends SceneObject {
 

@@ -1,4 +1,4 @@
-package util;
+package animation;
 
 import objects.Quadrik;
 import objects.SceneObject;
@@ -7,6 +7,7 @@ import math.Matrix4x4;
 import math.TransformationMatrix4x4;
 import math.Vector3;
 import math.Vector3D;
+import math.MathUtil;
 
 public class TransformationAnimator extends Animator {
 

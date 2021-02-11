@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Time;
 
 public class ImageWriter {
     private static String path; //= "D:/Uni/GT2A2 Raytracer/GT_Raytracer/render/Anim";
@@ -16,14 +15,15 @@ public class ImageWriter {
         type = fileType;
     }
 
-    public static void saveImage(Image image, ApplicationSettings applicationSettings) {
+    public static void saveImage(ApplicationSettings applicationSettings, int frameCount) {
+        Image image = GUI.getImage();
         int width = applicationSettings.getResX();
         int height = applicationSettings.getResY();
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
         Graphics g = bi.getGraphics();
         try {
             g.drawImage(image, 0, 0, null);
-            ImageIO.write(bi, type, new File(path+"00"+ TimeHandler.getFrameCounter()+ ".jpeg"));
+            ImageIO.write(bi, type, new File(path+"00"+ frameCount+ ".jpeg"));
         } catch (IOException e) {
             e.printStackTrace();
         }

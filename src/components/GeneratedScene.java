@@ -1,17 +1,8 @@
 package components;
 
-import objects.Ellipsoid;
-import objects.SceneObject;
-import objects.SphereObject;
-import util.Material;
-import util.ObjectGenerator;
-import util.TransformationAnimator;
 import application.ApplicationSettings;
-import math.TransformationMatrix4x4;
-import math.Vector3;
-import math.Vector3D;
-
-import static java.lang.Math.random;
+import objects.ObjectGenerator;
+import objects.SceneObject;
 
 public class GeneratedScene extends Scene {
     private int numObjects;
@@ -23,23 +14,16 @@ public class GeneratedScene extends Scene {
 
     @Override
     public void initializeScene() {
-        // setup Camera
-        setUpCamera();
-        // setup Keyhandler
-        setUpKeyHandler();
-        // setup Light
-        setUpLight();
-        // SetUpGround
-        setupGround();
+        setUpEnvironment();
         // Steup manual Objects
-        setupManualObjects();
+        // setupManualObjects();
         // generate Scene Objects procedurally
         SceneObject[] generatedObjects = ObjectGenerator.generateSceneObjects(numObjects, 0.2f, 0.01f);
         // Configure Scene Objects
         configureObjects(generatedObjects);
     }
 
-    void  setupManualObjects(){
+   /* void setupManualObjects(){
         // Materials
         Material defaultMat;
         Material ellipsoidMat = new Material(new Vector3((float) (random() * 0.5f + 0.5f), (float) (0.5f * random()), (float) (0.2 * random())), 0.01f, 1f, 0.9f, 1.3f, false);
@@ -62,7 +46,7 @@ public class GeneratedScene extends Scene {
         ellipse2.setScene(this);
         ellipse2.setMaterial(ellipsoidMat);
         getSceneObjects().add(ellipse2);
-    }
+    }*/
 
    
 }

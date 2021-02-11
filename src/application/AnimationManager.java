@@ -2,7 +2,7 @@ package application;
 
 import components.Scene;
 import objects.SceneObject;
-import util.Animator;
+import animation.Animator;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package util;
+package render;
 
 import components.Scene;
 import math.Vector3;

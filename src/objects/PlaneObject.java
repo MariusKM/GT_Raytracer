@@ -1,11 +1,9 @@
 package objects;
 
-import util.RenderUtil;
+import render.RenderUtil;
 import components.Light;
 import components.Scene;
 import math.Vector3;
-
-import java.awt.*;
 
 public class PlaneObject extends SceneObject {
     private Vector3 pointOnPlane;

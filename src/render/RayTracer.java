@@ -1,10 +1,11 @@
-package application;
+package render;
 
+import application.ApplicationSettings;
 import components.Camera;
 import objects.Ray;
 import components.Scene;
 import objects.SceneObject;
-import util.MathUtil;
+import math.MathUtil;
 import math.Vector3;
 
 import java.awt.*;
@@ -16,9 +17,9 @@ public class RayTracer implements Renderer {
 
 
     @Override
-    public void render(int[] pixels, Camera cam, Scene Scene) {
+    public void render(int[] pixels, Scene Scene) {
         float t = 0;
-
+        Camera cam = Scene.getSceneCam();
         int resX =ResX;
         int resY =ResY;
         int insideCounter = 0, outsideCounter = 0;

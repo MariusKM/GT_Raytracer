@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.image.DirectColorModel;
 import java.awt.image.MemoryImageSource;
 
-public class GUI {
+public abstract class GUI {
     private static Image image;
     private static JFrame frame = new JFrame();
     private static JLabel graphics = new JLabel();

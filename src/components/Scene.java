@@ -6,9 +6,9 @@ import objects.Ellipsoid;
 import objects.PlaneObject;
 import objects.Quadrik;
 import application.AnimationManager;
-import util.Material;
-import util.MaterialAnimator;
-import util.TransformationAnimator;
+import render.Material;
+import animation.MaterialAnimator;
+import animation.TransformationAnimator;
 import application.ApplicationSettings;
 import application.GUI;
 import application.KeyHandler;
@@ -17,10 +17,10 @@ import objects.SceneObject;
 
 import java.util.ArrayList;
 
-import static util.MathUtil.generatRandomPositiveNegitiveValue;
+import static math.MathUtil.generatRandomPositiveNegitiveValue;
 import static java.lang.Math.random;
 
-public class Scene {
+public abstract class Scene {
 
     private ArrayList<SceneObject> sceneObjects;
     private ArrayList<Light> sceneLights = new ArrayList<>();
@@ -66,11 +66,20 @@ public class Scene {
         this.bgCol = bgCol;
     }
 
-    public void initializeScene(){
+    public abstract void initializeScene();
+    protected void setUpEnvironment(){
+        // setup Camera
+        setUpCamera();
+        // setup Keyhandler
+        setUpKeyHandler();
+        // setup Light
+        setUpLight();
+        // SetUpGround
+        setupGround();
 
     }
 
-    void setupGround(){
+    protected void setupGround(){
         PlaneObject groundPlane = new PlaneObject(new Vector3(0.0f, 0, 0), new Vector3(0, 1, 0));
         Material groundMat = new Material(new Vector3(0.7f, 0.35f, 0.35f), 0.1f, 0f,1f,1.3f,false);
         groundPlane.setMaterial(groundMat);
